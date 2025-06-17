@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { HapticTabButton } from "@/components/HapticTabButton";
+import { TabBarButton } from "@/components/TabBarButton";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function TabLayout() {
@@ -11,7 +11,7 @@ export default function TabLayout() {
         animation: "fade",
         // headerTransparent: true,
         headerShown: false,
-        tabBarButton: HapticTabButton,
+        tabBarButton: TabBarButton,
         // // tabBarBackground: <BlurView
         //       // System chrome material automatically adapts to the system's theme
         //       // and matches the native tab bar appearance on iOS.
