@@ -1,39 +1,39 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
 
-import { HapticTab } from "@/components/HapticTab";
+import { HapticTabButton } from "@/components/HapticTabButton";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
         animation: "fade",
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        // headerTransparent: true,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
+        tabBarButton: HapticTabButton,
+        // // tabBarBackground: <BlurView
+        //       // System chrome material automatically adapts to the system's theme
+        //       // and matches the native tab bar appearance on iOS.
+        //       tint="systemChromeMaterial"
+        //       intensity={100}
+        //       style={StyleSheet.absoluteFill}
+        //     />,
+        // tabBarStyle: Platform.select({
+        //   ios: {
+        //     // Use a transparent background on iOS to show the blur effect
+        //     position: "absolute",
+        //   },
+        //   default: {},
+        // }),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol size={size} name="house.fill" color={color} />
           ),
         }}
       />
@@ -41,8 +41,17 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: "Explore",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol size={size} name="paperplane.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="activity"
+        options={{
+          title: "Activity",
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol size={size} name="chart.bar.fill" color={color} />
           ),
         }}
       />
