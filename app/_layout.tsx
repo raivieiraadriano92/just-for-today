@@ -1,3 +1,6 @@
+import "@/global.css";
+import "react-native-reanimated";
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -5,11 +8,10 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "react-native";
-import "react-native-reanimated";
+import { useColorScheme } from "nativewind";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   // if (!loaded) {
   //   // Async font loading only occurs in development.
