@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "just-for-today",
+    "name": "Just for Today",
     "slug": "just-for-today",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "app.justfortoday"
     },
     "android": {
       "adaptiveIcon": {

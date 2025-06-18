@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useUserStore } from "@/features/user/store/userStore";
 import { useTheme } from "@react-navigation/native";
+import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { HelloWave } from "./HelloWave";
@@ -30,20 +31,22 @@ export function IntentionGreetingCard() {
           </Text>
           <HelloWave />
         </View>
-        <Text className="text-text max-w-md text-center text-3xl font-semibold leading-relaxed">
+        <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
           {`${t("features.intention.components.IntentionGreetingCard.quote.part1")} `}
-          <Text className="text-text max-w-md text-center text-3xl font-bold leading-relaxed">
+          <Text className="text-text text-center text-3xl font-bold leading-relaxed">
             {t(
               "features.intention.components.IntentionGreetingCard.quote.part2",
             )}
           </Text>
         </Text>
       </View>
-      <Button
-        label={t(
-          "features.intention.components.IntentionGreetingCard.ctaLabel",
-        )}
-      />
+      <Link asChild href="/intention/[id]">
+        <Button
+          label={t(
+            "features.intention.components.IntentionGreetingCard.ctaLabel",
+          )}
+        />
+      </Link>
     </View>
   );
 }

@@ -1,4 +1,7 @@
 {
+  "common": {
+    "save": "Save"
+  },
   "features": {
     "intention": {
       "components": {
@@ -9,6 +12,13 @@
             "part2": "Just for Today?"
           },
           "ctaLabel": "Today I will..."
+        }
+      },
+      "screens": {
+        "IntentionFormScreen": {
+          "title": "Set your intention for today",
+          "description": "You have the power to shape your day.\nSet an intention that supports who you want to be.",
+          "placeholder": "Just for Today, I will..."
         }
       }
     }
