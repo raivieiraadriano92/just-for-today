@@ -5,7 +5,7 @@
         "IntentionGreetingCard": {
           "greeting": "Hi, {{name}}!",
           "quote": {
-            "part1": "Each sunrise brings a choice — what will you choose,",
+            "part1": "Each sunrise brings a new choice — what will you choose,",
             "part2": "Just for Today?"
           },
           "ctaLabel": "Today I will..."

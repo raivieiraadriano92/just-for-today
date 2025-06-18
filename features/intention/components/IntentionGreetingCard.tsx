@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useUserStore } from "@/features/user/store/userStore";
 import { useTheme } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
@@ -7,7 +8,10 @@ import { HelloWave } from "./HelloWave";
 
 export function IntentionGreetingCard() {
   const { t } = useTranslation();
+
   const theme = useTheme();
+
+  const { user } = useUserStore();
 
   return (
     <View className="bg-card flex-1 items-center justify-center gap-6 rounded-2xl p-6">
@@ -21,7 +25,7 @@ export function IntentionGreetingCard() {
         <View className="flex-row items-center gap-2">
           <Text className="text-text text-center text-2xl font-medium leading-relaxed">
             {t("features.intention.components.IntentionGreetingCard.greeting", {
-              name: "Raí",
+              name: user?.name,
             })}
           </Text>
           <HelloWave />
