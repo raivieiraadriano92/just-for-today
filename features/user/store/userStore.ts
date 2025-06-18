@@ -21,10 +21,7 @@ export type UserStore = UserStoreState & UserStoreActions;
 export const useUserStore = create<UserStore>()(
   persist(
     (set, get) => ({
-      /**
-       * @todo remove mock user data once the onboarding flow is implemented
-       */
-      user: __DEV__ ? { isOnboardingCompleted: false, name: "USER" } : null,
+      user: null,
 
       completeOnboarding: () => {
         const current = get().user;
