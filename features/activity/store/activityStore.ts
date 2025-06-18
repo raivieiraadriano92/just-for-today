@@ -1,6 +1,11 @@
 import { drizzleDb } from "@/db/client";
-import { intentionsTable } from "@/db/schema";
-import { addDays, isFuture, startOfWeek } from "date-fns";
+import {
+  gratitudeLogsTable,
+  intentionsTable,
+  moodLogsTable,
+  reflectionsTable,
+} from "@/db/schema";
+import { addDays, isFuture, parseISO, startOfWeek } from "date-fns";
 import { format } from "date-fns/format";
 import { and, count, gte, lte } from "drizzle-orm";
 import { create } from "zustand";
@@ -42,8 +47,13 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     const from = weekDays[0].date;
     const to = weekDays[weekDays.length - 1].date;
 
-    // Fetch the count of intentions for each day in the week
-    const [intentionCount] = await Promise.all([
+    // Fetch the counts of intentions, mood logs, gratitude logs, and reflections for the week
+    const [
+      intentionsCount,
+      moodLogsCount,
+      gratitudeLogsCount,
+      reflectionsCount,
+    ] = await Promise.all([
       drizzleDb
         .select({ date: intentionsTable.date, count: count() })
         .from(intentionsTable)
@@ -51,15 +61,69 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         .where(
           and(gte(intentionsTable.date, from), lte(intentionsTable.date, to)),
         ),
+      drizzleDb
+        .select({ datetime: moodLogsTable.datetime, count: count() })
+        .from(moodLogsTable)
+        .groupBy(moodLogsTable.datetime)
+        .where(
+          and(
+            gte(moodLogsTable.datetime, from),
+            lte(moodLogsTable.datetime, to),
+          ),
+        ),
+      drizzleDb
+        .select({ datetime: gratitudeLogsTable.datetime, count: count() })
+        .from(gratitudeLogsTable)
+        .groupBy(gratitudeLogsTable.datetime)
+        .where(
+          and(
+            gte(gratitudeLogsTable.datetime, from),
+            lte(gratitudeLogsTable.datetime, to),
+          ),
+        ),
+      drizzleDb
+        .select({ datetime: reflectionsTable.datetime, count: count() })
+        .from(reflectionsTable)
+        .groupBy(reflectionsTable.datetime)
+        .where(
+          and(
+            gte(reflectionsTable.datetime, from),
+            lte(reflectionsTable.datetime, to),
+          ),
+        ),
     ]);
 
-    // Map the intention count to the week days
+    // Map the counts to the corresponding week days
     const weeklyProgress = weekDays.map((day) => {
-      const intention = intentionCount.find((i) => i.date === day.date);
+      const intention = intentionsCount.find((i) => i.date === day.date);
+
+      const moodLog = moodLogsCount.find(
+        (m) => format(parseISO(m.datetime), "yyyy-MM-dd") === day.date,
+      );
+
+      const gratitudeLog = gratitudeLogsCount.find(
+        (g) => format(parseISO(g.datetime), "yyyy-MM-dd") === day.date,
+      );
+
+      const reflection = reflectionsCount.find(
+        (r) => format(parseISO(r.datetime), "yyyy-MM-dd") === day.date,
+      );
 
       let value = 0;
 
-      if (intention) {
+      if (!!intention?.count) {
+        value += 25;
+      }
+
+      if (!!moodLog?.count) {
+        value += 25;
+      }
+
+      if (!!gratitudeLog?.count) {
+        value += 25;
+      }
+
+      if (!!reflection?.count) {
         value += 25;
       }
 
