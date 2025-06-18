@@ -1,4 +1,3 @@
-import { hideAsync } from "expo-splash-screen";
 import { FunctionComponent, PropsWithChildren, useEffect } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import { useTodaysIntentionStore } from "../store/todaysIntentionStore";
@@ -10,14 +9,8 @@ export const TodaysIntentionProvider: FunctionComponent<PropsWithChildren> = ({
 
   useEffect(() => {
     const loadTodaysIntentionOnMount = async () => {
-      console.log("Loading on mount...");
+      console.log("Loading today's intention on mount...");
       await loadTodaysIntention(); // Load on mount
-
-      // This becomes the single point where we hide the splash screen
-      // Hide the splash screen after a short delay to prevent flickering
-      setTimeout(() => {
-        hideAsync();
-      }, 500);
     };
 
     loadTodaysIntentionOnMount();
@@ -25,7 +18,7 @@ export const TodaysIntentionProvider: FunctionComponent<PropsWithChildren> = ({
     const handleAppStateChange = (state: AppStateStatus) => {
       if (state === "active") {
         loadTodaysIntention(); // Load on resume
-        console.log("Loading on resume...");
+        console.log("Loading today's intention on resume...");
       }
     };
 

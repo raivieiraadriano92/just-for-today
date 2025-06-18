@@ -4,6 +4,7 @@ import "react-native-reanimated";
 
 import { DATABASE_NAME, drizzleDb } from "@/db/client";
 import migrations from "@/drizzle/migrations";
+import { ActivityProvider } from "@/features/activity/components/ActivityProvider";
 import { TodaysIntentionProvider } from "@/features/intention/components/TodaysIntentionProvider";
 import {
   DarkTheme,
@@ -50,15 +51,17 @@ export default function RootLayout() {
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
             <TodaysIntentionProvider>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="index" />
-                <Stack.Screen name="(protected)" />
-                <Stack.Screen
-                  name="+not-found"
-                  options={{ headerShown: true, title: "Oops!" }}
-                />
-              </Stack>
-              <StatusBar style="auto" />
+              <ActivityProvider>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="index" />
+                  <Stack.Screen name="(protected)" />
+                  <Stack.Screen
+                    name="+not-found"
+                    options={{ headerShown: true, title: "Oops!" }}
+                  />
+                </Stack>
+                <StatusBar style="auto" />
+              </ActivityProvider>
             </TodaysIntentionProvider>
           </ThemeProvider>
         </KeyboardProvider>
