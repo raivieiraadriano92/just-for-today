@@ -11,7 +11,8 @@
             "part1": "Each sunrise brings a new choice — what will you choose,",
             "part2": "Just for Today?"
           },
-          "ctaLabel": "Today I will..."
+          "ctaLabel": "Today I will...",
+          "intentionPrefix": "Just for Today, I will..."
         }
       },
       "screens": {

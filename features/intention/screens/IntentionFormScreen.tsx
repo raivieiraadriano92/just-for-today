@@ -3,14 +3,35 @@ import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
+import { useTodaysIntentionStore } from "../store/todaysIntentionStore";
 
 export default function IntentionFormScreen() {
   const { t } = useTranslation();
 
   const theme = useTheme();
+
+  const { insertTodaysIntention, todaysIntention, updateTodaysIntention } =
+    useTodaysIntentionStore();
+
+  const refIntentionValue = useRef(todaysIntention?.intention ?? "");
+
+  const handleSave = async () => {
+    if (!refIntentionValue.current) {
+      return;
+    }
+
+    if (todaysIntention) {
+      await updateTodaysIntention({ intention: refIntentionValue.current });
+    } else {
+      await insertTodaysIntention({ intention: refIntentionValue.current });
+    }
+
+    router.back();
+  };
 
   return (
     <View className="py-safe flex-1">
@@ -36,12 +57,18 @@ export default function IntentionFormScreen() {
           <TextInput
             autoFocus
             className="text-text flex-1 text-lg font-normal"
+            defaultValue={refIntentionValue.current}
             multiline
+            onChangeText={(text) => (refIntentionValue.current = text)}
             placeholder={t(
               "features.intention.screens.IntentionFormScreen.placeholder",
             )}
           />
-          <Button className="self-center" label={t("common.save")} />
+          <Button
+            className="self-center"
+            label={t("common.save")}
+            onPress={handleSave}
+          />
         </View>
       </KeyboardAvoidingView>
     </View>

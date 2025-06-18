@@ -14,7 +14,7 @@ export default function ProtectedLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="intention/[id]"
+        name="intention"
         options={{ contentStyle: { backgroundColor: theme.colors.card } }}
       />
     </Stack>
