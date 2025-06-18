@@ -1,17 +1,15 @@
 import { useInteractivePress } from "@/hooks/useInteractivePress";
-import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
-import { PlatformPressable } from "@react-navigation/elements";
+import { Pressable, PressableProps } from "react-native";
 import Animated from "react-native-reanimated";
 
-const AnimatedPlatformPressable =
-  Animated.createAnimatedComponent(PlatformPressable);
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function TabBarButton({
+export function InteractivePressable({
   onPressIn,
   onPressOut,
   style,
   ...props
-}: BottomTabBarButtonProps) {
+}: PressableProps) {
   const {
     interactiveAnimatedStyle,
     interactiveOnPressIn,
@@ -19,7 +17,7 @@ export function TabBarButton({
   } = useInteractivePress();
 
   return (
-    <AnimatedPlatformPressable
+    <AnimatedPressable
       {...props}
       onPressIn={(ev) => {
         interactiveOnPressIn();
