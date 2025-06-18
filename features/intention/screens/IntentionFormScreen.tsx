@@ -5,6 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 
 export default function IntentionFormScreen() {
   const { t } = useTranslation();
@@ -22,25 +23,27 @@ export default function IntentionFormScreen() {
           />
         </InteractivePressable>
       </View>
-      <View className="flex-1 gap-6 p-6">
-        <View className="gap-1">
-          <Text className="text-text text-3xl font-semibold leading-relaxed">
-            {t("features.intention.screens.IntentionFormScreen.title")}
-          </Text>
-          <Text className="text-text/50 mt-1 text-base font-normal leading-relaxed">
-            {t("features.intention.screens.IntentionFormScreen.description")}
-          </Text>
+      <KeyboardAvoidingView behavior={"padding"} className="flex-1">
+        <View className="flex-1 gap-6 p-6">
+          <View className="gap-1">
+            <Text className="text-text text-3xl font-semibold leading-relaxed">
+              {t("features.intention.screens.IntentionFormScreen.title")}
+            </Text>
+            <Text className="text-text/50 mt-1 text-base font-normal leading-relaxed">
+              {t("features.intention.screens.IntentionFormScreen.description")}
+            </Text>
+          </View>
+          <TextInput
+            autoFocus
+            className="text-text flex-1 text-lg font-normal"
+            multiline
+            placeholder={t(
+              "features.intention.screens.IntentionFormScreen.placeholder",
+            )}
+          />
+          <Button className="self-center" label={t("common.save")} />
         </View>
-        <TextInput
-          autoFocus
-          className="text-text flex-1 text-lg font-normal"
-          multiline
-          placeholder={t(
-            "features.intention.screens.IntentionFormScreen.placeholder",
-          )}
-        />
-        <Button className="self-center" label={t("common.save")} />
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
