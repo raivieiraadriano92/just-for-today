@@ -34,6 +34,11 @@ export default function IntentionFormScreen() {
     }
 
     router.back();
+
+    // timeout to allow the back navigation to complete and avoid flicker
+    setTimeout(() => {
+      router.push("/intention/success");
+    }, 500);
   };
 
   return (

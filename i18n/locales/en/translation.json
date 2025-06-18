@@ -1,6 +1,8 @@
 {
   "common": {
-    "save": "Save"
+    "notNow": "Not now",
+    "save": "Save",
+    "yes": "Yes"
   },
   "features": {
     "intention": {
@@ -20,6 +22,10 @@
           "title": "Set your intention for today",
           "description": "You have the power to shape your day.\nSet an intention that supports who you want to be.",
           "placeholder": "Just for Today, I will..."
+        },
+        "IntentionFormSuccessScreen": {
+          "title": "Guided by intention",
+          "description": "Your intention can light the way — let it guide you. Ready to check in with your feelings?"
         }
       }
     }

@@ -14,8 +14,17 @@ export default function ProtectedLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="intention"
+        name="intention/index"
         options={{ contentStyle: { backgroundColor: theme.colors.card } }}
+      />
+      <Stack.Screen
+        name="intention/success"
+        options={{
+          contentStyle: { backgroundColor: theme.colors.card },
+          presentation: "formSheet",
+          sheetAllowedDetents: "fitToContents",
+          sheetGrabberVisible: true,
+        }}
       />
     </Stack>
   );
