@@ -1,8 +1,12 @@
+import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
+import { HelloWave } from "./HelloWave";
 
 export function IntentionGreetingCard() {
+  const { t } = useTranslation();
   const theme = useTheme();
 
   return (
@@ -14,21 +18,28 @@ export function IntentionGreetingCard() {
         <IconSymbol color={theme.colors.text} name="quote.closing" size={80} />
       </View>
       <View className="items-center gap-3">
-        <Text className="text-text text-center text-2xl font-medium leading-relaxed">
-          Hi Raí
-        </Text>
+        <View className="flex-row items-center gap-2">
+          <Text className="text-text text-center text-2xl font-medium leading-relaxed">
+            {t("features.intention.components.IntentionGreetingCard.greeting", {
+              name: "Raí",
+            })}
+          </Text>
+          <HelloWave />
+        </View>
         <Text className="text-text max-w-md text-center text-3xl font-semibold leading-relaxed">
-          Each sunrise brings a choice — what will you choose,{" "}
+          {`${t("features.intention.components.IntentionGreetingCard.quote.part1")} `}
           <Text className="text-text max-w-md text-center text-3xl font-bold leading-relaxed">
-            Just for Today?
+            {t(
+              "features.intention.components.IntentionGreetingCard.quote.part2",
+            )}
           </Text>
         </Text>
       </View>
-      <TouchableOpacity className="bg-primary h-12 items-center justify-center rounded-full px-6">
-        <Text className="text-base font-medium text-white">
-          Today I will...
-        </Text>
-      </TouchableOpacity>
+      <Button
+        label={t(
+          "features.intention.components.IntentionGreetingCard.ctaLabel",
+        )}
+      />
     </View>
   );
 }

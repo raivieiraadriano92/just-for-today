@@ -20,7 +20,7 @@ export function useInteractivePress() {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
       // Scale the button down to give a pressed effect.
-      scale.value = withTiming(0.8);
+      scale.value = withTiming(0.9);
     },
     interactiveOnPressOut: () => {
       // Scale the button back up when releasing the press.

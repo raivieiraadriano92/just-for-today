@@ -1,0 +1,16 @@
+{
+  "features": {
+    "intention": {
+      "components": {
+        "IntentionGreetingCard": {
+          "greeting": "Hi, {{name}}!",
+          "quote": {
+            "part1": "Each sunrise brings a choice — what will you choose,",
+            "part2": "Just for Today?"
+          },
+          "ctaLabel": "Today I will..."
+        }
+      }
+    }
+  }
+}
