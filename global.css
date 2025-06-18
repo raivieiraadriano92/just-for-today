@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 242 242 242;
+    --border: 216 216 216;
+    --card: 255 255 255;
+    --notification: 255 59 48;
+    --primary: 0 122 255;
+    --text: 28 28 30;
+  }
+
+  .dark:root {
+    --background: 1 1 1;
+    --border: 39 39 41;
+    --card: 18 18 18;
+    --notification: 255 69 58;
+    --primary: 10 132 255;
+    --text: 229 229 231;
+  }
+}
