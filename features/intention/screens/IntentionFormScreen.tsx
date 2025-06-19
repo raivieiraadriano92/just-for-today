@@ -62,16 +62,17 @@ export default function IntentionFormScreen() {
               {t("features.intention.screens.IntentionFormScreen.description")}
             </Text>
           </View>
-          <TextInput
-            autoFocus
-            className="text-text flex-1 text-lg font-normal"
-            defaultValue={refIntentionValue.current}
-            multiline
-            onChangeText={(text) => (refIntentionValue.current = text)}
-            placeholder={t(
-              "features.intention.screens.IntentionFormScreen.placeholder",
-            )}
-          />
+          <View className="flex-1">
+            <TextInput
+              autoFocus
+              className="text-text text-lg font-normal"
+              defaultValue={refIntentionValue.current}
+              onChangeText={(text) => (refIntentionValue.current = text)}
+              placeholder={t(
+                "features.intention.screens.IntentionFormScreen.placeholder",
+              )}
+            />
+          </View>
           <Button
             className="self-center"
             label={t("common.save")}

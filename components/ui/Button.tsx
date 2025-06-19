@@ -6,6 +6,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 type ButtonProps = PressableProps & {
   label: string;
+  variant?: "solid" | "outline";
 };
 
 export function Button({
@@ -14,6 +15,7 @@ export function Button({
   onPressIn,
   onPressOut,
   style,
+  variant = "solid",
   ...props
 }: ButtonProps) {
   const {
@@ -24,7 +26,7 @@ export function Button({
 
   return (
     <AnimatedPressable
-      className={`bg-primary h-12 items-center justify-center rounded-full px-6 ${className}`}
+      className={`h-12 items-center justify-center rounded-full px-6 ${variant === "solid" ? "bg-primary" : "border-border border"} ${className}`}
       onPressIn={(ev) => {
         interactiveOnPressIn();
 
@@ -38,7 +40,11 @@ export function Button({
       style={[style, interactiveAnimatedStyle]}
       {...props}
     >
-      <Text className="text-base font-medium text-white">{label}</Text>
+      <Text
+        className={`text-base font-medium ${variant === "solid" ? "text-white" : "text-text"}`}
+      >
+        {label}
+      </Text>
     </AnimatedPressable>
   );
 }

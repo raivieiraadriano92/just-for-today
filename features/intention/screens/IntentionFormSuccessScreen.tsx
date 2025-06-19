@@ -109,6 +109,7 @@ export default function IntentionFormSuccessScreen() {
             className="flex-1"
             label={t("common.notNow")}
             onPress={router.back}
+            variant="outline"
           />
           <Button
             className="flex-1"
