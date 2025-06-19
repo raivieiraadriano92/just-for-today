@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type User = {
+  createdAt: string;
   isOnboardingCompleted: boolean;
   name: string;
 };

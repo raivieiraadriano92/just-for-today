@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { useUserStore } from "@/features/user/store/userStore";
+import { subDays } from "date-fns";
 import { Redirect } from "expo-router";
 import { View } from "react-native";
 
@@ -7,7 +8,11 @@ export default function OnboardingScreen() {
   const { user, completeOnboarding, setUser } = useUserStore();
 
   const handleFakeLogin = () => {
-    setUser({ isOnboardingCompleted: false, name: "John" });
+    setUser({
+      createdAt: subDays(new Date(), 3).toISOString(),
+      isOnboardingCompleted: false,
+      name: "John",
+    });
     completeOnboarding();
   };
 

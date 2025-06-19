@@ -15,7 +15,11 @@ type ActivityStoreState = {
     date: string;
     day: string;
     isFuture: boolean; // Optional, to indicate if the day is in the future
-    value: number; // Percentage of completion for the day
+    isCompleted: boolean;
+    intentionsCount: number;
+    moodLogsCount: number;
+    gratitudeLogsCount: number;
+    reflectionsCount: number;
   }[];
 };
 
@@ -109,27 +113,17 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         (r) => format(parseISO(r.datetime), "yyyy-MM-dd") === day.date,
       );
 
-      let value = 0;
-
-      if (!!intention?.count) {
-        value += 25;
-      }
-
-      if (!!moodLog?.count) {
-        value += 25;
-      }
-
-      if (!!gratitudeLog?.count) {
-        value += 25;
-      }
-
-      if (!!reflection?.count) {
-        value += 25;
-      }
-
       return {
         ...day,
-        value,
+        isCompleted:
+          !!intention?.count &&
+          !!moodLog?.count &&
+          !!gratitudeLog?.count &&
+          !!reflection?.count,
+        intentionsCount: intention?.count || 0,
+        moodLogsCount: moodLog?.count || 0,
+        gratitudeLogsCount: gratitudeLog?.count || 0,
+        reflectionsCount: reflection?.count || 0,
       };
     });
 

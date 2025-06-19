@@ -2,9 +2,53 @@
   "common": {
     "notNow": "Not now",
     "save": "Save",
-    "yes": "Yes"
+    "today": "Today",
+    "yes": "Yes",
+    "yesterday": "Yesterday"
   },
   "features": {
+    "activity": {
+      "screens": {
+        "ActivitySummaryByDateScreen": {
+          "status": {
+            "allCompleted": {
+              "title": "You did it all — beautifully!",
+              "description": "That’s a full day of self-care. Intention, emotion, gratitude, and reflection — your soul thanks you."
+            },
+            "partialCompleted": {
+              "title": "You showed up",
+              "description": "You took a moment for yourself — that’s something to feel good about. Little by little, it adds up."
+            },
+            "notCompletedToday": {
+              "title": "Today’s not over yet…",
+              "description": "Even one mindful moment can shift your day."
+            },
+            "notCompletedPast": {
+              "title": "It’s okay to have off days",
+              "description": "Some days are quieter — and that’s perfectly human. Tomorrow is a new “Just for Today.” We’ll be here."
+            }
+          },
+          "tasks": {
+            "intention": {
+              "description": "You paused to set your path.",
+              "title": "Daily intention"
+            },
+            "moodLog": {
+              "description": "You listened inward, deep and true.",
+              "title": "Mood check-in"
+            },
+            "gratitudeLog": {
+              "description": "You found the light in simple joys.",
+              "title": "Gratitude practice"
+            },
+            "reflection": {
+              "description": "You gently looked back too.",
+              "title": "Self-reflection"
+            }
+          }
+        }
+      }
+    },
     "intention": {
       "components": {
         "IntentionGreetingCard": {

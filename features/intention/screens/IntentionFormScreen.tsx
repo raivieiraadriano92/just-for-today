@@ -58,7 +58,7 @@ export default function IntentionFormScreen() {
             <Text className="text-text text-3xl font-semibold leading-relaxed">
               {t("features.intention.screens.IntentionFormScreen.title")}
             </Text>
-            <Text className="text-text/50 mt-1 text-base font-normal leading-relaxed">
+            <Text className="text-text/50 text-base font-normal leading-relaxed">
               {t("features.intention.screens.IntentionFormScreen.description")}
             </Text>
           </View>

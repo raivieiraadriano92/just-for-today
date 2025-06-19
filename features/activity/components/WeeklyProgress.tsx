@@ -1,6 +1,8 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
+import { useUserStore } from "@/features/user/store/userStore";
 import { useTheme } from "@react-navigation/native";
-import { Link } from "expo-router";
+import { isBefore, isToday, parseISO } from "date-fns";
+import { router } from "expo-router";
 import { Text, View } from "react-native";
 import { CircularProgressBase } from "react-native-circular-progress-indicator";
 import twColors from "tailwindcss/colors";
@@ -11,29 +13,59 @@ export function WeeklyProgress() {
 
   const { weeklyProgress } = useActivityStore();
 
+  const { user } = useUserStore();
+
   return (
     <View className="bg-card flex-row items-center justify-evenly rounded-2xl p-3">
-      {weeklyProgress.map((day, index) => (
-        <Link asChild key={index} href={`/summary/${day.date}-1`}>
-          <InteractivePressable>
+      {weeklyProgress.map((day, index) => {
+        let value = 0;
+
+        if (day.intentionsCount) {
+          value += 25;
+        }
+        if (day.moodLogsCount) {
+          value += 25;
+        }
+        if (day.gratitudeLogsCount) {
+          value += 25;
+        }
+        if (day.reflectionsCount) {
+          value += 25;
+        }
+
+        const disableInteraction =
+          day.isFuture || isBefore(day.date, user!.createdAt.split("T")[0]);
+
+        return (
+          <InteractivePressable
+            className="items-center justify-center"
+            key={index}
+            onPress={() =>
+              disableInteraction ? null : router.push(`/summary/${day.date}`)
+            }
+            hitSlop={10}
+          >
             <CircularProgressBase
               activeStrokeWidth={3}
               inActiveStrokeWidth={3}
               inActiveStrokeOpacity={1}
-              value={day.value}
+              value={value}
               radius={20}
               activeStrokeColor={twColors.green[theme.dark ? 400 : 500]}
               inActiveStrokeColor={
-                day.isFuture ? "transparent" : theme.colors.border
+                disableInteraction ? "transparent" : theme.colors.border
               }
             >
               <Text className="text-text text-center text-base font-semibold">
                 {day.day}
               </Text>
             </CircularProgressBase>
+            {isToday(parseISO(day.date)) && (
+              <View className="bg-primary absolute -bottom-2 h-1 w-1 rounded-full" />
+            )}
           </InteractivePressable>
-        </Link>
-      ))}
+        );
+      })}
     </View>
   );
 }
