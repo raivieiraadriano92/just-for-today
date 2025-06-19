@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/Button";
-import { drizzleDb } from "@/db/client";
-import { intentionsTable } from "@/db/schema";
 import { useActivityStore } from "@/features/activity/store/activityStore";
-import { format, subDays } from "date-fns";
-import { eq } from "drizzle-orm";
 import { router } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { Confetti } from "react-native-fast-confetti";
@@ -13,16 +9,9 @@ import { Confetti } from "react-native-fast-confetti";
 export default function IntentionFormSuccessScreen() {
   const { t } = useTranslation();
 
-  const { counters } = useActivityStore();
-
-  const [isInStreak, setIsInStreak] = useState(false);
-  const [isReady, setReady] = useState(false);
+  const { counters, streak } = useActivityStore();
 
   const message = useMemo(() => {
-    if (!isReady) {
-      return;
-    }
-
     if (counters.intentions === 1) {
       return {
         showConfetti: true,
@@ -34,7 +23,7 @@ export default function IntentionFormSuccessScreen() {
       };
     }
 
-    if (!isInStreak) {
+    if (streak.state === "streak_restarted") {
       return {
         showConfetti: true,
         emoji: "🎉",
@@ -53,27 +42,7 @@ export default function IntentionFormSuccessScreen() {
       description:
         "features.intention.screens.IntentionFormSuccessScreen.inStreak.description",
     };
-  }, [counters.intentions, isInStreak, isReady]);
-
-  useEffect(() => {
-    const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
-
-    drizzleDb
-      .select()
-      .from(intentionsTable)
-      .where(eq(intentionsTable.date, yesterday))
-      .limit(1)
-      .then((data) => {
-        setIsInStreak(data.length > 0);
-      })
-      .finally(() => {
-        setReady(true);
-      });
-  }, []);
-
-  if (!isReady || !message) {
-    return null;
-  }
+  }, [counters.intentions, streak.state]);
 
   return (
     <>
