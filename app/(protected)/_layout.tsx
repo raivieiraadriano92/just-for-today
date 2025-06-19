@@ -17,16 +17,6 @@ export default function ProtectedLayout() {
         contentStyle: { backgroundColor: theme.colors.card },
         headerShown: false,
       }}
-    >
-      <Stack.Screen name="intention/index" />
-      <Stack.Screen
-        name="intention/success"
-        options={{
-          presentation: "formSheet",
-          sheetAllowedDetents: "fitToContents",
-          sheetGrabberVisible: true,
-        }}
-      />
-    </Stack>
+    />
   );
 }

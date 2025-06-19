@@ -108,8 +108,19 @@
           "placeholder": "Just for Today, I will..."
         },
         "IntentionFormSuccessScreen": {
-          "title": "Guided by intention",
-          "description": "Your intention can light the way — let it guide you. Ready to check in with your feelings?"
+          "moodQuestion": "Let's check in with your mood now?",
+          "firstIntention": {
+            "title": "Your first intention is set!",
+            "description": "This is where it begins — one small, mindful choice to care for yourself."
+          },
+          "backInStreak": {
+            "title": "Welcome back",
+            "description": "No matter the gap, you're here again — and that means everything."
+          },
+          "inStreak": {
+            "title": "Another day with intention",
+            "description": "You’re staying connected, one day at a time — that’s something to feel proud of."
+          }
         }
       }
     }
