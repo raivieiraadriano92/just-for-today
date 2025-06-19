@@ -22,8 +22,10 @@ type ActivityStoreState = {
     moodLogs: number;
     gratitudeLogs: number;
     reflections: number;
+    wordsWritten: number;
   };
   streak: {
+    longestStreak: number;
     currentStreak: number;
     lastStreak: number;
     state: StreakState;
@@ -53,8 +55,10 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     moodLogs: 0,
     gratitudeLogs: 0,
     reflections: 0,
+    wordsWritten: 0,
   },
   streak: {
+    longestStreak: 0,
     currentStreak: 0,
     lastStreak: 0,
     state: "no_streak_yet",
@@ -65,17 +69,46 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     // Step 1: Fetch all intentions, mood logs, gratitude logs, and reflections
     const [intentions, moodLogs, gratitudeLogs, reflections] =
       await Promise.all([
-        drizzleDb.select({ date: intentionsTable.date }).from(intentionsTable),
         drizzleDb
-          .select({ datetime: moodLogsTable.datetime })
+          .select({
+            date: intentionsTable.date,
+            text: intentionsTable.intention,
+          })
+          .from(intentionsTable),
+        drizzleDb
+          .select({
+            datetime: moodLogsTable.datetime,
+            text: moodLogsTable.note,
+          })
           .from(moodLogsTable),
         drizzleDb
-          .select({ datetime: gratitudeLogsTable.datetime })
+          .select({
+            datetime: gratitudeLogsTable.datetime,
+            text: gratitudeLogsTable.content,
+          })
           .from(gratitudeLogsTable),
         drizzleDb
-          .select({ datetime: reflectionsTable.datetime })
+          .select({
+            datetime: reflectionsTable.datetime,
+            text: reflectionsTable.content,
+          })
           .from(reflectionsTable),
       ]);
+
+    const countWords = (text: string | null | undefined): number => {
+      if (!text || typeof text !== "string") {
+        return 0;
+      }
+
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    };
+
+    const wordsWritten = [
+      ...intentions,
+      ...moodLogs,
+      ...gratitudeLogs,
+      ...reflections,
+    ].reduce((acc, i) => acc + countWords(i.text), 0);
 
     set({
       counters: {
@@ -83,6 +116,7 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         moodLogs: moodLogs.length,
         gratitudeLogs: gratitudeLogs.length,
         reflections: reflections.length,
+        wordsWritten,
       },
     });
 
@@ -155,8 +189,33 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
       state = "streak_restarted";
     }
 
+    // Longest streak: find longest sequence of consecutive days
+    let longestStreak = 0;
+    let tempLongestStreak = 1;
+
+    for (let i = 1; i < uniqueDates.length; i++) {
+      const prev = parseISO(uniqueDates[i - 1]);
+      const curr = parseISO(uniqueDates[i]);
+
+      const diff = Math.round(
+        (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24),
+      );
+
+      if (diff === 1) {
+        tempLongestStreak++;
+        longestStreak = Math.max(longestStreak, tempLongestStreak);
+      } else {
+        tempLongestStreak = 1;
+      }
+    }
+
+    // If there's only one date, longestStreak is 1
+    if (uniqueDates.length === 1) {
+      longestStreak = 1;
+    }
+
     set({
-      streak: { currentStreak, lastStreak, state },
+      streak: { longestStreak, currentStreak, lastStreak, state },
     });
   },
 

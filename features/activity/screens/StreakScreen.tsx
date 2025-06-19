@@ -90,6 +90,18 @@ export default function StreakScreen() {
                   "features.activity.screens.StreakScreen.counters.reflections",
               },
             ],
+            [
+              {
+                count: counters.wordsWritten,
+                title:
+                  "features.activity.screens.StreakScreen.counters.wordsWritten",
+              },
+              {
+                count: streak.longestStreak,
+                title:
+                  "features.activity.screens.StreakScreen.counters.longestStreak",
+              },
+            ],
           ].map((row, rowIndex) => (
             <View className="flex-row gap-3" key={rowIndex}>
               {row.map((item) => (

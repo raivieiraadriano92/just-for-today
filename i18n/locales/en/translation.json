@@ -56,7 +56,10 @@
             "gratitudeLogs_one": "Reason to\nbe thankful",
             "gratitudeLogs_other": "Reasons to\nbe thankful",
             "reflections_one": "Moment of\nself-reflection",
-            "reflections_other": "Moments of\nself-reflection"
+            "reflections_other": "Moments of\nself-reflection",
+            "wordsWritten_one": "Word\nwritten",
+            "wordsWritten_other": "Words\nwritten",
+            "longestStreak": "Longest\nstreak"
           },
           "states": {
             "no_streak_yet": {
