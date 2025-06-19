@@ -21,14 +21,14 @@ export function IntentionGreetingCard() {
   if (todaysIntention) {
     return (
       <View className="bg-card flex-1 items-center justify-center gap-3 rounded-2xl p-6">
-        <View className="absolute left-6 top-6 opacity-10">
+        <View className="absolute left-6 top-6 opacity-10 dark:opacity-30">
           <IconSymbol
             color={theme.colors.text}
             name="quote.opening"
             size={80}
           />
         </View>
-        <View className="absolute bottom-6 right-6 opacity-10">
+        <View className="absolute bottom-6 right-6 opacity-10 dark:opacity-30">
           <IconSymbol
             color={theme.colors.text}
             name="quote.closing"

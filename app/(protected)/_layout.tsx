@@ -14,7 +14,11 @@ export default function ProtectedLayout() {
   return (
     <Stack
       screenOptions={{
-        contentStyle: { backgroundColor: theme.colors.card },
+        contentStyle: {
+          backgroundColor: theme.dark
+            ? theme.colors.background
+            : theme.colors.card,
+        },
         headerShown: false,
       }}
     />

@@ -15,19 +15,21 @@ export default function StreakScreen() {
   const { counters, streak } = useActivityStore();
 
   return (
-    <View className="pt-safe flex-1">
-      <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
-        <InteractivePressable
-          className="self-start"
-          onPress={router.back}
-          hitSlop={10}
-        >
-          <IconSymbol
-            color={theme.colors.primary}
-            name="chevron.left"
-            size={24}
-          />
-        </InteractivePressable>
+    <View className="flex-1">
+      <View className="pt-safe bg-card">
+        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
+          <InteractivePressable
+            className="self-start"
+            onPress={router.back}
+            hitSlop={10}
+          >
+            <IconSymbol
+              color={theme.colors.primary}
+              name="chevron.left"
+              size={24}
+            />
+          </InteractivePressable>
+        </View>
       </View>
       <ScrollView
         contentContainerClassName="gap-12 p-6 pb-safe-offset-6"
@@ -106,7 +108,7 @@ export default function StreakScreen() {
             <View className="flex-row gap-3" key={rowIndex}>
               {row.map((item) => (
                 <View
-                  className="border-border border-hairline flex-1 gap-1 rounded-2xl p-6"
+                  className="border-border border-hairline bg-card flex-1 gap-1 rounded-2xl p-6"
                   key={item.title}
                 >
                   <Text className="text-text text-3xl font-semibold">

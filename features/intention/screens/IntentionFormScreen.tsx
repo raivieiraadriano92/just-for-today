@@ -33,24 +33,21 @@ export default function IntentionFormScreen() {
       Emitter.emit("intention:changed", { type: "insert" });
     }
 
-    router.back();
-
-    // timeout to allow the back navigation to complete and avoid flicker
-    setTimeout(() => {
-      router.push("/intention/success");
-    }, 500);
+    router.replace("/intention/success");
   };
 
   return (
-    <View className="py-safe flex-1">
-      <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
-        <InteractivePressable onPress={router.back} hitSlop={10}>
-          <IconSymbol
-            color={theme.colors.primary}
-            name="chevron.left"
-            size={24}
-          />
-        </InteractivePressable>
+    <View className="flex-1">
+      <View className="pt-safe bg-card">
+        <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
+          <InteractivePressable onPress={router.back} hitSlop={10}>
+            <IconSymbol
+              color={theme.colors.primary}
+              name="chevron.left"
+              size={24}
+            />
+          </InteractivePressable>
+        </View>
       </View>
       <KeyboardAvoidingView behavior={"padding"} className="flex-1">
         <View className="flex-1 gap-6 p-6">
@@ -73,6 +70,8 @@ export default function IntentionFormScreen() {
               )}
             />
           </View>
+        </View>
+        <View className="border-border border-t-hairline bg-card p-6">
           <Button
             className="self-center"
             label={t("common.save")}
@@ -80,6 +79,7 @@ export default function IntentionFormScreen() {
           />
         </View>
       </KeyboardAvoidingView>
+      <View className="pb-safe bg-card" />
     </View>
   );
 }

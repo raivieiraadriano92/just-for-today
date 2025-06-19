@@ -1,10 +1,18 @@
 {
   "common": {
+    "next": "Next",
     "notNow": "Not now",
     "save": "Save",
     "today": "Today",
     "yes": "Yes",
     "yesterday": "Yesterday"
+  },
+  "app": {
+    "home": {
+      "addMoodLogButtonLabel": "Mood",
+      "addGratitudeButtonLabel": "Gratitude",
+      "addReflectionButtonLabel": "Reflection"
+    }
   },
   "features": {
     "activity": {

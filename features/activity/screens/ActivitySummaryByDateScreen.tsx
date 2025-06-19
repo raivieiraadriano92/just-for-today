@@ -143,22 +143,24 @@ export default function ActivitySummaryByDateScreen() {
         fallDuration={5000}
         isInfinite={false}
       />
-      <View className="pt-safe flex-1">
-        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
-          <InteractivePressable
-            className="self-start"
-            onPress={router.back}
-            hitSlop={10}
-          >
-            <IconSymbol
-              color={theme.colors.primary}
-              name="chevron.left"
-              size={24}
-            />
-          </InteractivePressable>
-          <Text className="text-text absolute text-lg font-semibold">
-            {title}
-          </Text>
+      <View className="flex-1">
+        <View className="pt-safe bg-card">
+          <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
+            <InteractivePressable
+              className="self-start"
+              onPress={router.back}
+              hitSlop={10}
+            >
+              <IconSymbol
+                color={theme.colors.primary}
+                name="chevron.left"
+                size={24}
+              />
+            </InteractivePressable>
+            <Text className="text-text absolute text-lg font-semibold">
+              {title}
+            </Text>
+          </View>
         </View>
         <ScrollView
           contentContainerClassName="gap-12 p-6 pb-safe-offset-6"
@@ -183,7 +185,7 @@ export default function ActivitySummaryByDateScreen() {
                 )}
                 <View className="flex-row items-center gap-6">
                   <View
-                    className={`bg-card h-14 w-14 items-center justify-center rounded-2xl border-2 ${task.isCompleted ? "border-green-500 dark:border-green-400" : "border-border"}`}
+                    className={`h-14 w-14 items-center justify-center rounded-2xl border-2 ${task.isCompleted ? "border-green-500 dark:border-green-400" : "border-border"}`}
                   >
                     <IconSymbol
                       color={
