@@ -46,6 +46,33 @@
               "title": "Self-reflection"
             }
           }
+        },
+        "StreakScreen": {
+          "states": {
+            "no_streak_yet": {
+              "emoji": "🌱",
+              "title": "Start with just one day",
+              "description": "Every journey begins gently. Set your first intention when the moment feels right."
+            },
+
+            "active_streak": {
+              "emoji": "✨",
+              "title": "{{currentStreak}} days of showing up",
+              "description": "You’re building something meaningful, one peaceful moment at a time."
+            },
+
+            "streak_broken": {
+              "emoji": "🌙",
+              "title": "You paused — and that’s okay",
+              "description": "Your {{lastStreak}}-day streak was a beautiful act of care. When you're ready, your journey continues."
+            },
+
+            "streak_restarted": {
+              "emoji": "☀️",
+              "title": "You're back — {{currentStreak}} day in",
+              "description": "Welcome back. You’ve already taken the first step — now keep going gently."
+            }
+          }
         }
       }
     },

@@ -5,12 +5,23 @@ import {
   moodLogsTable,
   reflectionsTable,
 } from "@/db/schema";
-import { addDays, isFuture, parseISO, startOfWeek } from "date-fns";
+import { addDays, isFuture, parseISO, startOfWeek, subDays } from "date-fns";
 import { format } from "date-fns/format";
 import { and, count, gte, lte } from "drizzle-orm";
 import { create } from "zustand";
 
+type StreakState =
+  | "no_streak_yet"
+  | "active_streak"
+  | "streak_broken"
+  | "streak_restarted";
+
 type ActivityStoreState = {
+  streak: {
+    currentStreak: number;
+    lastStreak: number;
+    state: StreakState;
+  };
   weeklyProgress: {
     date: string;
     day: string;
@@ -24,13 +35,109 @@ type ActivityStoreState = {
 };
 
 type ActivityStoreActions = {
+  loadStreak: () => Promise<void>;
   loadWeeklyProgress: () => Promise<void>;
 };
 
 export type ActivityStore = ActivityStoreState & ActivityStoreActions;
 
 export const useActivityStore = create<ActivityStore>()((set, get) => ({
+  streak: {
+    currentStreak: 0,
+    lastStreak: 0,
+    state: "no_streak_yet",
+  },
   weeklyProgress: [],
+
+  loadStreak: async () => {
+    // Step 1: Fetch all intentions, mood logs, gratitude logs, and reflections
+    const [intentions, moodLogs, gratitudeLogs, reflections] =
+      await Promise.all([
+        drizzleDb.select({ date: intentionsTable.date }).from(intentionsTable),
+        drizzleDb
+          .select({ datetime: moodLogsTable.datetime })
+          .from(moodLogsTable),
+        drizzleDb
+          .select({ datetime: gratitudeLogsTable.datetime })
+          .from(gratitudeLogsTable),
+        drizzleDb
+          .select({ datetime: reflectionsTable.datetime })
+          .from(reflectionsTable),
+      ]);
+
+    const extractDate = (dateStr: string) =>
+      format(parseISO(dateStr), "yyyy-MM-dd");
+
+    // Step 2: Extract unique date strings in "yyyy-MM-dd" format
+    const dates = [
+      ...intentions.map((i) => extractDate(i.date)),
+      ...moodLogs.map((m) => extractDate(m.datetime)),
+      ...gratitudeLogs.map((g) => extractDate(g.datetime)),
+      ...reflections.map((r) => extractDate(r.datetime)),
+    ];
+    const uniqueDates = [...new Set(dates)].sort();
+
+    let currentStreak = 0;
+    let previousStreak = 0;
+
+    // Step 3: Start checking streak from today
+    let day = new Date();
+    let dayStr = format(day, "yyyy-MM-dd");
+
+    // Step 4: If there's no entry for today, don't count it as part of streak
+    if (!uniqueDates.includes(dayStr)) {
+      day = subDays(day, 1);
+      dayStr = format(day, "yyyy-MM-dd");
+    }
+
+    // Step 5: Count how many consecutive days (including yesterday or today) had entries
+    while (uniqueDates.includes(dayStr)) {
+      currentStreak++;
+      day = subDays(day, 1);
+      dayStr = format(day, "yyyy-MM-dd");
+    }
+
+    // Step 6: Now calculate the most recent past streak (if current streak was restarted)
+    // This is useful to show “streak broken” or “streak restarted”
+    let tempStreak = 0;
+    let lastSeen: string | null = null;
+
+    // Skip the current streak dates when looking for a past one
+    for (let i = uniqueDates.length - 1 - currentStreak; i >= 0; i--) {
+      const current = uniqueDates[i];
+
+      if (lastSeen) {
+        // Check if current date is the day before lastSeen
+        const expected = subDays(parseISO(lastSeen), 1);
+        const expectedStr = format(expected, "yyyy-MM-dd");
+
+        if (current !== expectedStr) break; // streak broken
+      }
+
+      tempStreak++;
+      lastSeen = current;
+    }
+
+    if (tempStreak > 0) {
+      previousStreak = tempStreak;
+    }
+
+    const lastStreak = previousStreak || 0;
+
+    let state: StreakState = "no_streak_yet";
+
+    if (currentStreak > 1) {
+      state = "active_streak";
+    } else if (currentStreak === 0 && lastStreak) {
+      state = "streak_broken";
+    } else if (currentStreak === 1 && lastStreak) {
+      state = "streak_restarted";
+    }
+
+    set({
+      streak: { currentStreak, lastStreak, state },
+    });
+  },
 
   loadWeeklyProgress: async () => {
     const firstDayOfWeek = startOfWeek(new Date());

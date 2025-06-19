@@ -12,11 +12,12 @@ import { useActivityStore } from "../store/activityStore";
 export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
-  const { loadWeeklyProgress } = useActivityStore();
+  const { loadStreak, loadWeeklyProgress } = useActivityStore();
 
   const loadActivityData = useCallback(async () => {
     await loadWeeklyProgress();
-  }, [loadWeeklyProgress]);
+    await loadStreak();
+  }, [loadStreak, loadWeeklyProgress]);
 
   useEffect(() => {
     const loadActivityDataOnMount = async () => {
