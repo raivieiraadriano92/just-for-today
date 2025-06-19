@@ -131,6 +131,149 @@
           }
         }
       }
+    },
+    "moodLog": {
+      "moodTypes": {
+        "really_good": {
+          "title": "Really Good",
+          "description": "Feeling great and full of energy.",
+          "feelings": {
+            "joyful": "Joyful",
+            "happy": "Happy",
+            "love": "Love",
+            "playful": "Playful",
+            "connected": "Connected",
+            "proud": "Proud",
+            "brave": "Brave",
+            "confident": "Confident",
+            "free": "Free",
+            "energetic": "Energetic",
+            "creative": "Creative",
+            "excited": "Excited",
+            "elevated": "Elevated"
+          },
+          "messageTitle": "Joy is in the air",
+          "messageBody": "Something about today is lighting you up — let that warmth linger a little longer.",
+          "messageMostFrequentMood": "You’ve been feeling really good lately — that’s something to celebrate."
+        },
+        "good": {
+          "title": "Good",
+          "description": "Calm, content, and steady.",
+          "feelings": {
+            "calm": "Calm",
+            "peaceful": "Peaceful",
+            "safe": "Safe",
+            "comfortable": "Comfortable",
+            "balanced": "Balanced",
+            "content": "Content",
+            "appreciated": "Appreciated",
+            "warm": "Warm",
+            "respected": "Respected",
+            "open": "Open",
+            "grateful": "Grateful",
+            "curious": "Curious",
+            "inspired": "Inspired",
+            "recharged": "Recharged",
+            "motivated": "Motivated",
+            "optimistic": "Optimistic",
+            "satisfied": "Satisfied",
+            "relieved": "Relieved"
+          },
+          "messageTitle": "A good rhythm",
+          "messageBody": "There’s a sense of ease in today. Let yourself move gently with it.",
+          "messageMostFrequentMood": "Many of your days have felt good — that steady ease matters."
+        },
+        "okay": {
+          "title": "Okay",
+          "description": "Neutral. Just getting through.",
+          "feelings": {
+            "meh": "Meh",
+            "flat": "Flat",
+            "blank": "Blank",
+            "dull": "Dull",
+            "bored": "Bored",
+            "unsure": "Unsure",
+            "confused": "Confused",
+            "awkward": "Awkward",
+            "tired": "Tired",
+            "distracted": "Distracted",
+            "impatient": "Impatient",
+            "neutral": "Neutral"
+          },
+          "messageTitle": "A quiet middle",
+          "messageBody": "Not every day needs a peak. Showing up for the ordinary is powerful too.",
+          "messageMostFrequentMood": "You've been feeling okay most often — sometimes, calm neutrality is just right."
+        },
+        "bad": {
+          "title": "Bad",
+          "description": "Feeling low or off today.",
+          "feelings": {
+            "unmotivated": "Unmotivated",
+            "exhausted": "Exhausted",
+            "discouraged": "Discouraged",
+            "unfulfilled": "Unfulfilled",
+            "restless": "Restless",
+            "tired": "Tired",
+            "lonely": "Lonely",
+            "isolated": "Isolated",
+            "misunderstood": "Misunderstood",
+            "hurt": "Hurt",
+            "jealous": "Jealous",
+            "insecure": "Insecure",
+            "guilty": "Guilty",
+            "worried": "Worried",
+            "nervous": "Nervous",
+            "overwhelmed": "Overwhelmed",
+            "pessimistic": "Pessimistic",
+            "sad": "Sad",
+            "annoyed": "Annoyed",
+            "disappointed": "Disappointed",
+            "tense": "Tense",
+            "irritable": "Irritable",
+            "stuck": "Stuck"
+          },
+          "messageTitle": "Waves come and go",
+          "messageBody": "This moment feels heavier — be soft with yourself and take it slow.",
+          "messageMostFrequentMood": "You've had some tough days lately — it’s brave to notice and log them."
+        },
+        "really_bad": {
+          "title": "Really Bad",
+          "description": "Overwhelmed or really struggling.",
+          "feelings": {
+            "grieved": "Grieved",
+            "hopeless": "Hopeless",
+            "worthless": "Worthless",
+            "ashamed": "Ashamed",
+            "abandoned": "Abandoned",
+            "angry": "Angry",
+            "frustrated": "Frustrated",
+            "panicked": "Panicked",
+            "fearful": "Fearful",
+            "anxious": "Anxious",
+            "rejected": "Rejected",
+            "disrespected": "Disrespected",
+            "embarrassed": "Embarrassed",
+            "numb": "Numb",
+            "disgusted": "Disgusted"
+          },
+          "messageTitle": "A heavy sky",
+          "messageBody": "Today feels tough. Even noticing that is an act of care — maybe try writing one small thing you’re grateful for.",
+          "messageMostFrequentMood": "You’ve been through some very hard moments — being honest about them is powerful."
+        }
+      },
+      "screens": {
+        "MoodLogFormScreen": {
+          "MoodLogFormScreenMoodPicker": {
+            "title": "How are you feeling right now?",
+            "description": "Take a moment to notice what’s present — no rush, no judgment."
+          },
+          "MoodLogFormScreenNote": {
+            "title": "Want to explore this feeling a bit more?",
+            "description": "There’s no right or wrong — just your thoughts, written with care.",
+            "inputPlaceholder": "What’s on your mind?"
+          }
+        }
+      }
     }
   }
 }
