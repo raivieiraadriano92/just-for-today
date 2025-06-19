@@ -17,6 +17,12 @@ type StreakState =
   | "streak_restarted";
 
 type ActivityStoreState = {
+  counters: {
+    intentions: number;
+    moodLogs: number;
+    gratitudeLogs: number;
+    reflections: number;
+  };
   streak: {
     currentStreak: number;
     lastStreak: number;
@@ -42,6 +48,12 @@ type ActivityStoreActions = {
 export type ActivityStore = ActivityStoreState & ActivityStoreActions;
 
 export const useActivityStore = create<ActivityStore>()((set, get) => ({
+  counters: {
+    intentions: 0,
+    moodLogs: 0,
+    gratitudeLogs: 0,
+    reflections: 0,
+  },
   streak: {
     currentStreak: 0,
     lastStreak: 0,
@@ -64,6 +76,15 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
           .select({ datetime: reflectionsTable.datetime })
           .from(reflectionsTable),
       ]);
+
+    set({
+      counters: {
+        intentions: intentions.length,
+        moodLogs: moodLogs.length,
+        gratitudeLogs: gratitudeLogs.length,
+        reflections: reflections.length,
+      },
+    });
 
     const extractDate = (dateStr: string) =>
       format(parseISO(dateStr), "yyyy-MM-dd");

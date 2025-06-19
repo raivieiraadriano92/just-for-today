@@ -12,7 +12,7 @@ export default function StreakScreen() {
 
   const theme = useTheme();
 
-  const { streak } = useActivityStore();
+  const { counters, streak } = useActivityStore();
 
   return (
     <View className="pt-safe flex-1">
@@ -67,12 +67,28 @@ export default function StreakScreen() {
         <View className="gap-3">
           {[
             [
-              { count: 4, title: "Days with\nintention" },
-              { count: 4, title: "Emotional\ncheck-ins" },
+              {
+                count: counters.intentions,
+                title:
+                  "features.activity.screens.StreakScreen.counters.intentions",
+              },
+              {
+                count: counters.moodLogs,
+                title:
+                  "features.activity.screens.StreakScreen.counters.moodLogs",
+              },
             ],
             [
-              { count: 4, title: "Reasons to\nbe thankful" },
-              { count: 4, title: "Moments of\nself-reflection" },
+              {
+                count: counters.gratitudeLogs,
+                title:
+                  "features.activity.screens.StreakScreen.counters.gratitudeLogs",
+              },
+              {
+                count: counters.reflections,
+                title:
+                  "features.activity.screens.StreakScreen.counters.reflections",
+              },
             ],
           ].map((row, rowIndex) => (
             <View className="flex-row gap-3" key={rowIndex}>
@@ -85,7 +101,7 @@ export default function StreakScreen() {
                     {item.count}
                   </Text>
                   <Text className="text-text/50 text-md font-medium">
-                    {item.title}
+                    {t(item.title, { count: item.count })}
                   </Text>
                 </View>
               ))}
