@@ -181,7 +181,7 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
 
     let state: StreakState = "no_streak_yet";
 
-    if (currentStreak > 1) {
+    if (currentStreak > 1 || (currentStreak === 1 && !lastStreak)) {
       state = "active_streak";
     } else if (currentStreak === 0 && lastStreak) {
       state = "streak_broken";

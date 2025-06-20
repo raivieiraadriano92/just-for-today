@@ -323,6 +323,37 @@
           }
         }
       }
+    },
+    "reflection": {
+      "screens": {
+        "ReflectionFormScreen": {
+          "ReflectionFormScreenContent": {
+            "title": "Take a moment to reflect",
+            "description": "Whether you're closing the day or simply pausing, this is your space to connect with what’s within.",
+            "inputPlaceholder": "Write what’s on your mind..."
+          },
+          "ReflectionFormScreenImagePicker": {
+            "title": "Include a picture?",
+            "description": "Sometimes a picture captures the moment better than words ever could."
+          }
+        },
+        "ReflectionFormSuccessScreen": {
+          "moodQuestion": "Let's check in with your mood?",
+
+          "firstReflection": {
+            "title": "Your first reflection",
+            "description": "You took a moment to look inward — that’s a powerful beginning."
+          },
+          "backInStreak": {
+            "title": "Welcome back",
+            "description": "No matter the gap, you're here again — and that means everything."
+          },
+          "inStreak": {
+            "title": "Another day, reflected",
+            "description": "You’re building insight, one quiet thought at a time."
+          }
+        }
+      }
     }
   }
 }
