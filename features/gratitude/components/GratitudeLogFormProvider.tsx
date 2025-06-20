@@ -67,6 +67,10 @@ export const GratitudeLogFormProvider: FunctionComponent<
   };
 
   const saveImages = async (images: string[]) => {
+    if (!images[0]) {
+      return [];
+    }
+
     const directoryBase = `${FileSystem.documentDirectory}gratitude`;
 
     const asset = images[0];

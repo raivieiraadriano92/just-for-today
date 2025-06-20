@@ -1,5 +1,6 @@
 {
   "common": {
+    "goHome": "Go home",
     "next": "Next",
     "notNow": "Not now",
     "save": "Save",
@@ -304,6 +305,21 @@
           "GratitudeLogFormScreenImagePicker": {
             "title": "Include a picture?",
             "description": "Sometimes a picture captures the moment better than words ever could."
+          }
+        },
+        "GratitudeLogFormSuccessScreen": {
+          "buttonLabel": "That felt nice",
+          "firstGratitudeLog": {
+            "title": "Your first gratitude",
+            "description": "That’s a beautiful beginning — one small pause to notice something good."
+          },
+          "backInStreak": {
+            "title": "Welcome back",
+            "description": "No matter the gap, you're here again — and that means everything."
+          },
+          "inStreak": {
+            "title": "Another moment to appreciate",
+            "description": "You're building something beautiful — one small reflection at a time."
           }
         }
       }
