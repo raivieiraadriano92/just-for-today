@@ -2,7 +2,6 @@ import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useTheme } from "@react-navigation/native";
-import { useLocalSearchParams } from "expo-router";
 import { createRef, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, Text, TextInput, View } from "react-native";
@@ -128,6 +127,11 @@ function MoodLogFormScreenFeelingsPicker() {
         </Text>
         <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
           {t(`features.moodLog.moodTypes.${payload.mood}.messageBody`)}
+        </Text>
+        <Text className="text-text mt-3 text-xl font-semibold">
+          {t(
+            "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenFeelingsPicker.title",
+          )}
         </Text>
       </View>
       <View className="flex-row flex-wrap items-center gap-4">
@@ -296,12 +300,6 @@ function MoodLogFormScreenHeaderControls() {
 }
 
 export function MoodLogFormScreen() {
-  const { t } = useTranslation();
-
-  const { id } = useLocalSearchParams<{ id: string }>();
-
-  const theme = useTheme();
-
   return (
     <MoodLogFormProvider stepsLength={steps.length}>
       <View className="flex-1">

@@ -55,8 +55,8 @@ export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
   useEffect(() => {
     const events: EventKey[] = [
       "intention:changed",
-      "mood:changed",
-      "gratitude:changed",
+      "moodLog:changed",
+      "gratitudeLog:changed",
       "reflection:changed",
     ];
 

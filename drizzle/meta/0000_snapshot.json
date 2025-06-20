@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "b5c458e4-5969-49fc-9251-7b545b0c4bd2",
+  "id": "fb8113ef-5a86-453d-aae1-dcec45b80f5b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "gratitude_logs": {

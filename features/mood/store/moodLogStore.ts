@@ -1,5 +1,6 @@
 import { drizzleDb } from "@/db/client";
 import { moodLogsTable } from "@/db/schema";
+import { Emitter } from "@/utils/emitter";
 import { eq } from "drizzle-orm";
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
@@ -89,6 +90,8 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
       .insert(moodLogsTable)
       .values({ ...newRow, feelings: newRow.feelings.join(",") });
 
+    Emitter.emit("moodLog:changed", { type: "insert" });
+
     // set((state) => ({
     //   data: [newRow, ...state.data],
     // }));
@@ -101,6 +104,8 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
       .set({ ...updatedPayload, feelings: updatedPayload.feelings.join(",") })
       .where(eq(moodLogsTable.id, id));
 
+    Emitter.emit("moodLog:changed", { type: "update" });
+
     // set((state) => ({
     //   data: state.data.map((row) =>
     //     row.id === id ? { ...row, ...updatedPayload } : row,
@@ -109,6 +114,8 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
   },
   deleteById: async (id) => {
     await drizzleDb.delete(moodLogsTable).where(eq(moodLogsTable.id, id));
+
+    Emitter.emit("moodLog:changed", { type: "delete" });
 
     // set((state) => ({
     //   data: state.data.filter((row) => row.id !== id),

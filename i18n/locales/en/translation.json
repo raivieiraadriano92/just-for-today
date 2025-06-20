@@ -267,6 +267,9 @@
             "title": "How are you feeling right now?",
             "description": "Take a moment to notice what’s present — no rush, no judgment."
           },
+          "MoodLogFormScreenFeelingsPicker": {
+            "title": "Want to go a bit deeper?"
+          },
           "MoodLogFormScreenNote": {
             "title": "Want to explore this feeling a bit more?",
             "description": "There’s no right or wrong — just your thoughts, written with care.",
@@ -286,6 +289,21 @@
           "inStreak": {
             "title": "Check-in complete",
             "description": "You’re staying connected to your feelings — that’s something to celebrate."
+          }
+        }
+      }
+    },
+    "gratitudeLog": {
+      "screens": {
+        "GratitudeLogFormScreen": {
+          "GratitudeLogFormScreenContent": {
+            "title": "What are you grateful for today?",
+            "description": "Even a small moment — a smile, a breeze, a kind word — can brighten the whole day.",
+            "inputPlaceholder": "I'm grateful for..."
+          },
+          "GratitudeLogFormScreenImagePicker": {
+            "title": "Include a picture?",
+            "description": "Sometimes a picture captures the moment better than words ever could."
           }
         }
       }

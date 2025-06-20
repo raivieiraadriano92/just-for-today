@@ -4,8 +4,8 @@ type ChangeType = "insert" | "update" | "delete";
 
 type AppEvents = {
   "intention:changed": { type: ChangeType };
-  "mood:changed": { type: ChangeType };
-  "gratitude:changed": { type: ChangeType };
+  "moodLog:changed": { type: ChangeType };
+  "gratitudeLog:changed": { type: ChangeType };
   "reflection:changed": { type: ChangeType };
 };
 

@@ -1,5 +1,6 @@
 import { drizzleDb } from "@/db/client";
 import { intentionsTable } from "@/db/schema";
+import { Emitter } from "@/utils/emitter";
 import { format } from "date-fns/format";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
@@ -64,6 +65,8 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
 
       await drizzleDb.insert(intentionsTable).values(newRow);
 
+      Emitter.emit("intention:changed", { type: "insert" });
+
       set(() => ({
         todaysIntention: newRow,
       }));
@@ -85,6 +88,8 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
         .update(intentionsTable)
         .set(updatedPayload)
         .where(eq(intentionsTable.date, todaysIntention.date));
+
+      Emitter.emit("intention:changed", { type: "update" });
 
       set(() => ({
         todaysIntention: {

@@ -1,7 +1,6 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { Emitter } from "@/utils/emitter";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useRef } from "react";
@@ -27,10 +26,8 @@ export default function IntentionFormScreen() {
 
     if (todaysIntention) {
       await updateTodaysIntention({ intention: refIntentionValue.current });
-      Emitter.emit("intention:changed", { type: "update" });
     } else {
       await insertTodaysIntention({ intention: refIntentionValue.current });
-      Emitter.emit("intention:changed", { type: "insert" });
     }
 
     router.replace("/intention/success");
