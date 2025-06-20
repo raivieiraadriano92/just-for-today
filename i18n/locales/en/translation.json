@@ -25,7 +25,7 @@
             },
             "partialCompleted": {
               "title": "You showed up",
-              "description": "You took a moment for yourself — that’s something to feel good about. Little by little, it adds up."
+              "description": "You took a moment for yourself — that’s something to feel good about."
             },
             "notCompletedToday": {
               "title": "Today’s not over yet…",
@@ -112,13 +112,13 @@
       "screens": {
         "IntentionFormScreen": {
           "title": "Set your intention for today",
-          "description": "You have the power to shape your day.\nSet an intention that supports who you want to be.",
+          "description": "You have the power to shape your day. Set an intention that supports who you want to be.",
           "placeholder": "Just for Today, I will..."
         },
         "IntentionFormSuccessScreen": {
-          "moodQuestion": "Let's check in with your mood now?",
+          "moodQuestion": "Let's check in with your mood?",
           "firstIntention": {
-            "title": "Your first intention is set!",
+            "title": "Your first intention is set",
             "description": "This is where it begins — one small, mindful choice to care for yourself."
           },
           "backInStreak": {
@@ -271,6 +271,21 @@
             "title": "Want to explore this feeling a bit more?",
             "description": "There’s no right or wrong — just your thoughts, written with care.",
             "inputPlaceholder": "What’s on your mind?"
+          }
+        },
+        "MoodLogFormSuccessScreen": {
+          "gratitudeQuestion": "Did you know a few moments of gratitude can lift your mood?\n\nLet's try it?",
+          "firstMoodLog": {
+            "title": "First check-in done",
+            "description": "Noticing how you feel is a powerful first step toward self-awareness."
+          },
+          "backInStreak": {
+            "title": "Welcome back",
+            "description": "No matter the gap, you're here again — and that means everything."
+          },
+          "inStreak": {
+            "title": "Check-in complete",
+            "description": "You’re staying connected to your feelings — that’s something to celebrate."
           }
         }
       }

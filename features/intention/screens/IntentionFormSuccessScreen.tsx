@@ -61,7 +61,7 @@ export default function IntentionFormSuccessScreen() {
             <Text className="text-text text-center text-3xl font-semibold">
               {t(message.title)}
             </Text>
-            <Text className="text-text/50 text-center text-base font-normal">
+            <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
               {t(message.description)}
             </Text>
           </View>

@@ -50,12 +50,12 @@ export default function IntentionFormScreen() {
         </View>
       </View>
       <KeyboardAvoidingView behavior={"padding"} className="flex-1">
-        <View className="flex-1 gap-6 p-6">
-          <View className="gap-1">
+        <View className="flex-1 gap-12 p-6 pt-12">
+          <View className="gap-3">
             <Text className="text-text text-3xl font-semibold">
               {t("features.intention.screens.IntentionFormScreen.title")}
             </Text>
-            <Text className="text-text/50 text-base font-normal">
+            <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
               {t("features.intention.screens.IntentionFormScreen.description")}
             </Text>
           </View>

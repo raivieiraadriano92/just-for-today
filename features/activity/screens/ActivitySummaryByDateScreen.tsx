@@ -163,15 +163,15 @@ export default function ActivitySummaryByDateScreen() {
           </View>
         </View>
         <ScrollView
-          contentContainerClassName="gap-12 p-6 pb-safe-offset-6"
+          contentContainerClassName="gap-12 p-6 pb-safe-offset-6 pt-12"
           showsVerticalScrollIndicator={false}
         >
-          <View className="items-center justify-center">
+          <View className="max-w-sm items-center justify-center gap-3 self-center">
             <Text style={{ fontSize: 48 }}>{feedbackMessage.emoji}</Text>
             <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
               {t(feedbackMessage.title)}
             </Text>
-            <Text className="text-text/50 text-center text-base font-normal">
+            <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
               {t(feedbackMessage.description)}
             </Text>
           </View>

@@ -53,17 +53,17 @@ export default function HomeScreen() {
         {[
           {
             label: "app.home.addMoodLogButtonLabel",
-            icon: "face.smiling.fill",
+            icon: "😊",
             href: "/mood/new",
           },
           {
             label: "app.home.addGratitudeButtonLabel",
-            icon: "sparkles",
+            icon: "🙏",
             href: "/gratitude/new",
           },
           {
             label: "app.home.addReflectionButtonLabel",
-            icon: "book.fill",
+            icon: "📝",
             href: "/reflection/new",
           },
         ].map((item) => (
@@ -73,13 +73,7 @@ export default function HomeScreen() {
             onPress={() => router.push(item.href)}
           >
             <View className="flex-row items-center justify-center gap-2">
-              <View className="opacity-10 dark:opacity-30">
-                <IconSymbol
-                  color={theme.colors.text}
-                  name={item.icon}
-                  size={24}
-                />
-              </View>
+              <Text style={{ fontSize: 16 }}>{t(item.icon)}</Text>
               <Text className="text-text text-lg font-medium">
                 {t(item.label)}
               </Text>

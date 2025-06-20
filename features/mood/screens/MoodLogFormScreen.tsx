@@ -30,13 +30,13 @@ function MoodLogFormScreenMoodPicker() {
       contentContainerClassName="gap-12 p-6 pt-12"
       showsVerticalScrollIndicator={false}
     >
-      <View className="gap-1">
+      <View className="gap-3">
         <Text className="text-text text-3xl font-semibold">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenMoodPicker.title",
           )}
         </Text>
-        <Text className="text-text/50 text-base font-normal">
+        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenMoodPicker.description",
           )}
@@ -122,11 +122,11 @@ function MoodLogFormScreenFeelingsPicker() {
       contentContainerClassName="gap-12 p-6 pt-12"
       showsVerticalScrollIndicator={false}
     >
-      <View className="gap-1">
+      <View className="gap-3">
         <Text className="text-text text-3xl font-semibold">
           {t(`features.moodLog.moodTypes.${payload.mood}.messageTitle`)}
         </Text>
-        <Text className="text-text/50 text-base font-normal">
+        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
           {t(`features.moodLog.moodTypes.${payload.mood}.messageBody`)}
         </Text>
       </View>
@@ -185,13 +185,13 @@ function MoodLogFormScreenNote() {
       ref={refScrollView}
       showsVerticalScrollIndicator={false}
     >
-      <View className="gap-1">
+      <View className="gap-3">
         <Text className="text-text text-3xl font-semibold">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenNote.title",
           )}
         </Text>
-        <Text className="text-text/50 text-base font-normal">
+        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenNote.description",
           )}
