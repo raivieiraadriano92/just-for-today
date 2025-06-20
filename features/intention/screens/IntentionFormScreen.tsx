@@ -1,6 +1,7 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useActivityStore } from "@/features/activity/store/activityStore";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useRef } from "react";
@@ -19,6 +20,8 @@ export default function IntentionFormScreen() {
 
   const refIntentionValue = useRef(todaysIntention?.intention ?? "");
 
+  const { counters } = useActivityStore();
+
   const handleSave = async () => {
     if (!refIntentionValue.current) {
       return;
@@ -30,7 +33,7 @@ export default function IntentionFormScreen() {
       await insertTodaysIntention({ intention: refIntentionValue.current });
     }
 
-    router.replace("/intention/success");
+    router.replace(`/intention/success?isFirst=${!counters.intentions}`);
   };
 
   return (

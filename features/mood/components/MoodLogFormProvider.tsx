@@ -1,5 +1,6 @@
 import { drizzleDb } from "@/db/client";
 import { moodLogsTable } from "@/db/schema";
+import { useActivityStore } from "@/features/activity/store/activityStore";
 import { eq } from "drizzle-orm";
 import { router, useLocalSearchParams } from "expo-router";
 import React, {
@@ -55,6 +56,8 @@ export const MoodLogFormProvider: FunctionComponent<
 
   const { insert, updateById } = useMoodLogStore();
 
+  const { counters } = useActivityStore();
+
   const handleBack = async () => {
     setStep((prev) => {
       if (prev === 0) {
@@ -81,7 +84,7 @@ export const MoodLogFormProvider: FunctionComponent<
         }
 
         // After saving, redirect to success page
-        router.replace("/mood/success");
+        router.replace(`/mood/success?isFirst=${!counters.moodLogs}`);
         return prev;
       }
 

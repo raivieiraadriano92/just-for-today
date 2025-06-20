@@ -1,5 +1,6 @@
 import { drizzleDb } from "@/db/client";
 import { gratitudeLogsTable } from "@/db/schema";
+import { useActivityStore } from "@/features/activity/store/activityStore";
 import { eq } from "drizzle-orm";
 import * as FileSystem from "expo-file-system";
 import { router, useLocalSearchParams } from "expo-router";
@@ -56,6 +57,8 @@ export const GratitudeLogFormProvider: FunctionComponent<
 
   const { insert, updateById } = useGratitudeLogStore();
 
+  const { counters } = useActivityStore();
+
   const handleBack = async () => {
     setStep((prev) => {
       if (prev === 0) {
@@ -100,7 +103,7 @@ export const GratitudeLogFormProvider: FunctionComponent<
     }
 
     // After saving, redirect to success page
-    router.replace("/gratitude/success");
+    router.replace(`/gratitude/success?isFirst=${!counters.gratitudeLogs}`);
   };
 
   const handleNext = async () => {

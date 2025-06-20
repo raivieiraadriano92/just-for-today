@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { useActivityStore } from "@/features/activity/store/activityStore";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
@@ -11,8 +11,10 @@ export function ReflectionFormSuccessScreen() {
 
   const { counters, streak } = useActivityStore();
 
+  const { isFirst } = useLocalSearchParams<{ isFirst: string }>();
+
   const message = useMemo(() => {
-    if (counters.reflections === 1) {
+    if (isFirst === "true") {
       return {
         showConfetti: true,
         emoji: "🎉",
