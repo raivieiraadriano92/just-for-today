@@ -2,11 +2,13 @@ import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useTheme } from "@react-navigation/native";
-import { router, useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { createRef, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { Dimensions, ScrollView, Text, TextInput, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
+import PagerView from "react-native-pager-view";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import twColors from "tailwindcss/colors";
 import {
   MoodLogFormProvider,
@@ -14,15 +16,20 @@ import {
 } from "../components/MoodLogFormProvider";
 import { moodTypes, moodTypesList } from "../moodTypes";
 
+const { width: WINDOW_WIDTH } = Dimensions.get("window");
+
 function MoodLogFormScreenMoodPicker() {
   const { t } = useTranslation();
 
   const theme = useTheme();
 
-  const { moodType: selectedMoodType, setMoodType } = useMoodLogFormContext();
+  const { payload, setMoodType } = useMoodLogFormContext();
 
   return (
-    <View className="flex-1 gap-6 p-6">
+    <ScrollView
+      contentContainerClassName="gap-12 p-6 pt-12"
+      showsVerticalScrollIndicator={false}
+    >
       <View className="gap-1">
         <Text className="text-text text-3xl font-semibold">
           {t(
@@ -35,113 +42,125 @@ function MoodLogFormScreenMoodPicker() {
           )}
         </Text>
       </View>
-      <View className="flex-1 justify-center gap-4">
-        {moodTypesList.map((moodType) => (
-          <InteractivePressable
-            key={moodType}
-            onPress={() => setMoodType(moodType)}
-          >
-            <View className="flex-row items-center gap-6">
-              <View
-                className={`bg-card h-14 w-14 items-center justify-center rounded-2xl border-2`}
-                style={{
-                  borderColor:
-                    twColors[moodTypes[moodType].color.token][
-                      moodTypes[moodType].color[theme.dark ? "dark" : "light"]
-                    ],
-                }}
-              >
-                <Text style={{ fontSize: 24 }}>{moodTypes[moodType].icon}</Text>
-              </View>
-              <View className="flex-1">
-                <View className="flex-row items-center justify-between">
-                  <Text
-                    className="text-text text-xl font-semibold"
-                    style={{
-                      color:
+      <View className="flex-1 gap-4">
+        {moodTypesList.map((moodType) => {
+          const isSelected = payload.mood === moodType;
+
+          return (
+            <InteractivePressable
+              key={moodType}
+              onPress={() => setMoodType(moodType)}
+            >
+              <View className="flex-row items-center gap-6">
+                <View
+                  className={`bg-card h-14 w-14 items-center justify-center rounded-2xl border-2`}
+                  style={{
+                    borderColor:
+                      twColors[moodTypes[moodType].color.token][
+                        moodTypes[moodType].color[theme.dark ? "dark" : "light"]
+                      ],
+                    backgroundColor: isSelected
+                      ? twColors[moodTypes[moodType].color.token][
+                          moodTypes[moodType].color[
+                            theme.dark ? "dark" : "light"
+                          ]
+                        ]
+                      : "transparent",
+                  }}
+                >
+                  <Text style={{ fontSize: 24 }}>
+                    {moodTypes[moodType].icon}
+                  </Text>
+                </View>
+                <View className="flex-1">
+                  <View className="flex-row items-center justify-between">
+                    <Text
+                      className="text-text text-xl font-semibold"
+                      style={{
+                        color:
+                          twColors[moodTypes[moodType].color.token][
+                            moodTypes[moodType].color[
+                              theme.dark ? "dark" : "light"
+                            ]
+                          ],
+                      }}
+                    >
+                      {t(`features.moodLog.moodTypes.${moodType}.title`)}
+                    </Text>
+                    <IconSymbol
+                      color={
                         twColors[moodTypes[moodType].color.token][
                           moodTypes[moodType].color[
                             theme.dark ? "dark" : "light"
                           ]
-                        ],
-                    }}
-                  >
-                    {t(`features.moodLog.moodTypes.${moodType}.title`)}
+                        ]
+                      }
+                      name={isSelected ? "checkmark.circle.fill" : "circle"}
+                      size={24}
+                    />
+                  </View>
+                  <Text className="text-text/50 text-base font-normal">
+                    {t(`features.moodLog.moodTypes.${moodType}.description`)}
                   </Text>
-                  <IconSymbol
-                    color={
-                      twColors[moodTypes[moodType].color.token][
-                        moodTypes[moodType].color[theme.dark ? "dark" : "light"]
-                      ]
-                    }
-                    name={
-                      moodType === selectedMoodType
-                        ? "checkmark.circle.fill"
-                        : "circle"
-                    }
-                    size={24}
-                  />
                 </View>
-                <Text className="text-text/50 text-base font-normal">
-                  {t(`features.moodLog.moodTypes.${moodType}.description`)}
-                </Text>
               </View>
-            </View>
-          </InteractivePressable>
-        ))}
+            </InteractivePressable>
+          );
+        })}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 function MoodLogFormScreenFeelingsPicker() {
   const { t } = useTranslation();
 
-  const { feelings, moodType, toggleFeeling } = useMoodLogFormContext();
-
-  if (!moodType) {
-    return null;
-  }
+  const { payload, toggleFeeling } = useMoodLogFormContext();
 
   return (
-    <View className="flex-1 gap-6 p-6">
+    <ScrollView
+      contentContainerClassName="gap-12 p-6 pt-12"
+      showsVerticalScrollIndicator={false}
+    >
       <View className="gap-1">
         <Text className="text-text text-3xl font-semibold">
-          {t(`features.moodLog.moodTypes.${moodType}.messageTitle`)}
+          {t(`features.moodLog.moodTypes.${payload.mood}.messageTitle`)}
         </Text>
         <Text className="text-text/50 text-base font-normal">
-          {t(`features.moodLog.moodTypes.${moodType}.messageBody`)}
+          {t(`features.moodLog.moodTypes.${payload.mood}.messageBody`)}
         </Text>
       </View>
-      <View className="flex-1 flex-row flex-wrap items-center gap-4">
-        {moodTypes[moodType].feelings.map((feeling) => {
-          const isSelected = feelings.includes(feeling);
+      <View className="flex-row flex-wrap items-center gap-4">
+        {(payload.mood ? moodTypes[payload.mood].feelings : []).map(
+          (feeling) => {
+            const isSelected = payload.feelings.includes(feeling);
 
-          return (
-            <InteractivePressable
-              key={feeling}
-              className={`h-10 flex-row items-center justify-between gap-4 rounded-2xl px-4 ${isSelected ? "bg-primary" : "bg-background dark:bg-card"}`}
-              onPress={() => toggleFeeling(feeling)}
-            >
-              <Text
-                className={`text-base font-normal ${isSelected ? "text-white" : "text-text"}`}
+            return (
+              <InteractivePressable
+                key={feeling}
+                className={`h-10 flex-row items-center justify-between gap-4 rounded-2xl px-4 ${isSelected ? "bg-primary" : "bg-background dark:bg-card"}`}
+                onPress={() => toggleFeeling(feeling)}
               >
-                {t(
-                  `features.moodLog.moodTypes.${moodType}.feelings.${feeling}`,
-                )}
-              </Text>
-            </InteractivePressable>
-          );
-        })}
+                <Text
+                  className={`text-base font-normal ${isSelected ? "text-white" : "text-text"}`}
+                >
+                  {t(
+                    `features.moodLog.moodTypes.${payload.mood}.feelings.${feeling}`,
+                  )}
+                </Text>
+              </InteractivePressable>
+            );
+          },
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 function MoodLogFormScreenNote() {
   const { t } = useTranslation();
 
-  const { note, setNote } = useMoodLogFormContext();
+  const { payload, setNote } = useMoodLogFormContext();
 
   const refDebounce = useRef<number>(null);
 
@@ -159,7 +178,7 @@ function MoodLogFormScreenNote() {
 
   return (
     <ScrollView
-      contentContainerClassName="gap-6 p-6"
+      contentContainerClassName="gap-12 p-6 pt-12"
       onContentSizeChange={() =>
         refScrollView.current?.scrollToEnd({ animated: true })
       }
@@ -180,9 +199,8 @@ function MoodLogFormScreenNote() {
       </View>
       <View className="flex-1">
         <TextInput
-          autoFocus
           className="text-text text-lg font-normal"
-          defaultValue={note}
+          defaultValue={payload.note}
           multiline
           onChangeText={handleOnChangeText}
           onFocus={() =>
@@ -199,6 +217,84 @@ function MoodLogFormScreenNote() {
   );
 }
 
+const steps = [
+  MoodLogFormScreenMoodPicker,
+  MoodLogFormScreenFeelingsPicker,
+  MoodLogFormScreenNote,
+];
+
+const pagerViewRef = createRef<PagerView>();
+
+function MoodLogFormScreenStepComponent() {
+  const { payload, setStep, step } = useMoodLogFormContext();
+
+  useEffect(() => {
+    if (pagerViewRef.current) {
+      pagerViewRef.current.setPage(step);
+    }
+  }, [step]);
+
+  return (
+    <PagerView
+      initialPage={0}
+      onPageSelected={(e) => setStep(e.nativeEvent.position)}
+      orientation="horizontal"
+      ref={pagerViewRef}
+      scrollEnabled={!!payload.mood}
+      style={{ flex: 1 }}
+    >
+      {steps.map((Step, index) => (
+        <View key={index} className="flex-1">
+          <Step />
+        </View>
+      ))}
+    </PagerView>
+  );
+}
+
+function MoodLogFormScreenFooterControls() {
+  const { t } = useTranslation();
+
+  const { handleNext, step } = useMoodLogFormContext();
+
+  return (
+    <View className="border-border border-t-hairline bg-card justify-center py-3">
+      <Button
+        className="self-center"
+        label={t(step === steps.length - 1 ? "common.save" : "common.next")}
+        onPress={handleNext}
+      />
+    </View>
+  );
+}
+
+function MoodLogFormScreenHeaderControls() {
+  const { handleBack, step } = useMoodLogFormContext();
+
+  const theme = useTheme();
+
+  return (
+    <View className="pt-safe bg-card">
+      <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
+        <InteractivePressable onPress={handleBack} hitSlop={10}>
+          <IconSymbol
+            color={theme.colors.primary}
+            name="chevron.left"
+            size={24}
+          />
+        </InteractivePressable>
+      </View>
+      <Animated.View
+        className="bg-primary h-0.5 w-10"
+        layout={LinearTransition}
+        style={{
+          width: (WINDOW_WIDTH / steps.length) * (step + 1),
+        }}
+      />
+    </View>
+  );
+}
+
 export function MoodLogFormScreen() {
   const { t } = useTranslation();
 
@@ -206,35 +302,13 @@ export function MoodLogFormScreen() {
 
   const theme = useTheme();
 
-  const [step, setStep] = useState(0);
-
   return (
-    <MoodLogFormProvider>
+    <MoodLogFormProvider stepsLength={steps.length}>
       <View className="flex-1">
-        <View className="pt-safe bg-card">
-          <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
-            <InteractivePressable onPress={router.back} hitSlop={10}>
-              <IconSymbol
-                color={theme.colors.primary}
-                name="chevron.left"
-                size={24}
-              />
-            </InteractivePressable>
-          </View>
-        </View>
+        <MoodLogFormScreenHeaderControls />
         <KeyboardAvoidingView behavior={"padding"} className="flex-1">
-          <View className="flex-1">
-            {step === 0 && <MoodLogFormScreenMoodPicker />}
-            {step === 1 && <MoodLogFormScreenFeelingsPicker />}
-            {step === 2 && <MoodLogFormScreenNote />}
-          </View>
-          <View className="border-border border-t-hairline bg-card p-6">
-            <Button
-              className="self-center"
-              label={t("common.next")}
-              onPress={() => setStep((prev) => prev + 1)}
-            />
-          </View>
+          <MoodLogFormScreenStepComponent />
+          <MoodLogFormScreenFooterControls />
         </KeyboardAvoidingView>
         <View className="pb-safe bg-card" />
       </View>

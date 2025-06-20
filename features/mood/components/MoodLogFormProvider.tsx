@@ -1,30 +1,37 @@
-import { router } from "expo-router";
+import { drizzleDb } from "@/db/client";
+import { moodLogsTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { router, useLocalSearchParams } from "expo-router";
 import React, {
   createContext,
   FunctionComponent,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
-import { MoodLogPayload, MoodType } from "../store/moodLogStore";
+import {
+  MoodLogPayload,
+  MoodType,
+  useMoodLogStore,
+} from "../store/moodLogStore";
 
 type MoodLogFormContextValue = {
-  moodType: MoodType | null;
-  feelings: string[];
-  note: string;
+  payload: Omit<MoodLogPayload, "mood"> & Partial<Pick<MoodLogPayload, "mood">>;
+  step: number;
+  setStep: (step: number) => void;
+  handleBack: () => void;
+  handleNext: () => Promise<void>;
   setMoodType: (moodType: MoodType) => void;
   toggleFeeling: (feeling: string) => void;
   setNote: (note: string) => void;
-  handleOnSave: () => Promise<void>;
   handleOnDelete: () => Promise<void>;
 };
 
 type MoodLogFormProviderProps = PropsWithChildren<{
-  initialValues?: MoodLogPayload;
-  onDelete?: () => void;
-  onSave?: (payload: MoodLogPayload) => void;
+  stepsLength: number;
 }>;
 
 const MoodLogFormContext = createContext<MoodLogFormContextValue | undefined>(
@@ -33,47 +40,62 @@ const MoodLogFormContext = createContext<MoodLogFormContextValue | undefined>(
 
 export const MoodLogFormProvider: FunctionComponent<
   MoodLogFormProviderProps
-> = ({ children, initialValues, onDelete, onSave }) => {
+> = ({ children, stepsLength }) => {
   const { t } = useTranslation();
 
-  const [moodType, setMoodType] = useState<MoodType | null>(
-    initialValues?.mood ?? null,
-  );
+  const [payload, setPayload] = useState<MoodLogFormContextValue["payload"]>({
+    datetime: new Date().toISOString(),
+    feelings: [],
+    note: "",
+  });
 
-  const [feelings, setFeelings] = useState<string[]>(
-    initialValues?.feelings ?? [],
-  );
+  const [step, setStep] = useState(0);
 
-  const [note, setNote] = useState(initialValues?.note ?? "");
+  const { id } = useLocalSearchParams<{ id: string }>();
 
-  const toggleFeeling = (feeling: string) => {
-    setFeelings((prev) =>
-      prev.includes(feeling)
-        ? prev.filter((f) => f !== feeling)
-        : [...prev, feeling],
-    );
+  const { insert, updateById } = useMoodLogStore();
+
+  const handleBack = async () => {
+    setStep((prev) => {
+      if (prev === 0) {
+        router.back();
+        return prev;
+      }
+      return prev - 1;
+    });
   };
 
-  const handleOnSave = async () => {
-    try {
-      if (!moodType) {
-        return;
+  const handleNext = async () => {
+    if (!payload.mood) {
+      return;
+    }
+
+    setStep((prev) => {
+      const nextStep = prev + 1;
+
+      if (nextStep >= stepsLength) {
+        if (id && id !== "new") {
+          updateById(id, payload as MoodLogPayload);
+        } else {
+          insert(payload as MoodLogPayload);
+        }
+
+        // After saving, redirect to success page
+        router.replace("/mood/success");
+        return prev;
       }
 
-      const payload: MoodLogPayload = {
-        feelings,
-        mood: moodType,
-        note,
-        datetime: initialValues?.datetime ?? new Date().toISOString(),
-      };
+      return nextStep;
+    });
+  };
 
-      await onSave?.(payload);
-
-      router.replace("/mood/success");
-    } catch (error) {
-      console.error("Error saving mood:", error);
-      // Optionally, you can show an error message to the user
-    }
+  const toggleFeeling = (feeling: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      feelings: prev.feelings.includes(feeling)
+        ? prev.feelings.filter((f) => f !== feeling)
+        : [...prev.feelings, feeling],
+    }));
   };
 
   const handleOnDelete = async () => {
@@ -90,7 +112,7 @@ export const MoodLogFormProvider: FunctionComponent<
           style: "destructive",
           onPress: async () => {
             try {
-              await onDelete?.();
+              // await onDelete?.();
 
               router.back();
             } catch (error) {
@@ -104,21 +126,56 @@ export const MoodLogFormProvider: FunctionComponent<
     );
   };
 
-  const handleSetMoodType = (moodType: MoodType) => {
-    setMoodType(moodType);
-    setFeelings([]); // Reset feelings when mood type changes
+  const setMoodType = (moodType: MoodType) => {
+    setPayload((prev) => ({
+      ...prev,
+      mood: moodType,
+      feelings: [], // Reset feelings when mood type changes
+    }));
   };
+
+  const setNote = (note: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      note,
+    }));
+  };
+
+  useEffect(() => {
+    const fetchRow = async () => {
+      const rows = await drizzleDb
+        .select()
+        .from(moodLogsTable)
+        .where(eq(moodLogsTable.id, id))
+        .limit(1);
+
+      if (rows.length > 0) {
+        setPayload({
+          ...rows[0],
+          mood: rows[0].mood as MoodType,
+          feelings: rows[0].feelings.split(",") ?? [],
+        });
+      } else {
+        console.error("Mood Log not found");
+      }
+    };
+
+    if (id && id !== "new") {
+      fetchRow();
+    }
+  }, [id]);
 
   return (
     <MoodLogFormContext.Provider
       value={{
-        moodType,
-        feelings,
-        note,
-        setMoodType: handleSetMoodType,
+        payload,
+        step,
+        setStep,
+        handleBack,
+        handleNext,
+        setMoodType,
         toggleFeeling,
         setNote,
-        handleOnSave,
         handleOnDelete,
       }}
     >
