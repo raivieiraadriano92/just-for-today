@@ -14,15 +14,15 @@ export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
 }) => {
   const { loadStreak, loadWeeklyProgress } = useActivityStore();
 
-  const loadActivityData = useCallback(async () => {
-    await loadWeeklyProgress();
-    await loadStreak();
+  const loadActivityData = useCallback(() => {
+    loadWeeklyProgress();
+    loadStreak();
   }, [loadStreak, loadWeeklyProgress]);
 
   useEffect(() => {
-    const loadActivityDataOnMount = async () => {
+    const loadActivityDataOnMount = () => {
       console.log("Loading activity data on mount...");
-      await loadActivityData(); // Load on mount
+      loadActivityData(); // Load on mount
 
       // This becomes the single point where we hide the splash screen
       // Hide the splash screen after a short delay to prevent flickering
@@ -60,9 +60,9 @@ export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
       "reflection:changed",
     ];
 
-    Emitter.onMany(events, async (event, payload) => {
+    Emitter.onMany(events, (event, payload) => {
       console.log(`Event received: ${event}`, payload);
-      await loadActivityData();
+      loadActivityData();
     });
 
     return () => {

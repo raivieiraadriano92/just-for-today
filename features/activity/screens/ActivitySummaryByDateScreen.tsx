@@ -24,7 +24,7 @@ export default function ActivitySummaryByDateScreen() {
 
   const { weeklyProgress } = useActivityStore();
 
-  const todaysProgress = weeklyProgress.find((day) => day.date === date);
+  const todaysProgress = weeklyProgress.data.find((day) => day.date === date);
 
   const title = useMemo(() => {
     if (isToday(dateObj)) {

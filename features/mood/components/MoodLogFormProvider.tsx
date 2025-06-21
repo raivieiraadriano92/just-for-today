@@ -1,6 +1,5 @@
 import { drizzleDb } from "@/db/client";
 import { moodLogsTable } from "@/db/schema";
-import { useActivityStore } from "@/features/activity/store/activityStore";
 import { eq } from "drizzle-orm";
 import { router, useLocalSearchParams } from "expo-router";
 import React, {
@@ -56,8 +55,6 @@ export const MoodLogFormProvider: FunctionComponent<
 
   const { insert, updateById } = useMoodLogStore();
 
-  const { counters } = useActivityStore();
-
   const handleBack = async () => {
     setStep((prev) => {
       if (prev === 0) {
@@ -66,6 +63,17 @@ export const MoodLogFormProvider: FunctionComponent<
       }
       return prev - 1;
     });
+  };
+
+  const handleSave = async () => {
+    if (id && id !== "new") {
+      await updateById(id, payload as MoodLogPayload);
+    } else {
+      await insert(payload as MoodLogPayload);
+    }
+
+    // After saving, redirect to success page
+    router.replace("/mood/success");
   };
 
   const handleNext = async () => {
@@ -77,14 +85,7 @@ export const MoodLogFormProvider: FunctionComponent<
       const nextStep = prev + 1;
 
       if (nextStep >= stepsLength) {
-        if (id && id !== "new") {
-          updateById(id, payload as MoodLogPayload);
-        } else {
-          insert(payload as MoodLogPayload);
-        }
-
-        // After saving, redirect to success page
-        router.replace(`/mood/success?isFirst=${!counters.moodLogs}`);
+        handleSave();
         return prev;
       }
 

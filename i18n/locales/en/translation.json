@@ -79,7 +79,8 @@
 
             "active_streak": {
               "emoji": "✨",
-              "title": "{{currentStreak}} days of showing up",
+              "title_one": "{{currentStreak}} day of showing up",
+              "title_other": "{{currentStreak}} days of showing up",
               "description": "You’re building something meaningful, one peaceful moment at a time."
             },
 

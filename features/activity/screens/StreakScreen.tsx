@@ -45,6 +45,7 @@ export default function StreakScreen() {
             {t(
               `features.activity.screens.StreakScreen.states.${streak.state}.title`,
               {
+                count: streak.currentStreak,
                 currentStreak: streak.currentStreak,
                 lastStreak: streak.lastStreak,
               },

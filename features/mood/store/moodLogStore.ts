@@ -81,7 +81,6 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
     const newRow: MoodLogRow = {
       ...payload,
       id: randomUUID(),
-
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

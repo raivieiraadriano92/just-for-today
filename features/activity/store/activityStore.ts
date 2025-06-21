@@ -5,7 +5,15 @@ import {
   moodLogsTable,
   reflectionsTable,
 } from "@/db/schema";
-import { addDays, isFuture, parseISO, startOfWeek, subDays } from "date-fns";
+import {
+  addDays,
+  endOfDay,
+  isFuture,
+  parseISO,
+  startOfDay,
+  startOfWeek,
+  subDays,
+} from "date-fns";
 import { format } from "date-fns/format";
 import { and, count, gte, lte } from "drizzle-orm";
 import { create } from "zustand";
@@ -18,6 +26,7 @@ type StreakState =
 
 type ActivityStoreState = {
   counters: {
+    loading: boolean;
     intentions: number;
     moodLogs: number;
     gratitudeLogs: number;
@@ -25,21 +34,26 @@ type ActivityStoreState = {
     wordsWritten: number;
   };
   streak: {
+    loading: boolean;
     longestStreak: number;
     currentStreak: number;
     lastStreak: number;
     state: StreakState;
   };
   weeklyProgress: {
-    date: string;
-    day: string;
-    isFuture: boolean; // Optional, to indicate if the day is in the future
-    isCompleted: boolean;
-    intentionsCount: number;
-    moodLogsCount: number;
-    gratitudeLogsCount: number;
-    reflectionsCount: number;
-  }[];
+    loading: boolean;
+    data: {
+      date: string;
+      day: string;
+      isFuture: boolean; // Optional, to indicate if the day is in the future
+      isCompleted: boolean;
+      intentionsCount: number;
+      moodLogsCount: number;
+      gratitudeLogsCount: number;
+      reflectionsCount: number;
+      progress: number;
+    }[];
+  };
 };
 
 type ActivityStoreActions = {
@@ -49,8 +63,11 @@ type ActivityStoreActions = {
 
 export type ActivityStore = ActivityStoreState & ActivityStoreActions;
 
+export const PROGRESS_MULTIPLIER = 25; // Each completed log contributes 25% to the progress
+
 export const useActivityStore = create<ActivityStore>()((set, get) => ({
   counters: {
+    loading: false,
     intentions: 0,
     moodLogs: 0,
     gratitudeLogs: 0,
@@ -58,14 +75,30 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     wordsWritten: 0,
   },
   streak: {
+    loading: false,
     longestStreak: 0,
     currentStreak: 0,
     lastStreak: 0,
     state: "no_streak_yet",
   },
-  weeklyProgress: [],
+  weeklyProgress: {
+    loading: false,
+    data: [],
+  },
 
   loadStreak: async () => {
+    console.log("Loading streak...");
+    set({
+      counters: {
+        ...get().counters,
+        loading: true,
+      },
+      streak: {
+        ...get().streak,
+        loading: true,
+      },
+    });
+
     // Step 1: Fetch all intentions, mood logs, gratitude logs, and reflections
     const [intentions, moodLogs, gratitudeLogs, reflections] =
       await Promise.all([
@@ -112,6 +145,7 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
 
     set({
       counters: {
+        loading: false,
         intentions: intentions.length,
         moodLogs: moodLogs.length,
         gratitudeLogs: gratitudeLogs.length,
@@ -215,11 +249,26 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     }
 
     set({
-      streak: { longestStreak, currentStreak, lastStreak, state },
+      streak: {
+        loading: false,
+        longestStreak,
+        currentStreak,
+        lastStreak,
+        state,
+      },
     });
   },
 
   loadWeeklyProgress: async () => {
+    console.log("Loading weekly progress...");
+
+    set({
+      weeklyProgress: {
+        ...get().weeklyProgress,
+        loading: true,
+      },
+    });
+
     const firstDayOfWeek = startOfWeek(new Date());
 
     // Generate an array of dates for the current week starting from the first day of the week
@@ -235,8 +284,10 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     });
 
     // Get the start and end dates of the week
-    const from = weekDays[0].date;
-    const to = weekDays[weekDays.length - 1].date;
+    const from = startOfDay(parseISO(weekDays[0].date)).toISOString();
+    const to = endOfDay(
+      parseISO(weekDays[weekDays.length - 1].date),
+    ).toISOString();
 
     // Fetch the counts of intentions, mood logs, gratitude logs, and reflections for the week
     const [
@@ -285,7 +336,7 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
     ]);
 
     // Map the counts to the corresponding week days
-    const weeklyProgress = weekDays.map((day) => {
+    const data = weekDays.map((day) => {
       const intention = intentionsCount.find((i) => i.date === day.date);
 
       const moodLog = moodLogsCount.find(
@@ -300,6 +351,13 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         (r) => format(parseISO(r.datetime), "yyyy-MM-dd") === day.date,
       );
 
+      const progress =
+        ((intention?.count ? 1 : 0) +
+          (moodLog?.count ? 1 : 0) +
+          (gratitudeLog?.count ? 1 : 0) +
+          (reflection?.count ? 1 : 0)) *
+        PROGRESS_MULTIPLIER;
+
       return {
         ...day,
         isCompleted:
@@ -311,11 +369,15 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         moodLogsCount: moodLog?.count || 0,
         gratitudeLogsCount: gratitudeLog?.count || 0,
         reflectionsCount: reflection?.count || 0,
+        progress,
       };
     });
 
     set({
-      weeklyProgress,
+      weeklyProgress: {
+        loading: false,
+        data,
+      },
     });
   },
 }));

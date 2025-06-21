@@ -1,6 +1,5 @@
 import { drizzleDb } from "@/db/client";
 import { reflectionsTable } from "@/db/schema";
-import { useActivityStore } from "@/features/activity/store/activityStore";
 import { eq } from "drizzle-orm";
 import * as FileSystem from "expo-file-system";
 import { router, useLocalSearchParams } from "expo-router";
@@ -57,8 +56,6 @@ export const ReflectionFormProvider: FunctionComponent<
 
   const { insert, updateById } = useReflectionStore();
 
-  const { counters } = useActivityStore();
-
   const handleBack = async () => {
     setStep((prev) => {
       if (prev === 0) {
@@ -97,13 +94,13 @@ export const ReflectionFormProvider: FunctionComponent<
     const images = await saveImages(payload.images);
 
     if (id && id !== "new") {
-      updateById(id, { ...payload, images });
+      await updateById(id, { ...payload, images });
     } else {
-      insert({ ...payload, images });
+      await insert({ ...payload, images });
     }
 
     // After saving, redirect to success page
-    router.replace(`/reflection/success?isFirst=${!counters.reflections}`);
+    router.replace("/reflection/success");
   };
 
   const handleNext = async () => {

@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/Button";
-import { useActivityStore } from "@/features/activity/store/activityStore";
-import { router, useLocalSearchParams } from "expo-router";
+import {
+  PROGRESS_MULTIPLIER,
+  useActivityStore,
+} from "@/features/activity/store/activityStore";
+import { router } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
@@ -9,12 +12,13 @@ import { Confetti } from "react-native-fast-confetti";
 export default function IntentionFormSuccessScreen() {
   const { t } = useTranslation();
 
-  const { counters, streak } = useActivityStore();
+  const { counters, streak, weeklyProgress } = useActivityStore();
 
-  const { isFirst } = useLocalSearchParams<{ isFirst: string }>();
+  const isLoading =
+    counters.loading || streak.loading || weeklyProgress.loading;
 
   const message = useMemo(() => {
-    if (isFirst === "true") {
+    if (counters.intentions <= 1) {
       return {
         showConfetti: true,
         emoji: "🎉",
@@ -25,7 +29,14 @@ export default function IntentionFormSuccessScreen() {
       };
     }
 
-    if (streak.state === "streak_restarted") {
+    const todaysProgress = weeklyProgress.data.find(
+      (progress) => progress.date === new Date().toISOString().split("T")[0],
+    );
+
+    if (
+      streak.state === "streak_restarted" &&
+      (todaysProgress?.progress || 0) <= PROGRESS_MULTIPLIER
+    ) {
       return {
         showConfetti: true,
         emoji: "🎉",
@@ -44,7 +55,11 @@ export default function IntentionFormSuccessScreen() {
       description:
         "features.intention.screens.IntentionFormSuccessScreen.inStreak.description",
     };
-  }, [counters.intentions, streak.state]);
+  }, [counters.intentions, streak.state, weeklyProgress.data]);
+
+  if (isLoading) {
+    return null; // or a loading spinner
+  }
 
   return (
     <>

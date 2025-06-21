@@ -17,22 +17,7 @@ export function WeeklyProgress() {
 
   return (
     <View className="bg-card flex-row items-center justify-evenly rounded-2xl p-3">
-      {weeklyProgress.map((day, index) => {
-        let value = 0;
-
-        if (day.intentionsCount) {
-          value += 25;
-        }
-        if (day.moodLogsCount) {
-          value += 25;
-        }
-        if (day.gratitudeLogsCount) {
-          value += 25;
-        }
-        if (day.reflectionsCount) {
-          value += 25;
-        }
-
+      {weeklyProgress.data.map((day, index) => {
         const disableInteraction =
           day.isFuture || isBefore(day.date, user!.createdAt.split("T")[0]);
 
@@ -49,7 +34,7 @@ export function WeeklyProgress() {
               activeStrokeWidth={3}
               inActiveStrokeWidth={3}
               inActiveStrokeOpacity={1}
-              value={value}
+              value={day.progress}
               radius={20}
               activeStrokeColor={twColors.green[theme.dark ? 400 : 500]}
               inActiveStrokeColor={
