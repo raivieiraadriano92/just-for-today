@@ -301,7 +301,10 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         .from(intentionsTable)
         .groupBy(intentionsTable.date)
         .where(
-          and(gte(intentionsTable.date, from), lte(intentionsTable.date, to)),
+          and(
+            gte(intentionsTable.date, weekDays[0].date),
+            lte(intentionsTable.date, weekDays[weekDays.length - 1].date),
+          ),
         ),
       drizzleDb
         .select({ datetime: moodLogsTable.datetime, count: count() })
