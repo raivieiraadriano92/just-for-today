@@ -5,11 +5,17 @@ import { eq } from "drizzle-orm";
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
 
-export type ReflectionRow = typeof reflectionsTable.$inferSelect;
-
-export type ReflectionPayload = Pick<ReflectionRow, "datetime" | "content"> & {
+export type ReflectionRow = Omit<
+  typeof reflectionsTable.$inferSelect,
+  "images"
+> & {
   images: string[];
 };
+
+export type ReflectionPayload = Pick<
+  ReflectionRow,
+  "datetime" | "content" | "images"
+>;
 
 type ReflectionStoreState = {
   //   data: ReflectionRow[];
@@ -70,12 +76,13 @@ export const useReflectionStore = create<ReflectionStore>()((set, get) => ({
     const newRow: ReflectionRow = {
       ...payload,
       id,
-      images: payload.images.join(","),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    await drizzleDb.insert(reflectionsTable).values(newRow);
+    await drizzleDb
+      .insert(reflectionsTable)
+      .values({ ...newRow, images: payload.images.join(",") });
 
     Emitter.emit("reflection:changed", { type: "insert" });
 
@@ -88,13 +95,12 @@ export const useReflectionStore = create<ReflectionStore>()((set, get) => ({
   updateById: async (id, payload) => {
     const updatedPayload = {
       ...payload,
-      images: payload.images.join(","),
       updatedAt: new Date().toISOString(),
     };
 
     await drizzleDb
       .update(reflectionsTable)
-      .set(updatedPayload)
+      .set({ ...updatedPayload, images: payload.images.join(",") })
       .where(eq(reflectionsTable.id, id));
 
     Emitter.emit("reflection:changed", { type: "update" });

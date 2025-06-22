@@ -23,7 +23,7 @@ export const reflectionsTable = sqliteTable("reflections", {
   updatedAt: text("updated_at").notNull(),
   datetime: text("datetime").notNull(),
   content: text("content").notNull(),
-  images: text("content").notNull(),
+  images: text("images").notNull(),
 });
 
 export const gratitudeLogsTable = sqliteTable("gratitude_logs", {
@@ -32,5 +32,5 @@ export const gratitudeLogsTable = sqliteTable("gratitude_logs", {
   updatedAt: text("updated_at").notNull(),
   datetime: text("datetime").notNull(),
   content: text("content").notNull(),
-  images: text("content").notNull(),
+  images: text("images").notNull(),
 });

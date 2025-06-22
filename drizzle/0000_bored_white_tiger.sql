@@ -3,7 +3,8 @@ CREATE TABLE `gratitude_logs` (
 	`created_at` text NOT NULL,
 	`updated_at` text NOT NULL,
 	`datetime` text NOT NULL,
-	`content` text NOT NULL
+	`content` text NOT NULL,
+	`images` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `intentions` (
@@ -28,5 +29,6 @@ CREATE TABLE `reflections` (
 	`created_at` text NOT NULL,
 	`updated_at` text NOT NULL,
 	`datetime` text NOT NULL,
-	`content` text NOT NULL
+	`content` text NOT NULL,
+	`images` text NOT NULL
 );

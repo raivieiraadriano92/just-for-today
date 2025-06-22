@@ -5,7 +5,7 @@ import { format } from "date-fns/format";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
 
-type IntentionRow = typeof intentionsTable.$inferSelect;
+export type IntentionRow = typeof intentionsTable.$inferSelect;
 
 type IntentionPayload = Pick<IntentionRow, "intention">;
 

@@ -5,14 +5,17 @@ import { eq } from "drizzle-orm";
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
 
-export type GratitudeLogRow = typeof gratitudeLogsTable.$inferSelect;
+export type GratitudeLogRow = Omit<
+  typeof gratitudeLogsTable.$inferSelect,
+  "images"
+> & {
+  images: string[]; // Store images as a comma-separated string in the database
+};
 
 export type GratitudeLogPayload = Pick<
   GratitudeLogRow,
-  "datetime" | "content"
-> & {
-  images: string[];
-};
+  "datetime" | "content" | "images"
+>;
 
 type GratitudeLogStoreState = {
   //   data: GratitudeLogRow[];
@@ -74,12 +77,13 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
     const newRow: GratitudeLogRow = {
       ...payload,
       id,
-      images: payload.images.join(","),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    await drizzleDb.insert(gratitudeLogsTable).values(newRow);
+    await drizzleDb
+      .insert(gratitudeLogsTable)
+      .values({ ...newRow, images: payload.images.join(",") });
 
     Emitter.emit("gratitudeLog:changed", { type: "insert" });
 
@@ -92,13 +96,12 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
   updateById: async (id, payload) => {
     const updatedPayload = {
       ...payload,
-      images: payload.images.join(","),
       updatedAt: new Date().toISOString(),
     };
 
     await drizzleDb
       .update(gratitudeLogsTable)
-      .set(updatedPayload)
+      .set({ ...updatedPayload, images: payload.images.join(",") })
       .where(eq(gratitudeLogsTable.id, id));
 
     Emitter.emit("gratitudeLog:changed", { type: "update" });

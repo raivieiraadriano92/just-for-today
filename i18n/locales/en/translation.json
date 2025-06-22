@@ -13,6 +13,13 @@
       "addMoodLogButtonLabel": "Mood",
       "addGratitudeButtonLabel": "Gratitude",
       "addReflectionButtonLabel": "Reflection"
+    },
+    "journey": {
+      "title": "Your Journey",
+      "intentionTitle": "Just for Today, I will...",
+      "gratitudeLogTitle": "Reasons to be grateful",
+      "reflectionTitle": "Moment of reflection",
+      "endOfListTitle": "Your journey began here."
     }
   },
   "features": {
