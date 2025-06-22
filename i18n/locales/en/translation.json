@@ -417,6 +417,11 @@
               "Just for today."
             ]
           }
+        },
+        "SettingsScreen": {
+          "title": "Settings",
+          "profile": "Profile",
+          "notifications": "Notifications"
         }
       }
     }
