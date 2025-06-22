@@ -1,6 +1,7 @@
 {
   "common": {
     "goHome": "Go home",
+    "justForToday": "Just for Today",
     "next": "Next",
     "notNow": "Not now",
     "save": "Save",
@@ -9,6 +10,10 @@
     "yesterday": "Yesterday"
   },
   "app": {
+    "welcome": {
+      "welcomeMessage": "Each sunrise brings a new choice.",
+      "buttonLabel": "Get Started"
+    },
     "home": {
       "addMoodLogButtonLabel": "Mood",
       "addGratitudeButtonLabel": "Gratitude",
@@ -359,6 +364,58 @@
           "inStreak": {
             "title": "Another day, reflected",
             "description": "You’re building insight, one quiet thought at a time."
+          }
+        }
+      }
+    },
+    "user": {
+      "notifications": {
+        "MORNING_NOTIFICATION": {
+          "settingLabel": "☀️ Start your day with intention",
+          "messageTitle": "Good morning, {{user}} ☀️",
+          "messageBody": "what will you choose, Just for Today?"
+        },
+        "AFTERNOON_NOTIFICATION": {
+          "settingLabel": "🫶 Midday check-in",
+          "messageTitle": "Midday check-in 🫶",
+          "messageBody": "{{user}}, how’s your day unfolding? Just notice."
+        },
+        "EVENING_NOTIFICATION": {
+          "settingLabel": "🌙 Ending your day",
+          "messageTitle": "Winding down 🌙",
+          "messageBody": "{{user}}, take a moment to gently notice how you’re feeling."
+        }
+      },
+      "screens": {
+        "OnboardingScreen": {
+          "finishButtonLabel": "🖐 High five to accept",
+          "successTitle": "{{name}}, your journey begins now!",
+          "OnboardingScreenName": {
+            "title": "What should we call you?",
+            "description": "Just your name — to make this space feel a little more like yours.",
+            "inputPlaceholder": "Your first name"
+          },
+          "OnboardingScreenNotifications": {
+            "title": "Your gentle reminders",
+            "description": "Set calm, kind notifications to help you pause, reflect, and return to yourself throughout the day.",
+            "inputPlaceholder": "Your first name"
+          },
+          "OnboardingScreenPrivacyMessage": {
+            "title": "Just for Today is yours — truly.",
+            "subtitle": "Private, ad-free, and built for your well-being.",
+            "description": "Everything you log stays on your device. We don’t store it, access it, or share it.\n\nWe track only simple usage stats to improve the app — never your personal data.\n\nIn the future, we may offer optional AI insights and other additional features through a premium plan, but your privacy will always come first."
+          },
+          "OnboardingScreenCommitment": {
+            "title": "Let's make a contract?",
+            "items": [
+              "Just for today, I choose me.",
+              "I don’t have to do it all.",
+              "I don’t have to fix everything.",
+              "But I can choose to pause.",
+              "To feel what’s here.",
+              "To take one small step — for me.",
+              "Just for today."
+            ]
           }
         }
       }

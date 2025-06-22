@@ -5,6 +5,7 @@ import Animated from "react-native-reanimated";
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export function InteractivePressable({
+  disabled,
   onPressIn,
   onPressOut,
   style,
@@ -14,11 +15,12 @@ export function InteractivePressable({
     interactiveAnimatedStyle,
     interactiveOnPressIn,
     interactiveOnPressOut,
-  } = useInteractivePress();
+  } = useInteractivePress({ disabled: !!disabled });
 
   return (
     <AnimatedPressable
       {...props}
+      disabled={disabled}
       onPressIn={(ev) => {
         interactiveOnPressIn();
 

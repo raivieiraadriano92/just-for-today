@@ -29,6 +29,31 @@ setOptions({
   fade: true,
 });
 
+const theme = {
+  default: {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: "rgb(236, 239, 242)",
+      card: "rgb(249, 251, 252)",
+      primary: "rgb(76, 148, 171)",
+      text: "rgb(51, 51, 51)",
+      border: "rgb(215, 224, 229)",
+    },
+  },
+  dark: {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: "rgb(15, 37, 46)",
+      card: "rgb(28, 51, 61)",
+      primary: "rgb(104, 179, 201)",
+      text: "rgb(228, 228, 231)",
+      border: "rgb(43, 74, 85)",
+    },
+  },
+};
+
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
@@ -48,12 +73,12 @@ export default function RootLayout() {
       >
         <KeyboardProvider>
           <ThemeProvider
-            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            value={colorScheme === "dark" ? theme.dark : theme.default}
           >
             <TodaysIntentionProvider>
               <ActivityProvider>
                 <Stack screenOptions={{ headerShown: false }}>
-                  <Stack.Screen name="index" />
+                  <Stack.Screen name="(onboarding)" />
                   <Stack.Screen name="(protected)" />
                   <Stack.Screen
                     name="+not-found"

@@ -3,11 +3,11 @@ import { useTheme } from "@react-navigation/native";
 import { Redirect, Stack } from "expo-router";
 
 export default function ProtectedLayout() {
-  const { user } = useUserStore();
+  const { isOnboardingCompleted, user } = useUserStore();
 
   const theme = useTheme();
 
-  if (!user?.isOnboardingCompleted) {
+  if (!user || !isOnboardingCompleted) {
     return <Redirect href="/" />;
   }
 

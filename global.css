@@ -4,20 +4,20 @@
 
 @layer base {
   :root {
-    --background: 242 242 242;
-    --border: 216 216 216;
-    --card: 255 255 255;
+    --background: 241 245 247;
+    --border: 215 224 229;
+    --card: 249 251 252;
     --notification: 255 59 48;
-    --primary: 0 122 255;
-    --text: 28 28 30;
+    --primary: 76 148 171;
+    --text: 51 51 51;
   }
 
   .dark:root {
-    --background: 1 1 1;
-    --border: 39 39 41;
-    --card: 18 18 18;
+    --background: 15 37 46;
+    --border: 43 74 85;
+    --card: 28 51 61;
     --notification: 255 69 58;
-    --primary: 10 132 255;
-    --text: 229 229 231;
+    --primary: 104 179 201;
+    --text: 228 228 231;
   }
 }

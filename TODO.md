@@ -8,6 +8,7 @@
 [] - check if the user select any feeling linked to "worry" and then recommend use a tool to analyze what is worrying the user. (book pag 63)
 [] - ask user's review in app store
 [] - remove old images on editing/deleting
+[] - change the splash screen bg color (light/dark)
 
 # tips
 
