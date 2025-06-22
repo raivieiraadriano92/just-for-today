@@ -1,3 +1,5 @@
+import { InteractivePressable } from "@/components/InteractivePressable";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { drizzleDb } from "@/db/client";
 import {
   gratitudeLogsTable,
@@ -13,7 +15,7 @@ import { ReflectionRow } from "@/features/reflection/store/reflectionStore";
 import { useTheme } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import { format, isToday, isYesterday, parseISO } from "date-fns";
-import { useFocusEffect } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, Text, View } from "react-native";
@@ -216,21 +218,34 @@ export default function JourneyScreen() {
                               </Text>
                             </View>
                             <View className="flex-1 gap-2">
-                              <Text
-                                className="text-text text-xl font-semibold"
-                                style={{
-                                  color:
-                                    twColors[moodTypes[entry.mood].color.token][
-                                      moodTypes[entry.mood].color[
-                                        theme.dark ? "dark" : "light"
-                                      ]
-                                    ],
-                                }}
-                              >
-                                {t(
-                                  `features.moodLog.moodTypes.${entry.mood}.title`,
-                                )}
-                              </Text>
+                              <View className="flex-row items-center justify-between">
+                                <Text
+                                  className="text-text text-xl font-semibold"
+                                  style={{
+                                    color:
+                                      twColors[
+                                        moodTypes[entry.mood].color.token
+                                      ][
+                                        moodTypes[entry.mood].color[
+                                          theme.dark ? "dark" : "light"
+                                        ]
+                                      ],
+                                  }}
+                                >
+                                  {t(
+                                    `features.moodLog.moodTypes.${entry.mood}.title`,
+                                  )}
+                                </Text>
+                                <Link asChild href={`/mood/${entry.id}`}>
+                                  <InteractivePressable>
+                                    <IconSymbol
+                                      color={theme.colors.primary}
+                                      name="pencil"
+                                      size={20}
+                                    />
+                                  </InteractivePressable>
+                                </Link>
+                              </View>
                               {!!entry.note && (
                                 <Text className="text-text text-base">
                                   {`“${entry.note}”`}
@@ -276,9 +291,20 @@ export default function JourneyScreen() {
                             <View className="border-hairline border-border flex-1" />
                           </View>
                           <View className="gap-2">
-                            <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
-                              {`${t("app.journey.gratitudeLogTitle")} 🙏`}
-                            </Text>
+                            <View className="flex-row items-center justify-between">
+                              <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
+                                {`${t("app.journey.gratitudeLogTitle")} 🙏`}
+                              </Text>
+                              <Link asChild href={`/gratitude/${entry.id}`}>
+                                <InteractivePressable>
+                                  <IconSymbol
+                                    color={theme.colors.primary}
+                                    name="pencil"
+                                    size={20}
+                                  />
+                                </InteractivePressable>
+                              </Link>
+                            </View>
                             <Text className="text-text text-2xl font-bold">
                               {`“${entry.content}”`}
                             </Text>
@@ -302,9 +328,20 @@ export default function JourneyScreen() {
                             <View className="border-hairline border-border flex-1" />
                           </View>
                           <View className="gap-2">
-                            <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
-                              {`${t("app.journey.reflectionTitle")} 📝`}
-                            </Text>
+                            <View className="flex-row items-center justify-between">
+                              <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
+                                {`${t("app.journey.reflectionTitle")} 📝`}
+                              </Text>
+                              <Link asChild href={`/reflection/${entry.id}`}>
+                                <InteractivePressable>
+                                  <IconSymbol
+                                    color={theme.colors.primary}
+                                    name="pencil"
+                                    size={20}
+                                  />
+                                </InteractivePressable>
+                              </Link>
+                            </View>
                             <Text className="text-text text-2xl font-bold">
                               {`“${entry.content}”`}
                             </Text>

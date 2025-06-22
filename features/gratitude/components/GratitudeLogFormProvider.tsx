@@ -77,10 +77,15 @@ export const GratitudeLogFormProvider: FunctionComponent<
     const filename = asset.split("/").pop();
     const newPath = `${directoryBase}/${filename}`;
 
-    await FileSystem.makeDirectoryAsync(`${directoryBase}`, {
-      intermediates: true,
-    });
-    await FileSystem.copyAsync({ from: asset, to: newPath });
+    const fileInfo = await FileSystem.getInfoAsync(newPath);
+
+    // Check if the file already exists
+    if (!fileInfo.exists) {
+      await FileSystem.makeDirectoryAsync(`${directoryBase}`, {
+        intermediates: true,
+      });
+      await FileSystem.copyAsync({ from: asset, to: newPath });
+    }
 
     // const files = await FileSystem.readDirectoryAsync(directoryBase);
 
