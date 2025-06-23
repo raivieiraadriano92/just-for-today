@@ -36,7 +36,11 @@
     "activity": {
       "components": {
         "MoodCountCard": {
-          "title": "Mood Count"
+          "title": "Mood Count",
+          "totalLogs": "Total: {{count}} logs"
+        },
+        "MoodFlowCard": {
+          "title": "Mood Flow"
         }
       },
       "screens": {

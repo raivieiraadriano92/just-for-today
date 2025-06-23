@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { MoodCountCard } from "../components/MoodCountCard";
+import { MoodFlowCard } from "../components/MoodFlowCard";
 
 type FilterType = "week" | "month" | "year";
 
@@ -11,6 +12,12 @@ const filterOptions: FilterType[] = ["week", "month", "year"];
 
 export function StatsScreen() {
   const { t } = useTranslation();
+
+  const moodFlowData = moodTypesList.map((moodType) => ({
+    moodType,
+    // random integer number between 1 and 5 for demonstration purposes
+    value: Math.floor(Math.random() * 5) + 1, // Replace with actual data if available
+  }));
 
   const moodCountData = moodTypesList.map((moodType) => ({
     moodType,
@@ -29,8 +36,8 @@ export function StatsScreen() {
           </Text>
         </View>
       </View>
-      <ScrollView contentContainerClassName="p-6">
-        <View className="mb-6 flex-row items-center justify-center">
+      <ScrollView contentContainerClassName="p-6 gap-6">
+        <View className="flex-row items-center justify-center">
           {filterOptions.map((option) => (
             <Button
               key={option}
@@ -42,6 +49,7 @@ export function StatsScreen() {
             />
           ))}
         </View>
+        <MoodFlowCard data={moodFlowData} />
         <MoodCountCard data={moodCountData} />
       </ScrollView>
     </View>
