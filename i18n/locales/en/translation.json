@@ -10,10 +10,6 @@
     "yesterday": "Yesterday"
   },
   "app": {
-    "welcome": {
-      "welcomeMessage": "Each sunrise brings a new choice.",
-      "buttonLabel": "Get Started"
-    },
     "home": {
       "addMoodLogButtonLabel": "Mood",
       "addGratitudeButtonLabel": "Gratitude",
@@ -25,10 +21,24 @@
       "gratitudeLogTitle": "Reasons to be grateful",
       "reflectionTitle": "Moment of reflection",
       "endOfListTitle": "Your journey began here."
+    },
+    "tabs": {
+      "home": { "label": "Home" },
+      "journey": { "label": "Journey" },
+      "stats": { "label": "Stats" }
+    },
+    "welcome": {
+      "welcomeMessage": "Each sunrise brings a new choice.",
+      "buttonLabel": "Get Started"
     }
   },
   "features": {
     "activity": {
+      "components": {
+        "MoodCountCard": {
+          "title": "Mood Count"
+        }
+      },
       "screens": {
         "ActivitySummaryByDateScreen": {
           "status": {
@@ -67,6 +77,9 @@
               "title": "Self-reflection"
             }
           }
+        },
+        "stats": {
+          "title": "Stats"
         },
         "StreakScreen": {
           "counters": {

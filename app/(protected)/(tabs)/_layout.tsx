@@ -1,10 +1,13 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { TabBarButton } from "@/components/TabBarButton";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -31,7 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Home",
+          title: t("app.tabs.home.label"),
           tabBarIcon: ({ color, size }) => (
             <IconSymbol size={size} name="house.fill" color={color} />
           ),
@@ -40,16 +43,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="journey"
         options={{
-          title: "Journey",
+          title: t("app.tabs.journey.label"),
           tabBarIcon: ({ color, size }) => (
             <IconSymbol size={size} name="book.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="activity"
+        name="stats"
         options={{
-          title: "Activity",
+          title: t("app.tabs.stats.label"),
           tabBarIcon: ({ color, size }) => (
             <IconSymbol size={size} name="chart.bar.fill" color={color} />
           ),
