@@ -3,6 +3,7 @@ import { format, isAfter, parseISO } from "date-fns";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import { MoodByWeekdayChart } from "../components/MoodByWeekdayChart";
 import { MoodCountCard } from "../components/MoodCountCard";
 import { MoodDistributionChart } from "../components/MoodDistributionChart";
 import { MoodTrendLineChart } from "../components/MoodTrendLineChart";
@@ -367,6 +368,10 @@ export function StatsScreen() {
         <MoodCountCard
           moodLogRows={filteredData}
           key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+        />
+        <MoodByWeekdayChart
+          moodLogRows={filteredData}
+          key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
       </ScrollView>
     </View>

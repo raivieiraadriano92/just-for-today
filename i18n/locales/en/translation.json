@@ -44,6 +44,9 @@
         },
         "MoodDistributionChart": {
           "title": "Mood Distribution"
+        },
+        "MoodByWeekdayChart": {
+          "title": "Mood by Weekday"
         }
       },
       "screens": {
