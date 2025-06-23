@@ -2,15 +2,19 @@ import { moodTypes } from "@/features/mood/moodTypes";
 import { MoodLogRow, MoodType } from "@/features/mood/store/moodLogStore";
 import { useTheme } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Text, View } from "react-native";
-import { BarChart } from "react-native-svg-charts";
+import { Dimensions, Text, View } from "react-native";
+import { PieChart } from "react-native-gifted-charts";
 import twColors from "tailwindcss/colors";
 
-type MoodCountCardProps = {
+const { width: WINDOW_WIDTH } = Dimensions.get("window");
+
+const CHART_RADIUS = Math.min(WINDOW_WIDTH * 0.35, 200);
+
+type MoodDistributionChartProps = {
   moodLogRows: MoodLogRow[];
 };
 
-function getMoodCountData(logs: MoodLogRow[], isDark = false) {
+function getMoodDistributionData(logs: MoodLogRow[], isDark = false) {
   const total = logs.length;
   const grouped: Record<string, number> = {};
 
@@ -21,7 +25,13 @@ function getMoodCountData(logs: MoodLogRow[], isDark = false) {
   return (Object.entries(grouped) as [MoodType, number][])
     .map(([mood, count]) => ({
       mood,
-      value: count,
+      value: Math.round((count / total) * 100),
+      color:
+        twColors[moodTypes[mood].color.token][
+          moodTypes[mood].color[isDark ? "dark" : "light"]
+        ],
+      label: `${moodTypes[mood]?.icon}`,
+      //   label: `${moodTypes[mood]?.icon} ${moodLabels[mood]?.label}`,
     }))
     .sort((a, b) => {
       const moodA = moodTypes[a.mood];
@@ -30,38 +40,42 @@ function getMoodCountData(logs: MoodLogRow[], isDark = false) {
     });
 }
 
-export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
+export function MoodDistributionChart({
+  moodLogRows,
+}: MoodDistributionChartProps) {
   const { t } = useTranslation();
-
   const theme = useTheme();
 
-  const data = getMoodCountData(moodLogRows).map((item) => ({
-    ...item,
-    svg: {
-      fill: twColors[moodTypes[item.mood].color.token][
-        moodTypes[item.mood].color[theme.dark ? "dark" : "light"]
-      ],
-    },
-  }));
-
-  const totalCount = data.reduce((acc, item) => acc + item.value, 0);
+  const pieData = getMoodDistributionData(moodLogRows, theme.dark).map(
+    (item) => ({
+      ...item,
+      value: item.value,
+      color: item.color,
+      text: `${item.value}%`,
+    }),
+  );
 
   return (
     <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
       <Text className="text-primary text-lg font-bold">
-        {t("features.activity.components.MoodCountCard.title")}
+        {t("features.activity.components.MoodDistributionChart.title")}
       </Text>
-      <View style={{ height: 100 }}>
-        <BarChart
-          animate
-          data={data}
-          gridMin={0}
-          yAccessor={({ item }) => item.value}
-          style={{ flex: 1 }}
+      <View
+        className="items-center justify-center"
+        style={{ minHeight: CHART_RADIUS * 2 }}
+      >
+        <PieChart
+          isAnimated
+          data={pieData}
+          radius={CHART_RADIUS}
+          showText
+          textColor="white"
+          textSize={12}
+          showValuesAsLabels
         />
       </View>
       <View className="flex-row">
-        {data.map((item) => (
+        {pieData.map((item) => (
           <View key={item.mood} className="flex-1 items-center">
             <View className="w-14 items-center gap-1">
               <Text
@@ -73,11 +87,13 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
                     ],
                 }}
               >
-                {`${item.value}x`}
+                {`${item.value}%`}
               </Text>
               <View
-                className={`bg-card h-10 w-10 items-center justify-center rounded-2xl border-2`}
+                className={`bg-card items-center justify-center rounded-2xl border-2`}
                 style={{
+                  height: 36,
+                  width: 36,
                   borderColor:
                     twColors[moodTypes[item.mood].color.token][
                       moodTypes[item.mood].color[theme.dark ? "dark" : "light"]
@@ -103,11 +119,14 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
           </View>
         ))}
       </View>
-      <Text className="text-primary text-lg font-bold">
-        {t("features.activity.components.MoodCountCard.totalLogs", {
-          count: totalCount,
-        })}
-      </Text>
+      {/* <View className="mt-4 space-y-2">
+        {getMoodDistributionData(data).map((item) => (
+          <Text key={item.mood} className="text-sm">
+            <Text style={{ color: item.color }}>{item.label}:</Text>{" "}
+            {item.value}%
+          </Text>
+        ))}
+      </View> */}
     </View>
   );
 }

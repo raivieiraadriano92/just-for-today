@@ -39,11 +39,11 @@
           "title": "Mood Count",
           "totalLogs": "Total: {{count}} logs"
         },
-        "MoodFlowCard": {
-          "title": "Mood Flow"
-        },
         "MoodTrendLineChart": {
           "title": "Mood Trend"
+        },
+        "MoodDistributionChart": {
+          "title": "Mood Distribution"
         }
       },
       "screens": {
