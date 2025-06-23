@@ -78,8 +78,13 @@
             }
           }
         },
-        "stats": {
-          "title": "Stats"
+        "StatsScreen": {
+          "title": "Stats",
+          "filters": {
+            "week": "Week",
+            "month": "Month",
+            "year": "Year"
+          }
         },
         "StreakScreen": {
           "counters": {

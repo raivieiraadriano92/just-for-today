@@ -4,9 +4,26 @@ import Animated from "react-native-reanimated";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+type Variant = "solid" | "outline" | "ghost";
+
 type ButtonProps = PressableProps & {
   label: string;
-  variant?: "solid" | "outline";
+  variant?: Variant;
+};
+
+const variantStyles: Record<Variant, { container: string; text: string }> = {
+  ghost: {
+    container: "",
+    text: "text-primary",
+  },
+  outline: {
+    container: "border-border border",
+    text: "text-text",
+  },
+  solid: {
+    container: "bg-primary",
+    text: "text-white dark:text-background",
+  },
 };
 
 export function Button({
@@ -26,7 +43,7 @@ export function Button({
 
   return (
     <AnimatedPressable
-      className={`h-12 items-center justify-center rounded-full px-6 ${variant === "solid" ? "bg-primary" : "border-border border"} ${className}`}
+      className={`h-12 items-center justify-center rounded-full px-6 ${variantStyles[variant].container} ${className}`}
       onPressIn={(ev) => {
         interactiveOnPressIn();
 
@@ -40,9 +57,7 @@ export function Button({
       style={[style, interactiveAnimatedStyle]}
       {...props}
     >
-      <Text
-        className={`text-base font-medium ${variant === "solid" ? "text-white" : "text-text"}`}
-      >
+      <Text className={`text-base font-medium ${variantStyles[variant].text}`}>
         {label}
       </Text>
     </AnimatedPressable>

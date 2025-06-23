@@ -32,7 +32,7 @@ export function MoodCountCard({ data }: MoodCountCardProps) {
       <Text className="text-primary text-lg font-bold">
         {t("features.activity.components.MoodCountCard.title")}
       </Text>
-      <View style={{ height: 200 }}>
+      <View style={{ height: 100 }}>
         <BarChart
           animate
           data={_data}
