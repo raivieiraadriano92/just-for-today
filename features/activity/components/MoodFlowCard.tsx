@@ -1,6 +1,7 @@
 import { moodTypes, moodTypesList } from "@/features/mood/moodTypes";
 import { MoodType } from "@/features/mood/store/moodLogStore";
 import { useTheme } from "@react-navigation/native";
+import * as shape from "d3-shape";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
@@ -300,7 +301,7 @@ export function MoodFlowCard({}: MoodFlowCardProps) {
         </View>
         <LineChart
           // contentInset={{ top: 15, bottom: 15 }}
-          // curve={shape.curveLinear}
+          curve={shape.curveLinear}
           style={{ flex: 1, height: 200 }}
           data={data}
           yAccessor={({ item }) => item.value}

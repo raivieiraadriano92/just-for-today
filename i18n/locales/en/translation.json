@@ -41,6 +41,9 @@
         },
         "MoodFlowCard": {
           "title": "Mood Flow"
+        },
+        "MoodTrendLineChart": {
+          "title": "Mood Trend"
         }
       },
       "screens": {
@@ -85,7 +88,7 @@
         "StatsScreen": {
           "title": "Stats",
           "filters": {
-            "week": "Week",
+            "7d": "Last 7 days",
             "month": "Month",
             "year": "Year"
           }
