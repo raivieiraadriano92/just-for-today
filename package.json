@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
+    "@sentry/react-native": "^6.15.1",
     "@shopify/flash-list": "1.7.6",
     "@shopify/react-native-skia": "2.0.0-next.4",
     "babel-plugin-inline-import": "^3.0.0",
@@ -63,6 +64,7 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
+    "vexo-analytics": "^1.4.11",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

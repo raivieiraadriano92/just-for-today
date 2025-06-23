@@ -11,6 +11,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import * as Sentry from "@sentry/react-native";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
 import { preventAutoHideAsync, setOptions } from "expo-splash-screen";
@@ -20,6 +21,36 @@ import { useColorScheme } from "nativewind";
 import { Suspense } from "react";
 import { ActivityIndicator } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { vexo } from "vexo-analytics";
+
+const sentryDns = process.env.EXPO_PUBLIC_SENTRY_DNS;
+
+if (!sentryDns) {
+  throw new Error(
+    "Sentry DSN is not set. Please set EXPO_PUBLIC_SENTRY_DNS in your environment variables.",
+  );
+}
+
+Sentry.init({
+  dsn: sentryDns,
+
+  // Adds more context data to events (IP address, cookies, user, etc.)
+  // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
+  sendDefaultPii: true,
+
+  enabled: !__DEV__,
+
+  // Configure Session Replay
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1,
+  integrations: [
+    Sentry.mobileReplayIntegration(),
+    Sentry.feedbackIntegration(),
+  ],
+
+  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  // spotlight: __DEV__,
+});
 
 // Keep splash screen visible while we fetch resources
 preventAutoHideAsync();
@@ -28,6 +59,18 @@ setOptions({
   duration: 500,
   fade: true,
 });
+
+if (!__DEV__) {
+  const vexoApiKey = process.env.EXPO_PUBLIC_VEXO_API_KEY;
+
+  if (!vexoApiKey) {
+    throw new Error(
+      "Vexo API key is not set. Please set VEXO_API_KEY in your environment variables.",
+    );
+  }
+
+  vexo(vexoApiKey);
+}
 
 const theme = {
   default: {
@@ -54,7 +97,7 @@ const theme = {
   },
 };
 
-export default function RootLayout() {
+export default Sentry.wrap(function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   const { success, error } = useMigrations(drizzleDb, migrations);
@@ -93,4 +136,4 @@ export default function RootLayout() {
       </SQLiteProvider>
     </Suspense>
   );
-}
+});

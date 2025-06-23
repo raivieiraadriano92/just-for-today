@@ -9,6 +9,7 @@
 [] - ask user's review in app store
 [] - remove old images on editing/deleting
 [] - change the splash screen bg color (light/dark)
+[] - setup sentry feedback widget - https://docs.sentry.io/platforms/react-native/user-feedback/
 
 # tips
 
