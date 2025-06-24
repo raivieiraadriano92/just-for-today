@@ -16,7 +16,7 @@ export function WeeklyProgress() {
   const { user } = useUserStore();
 
   return (
-    <View className="bg-card flex-row items-center justify-evenly rounded-2xl p-3">
+    <View className="flex-row items-center justify-evenly rounded-2xl bg-card p-3">
       {weeklyProgress.data.map((day, index) => {
         const disableInteraction =
           day.isFuture || isBefore(day.date, user!.createdAt.split("T")[0]);
@@ -41,12 +41,12 @@ export function WeeklyProgress() {
                 disableInteraction ? "transparent" : theme.colors.border
               }
             >
-              <Text className="text-text text-center text-base font-semibold">
+              <Text className="text-center text-base font-semibold text-text">
                 {day.day}
               </Text>
             </CircularProgressBase>
             {isToday(parseISO(day.date)) && (
-              <View className="bg-primary absolute -bottom-2 h-1 w-1 rounded-full" />
+              <View className="absolute -bottom-2 h-1 w-1 rounded-full bg-primary" />
             )}
           </InteractivePressable>
         );

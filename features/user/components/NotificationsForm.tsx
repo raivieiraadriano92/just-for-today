@@ -38,12 +38,12 @@ export function NotificationsForm() {
         showsVerticalScrollIndicator={false}
       >
         <View className="gap-3">
-          <Text className="text-text text-3xl font-semibold">
+          <Text className="text-3xl font-semibold text-text">
             {t(
               "features.user.screens.OnboardingScreen.OnboardingScreenNotifications.title",
             )}
           </Text>
-          <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+          <Text className="text-lg font-normal text-text/60 dark:text-text/80">
             {t(
               "features.user.screens.OnboardingScreen.OnboardingScreenNotifications.description",
             )}
@@ -58,9 +58,9 @@ export function NotificationsForm() {
             return (
               <View
                 key={notificationType}
-                className="bg-card gap-3 rounded-2xl p-6"
+                className="gap-3 rounded-2xl bg-card p-6"
               >
-                <Text className="text-text text-lg font-medium">
+                <Text className="text-lg font-medium text-text">
                   {t(
                     `features.user.notifications.${notificationType}.settingLabel`,
                   )}
@@ -76,7 +76,7 @@ export function NotificationsForm() {
                     }}
                   >
                     <Text
-                      className={`text-primary text-lg font-medium ${enabled ? "text-white" : "text-primary"}`}
+                      className={`text-lg font-medium text-primary ${enabled ? "text-white" : "text-primary"}`}
                     >
                       {settings.notifications[notificationType].time}
                     </Text>

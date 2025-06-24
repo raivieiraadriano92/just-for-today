@@ -27,12 +27,12 @@ export function UserNameForm() {
   return (
     <View className="flex-1 gap-12 p-6 pt-12">
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenName.title",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenName.description",
           )}
@@ -42,7 +42,7 @@ export function UserNameForm() {
         <TextInput
           autoCorrect={false}
           autoFocus
-          className="text-text text-lg font-normal"
+          className="text-lg font-normal text-text"
           defaultValue={user?.name || ""}
           onChangeText={handleOnChangeText}
           placeholder={t(

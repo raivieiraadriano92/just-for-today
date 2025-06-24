@@ -52,12 +52,12 @@ function GratitudeLogFormScreenContent() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.gratitudeLog.screens.GratitudeLogFormScreen.GratitudeLogFormScreenContent.title",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.gratitudeLog.screens.GratitudeLogFormScreen.GratitudeLogFormScreenContent.description",
           )}
@@ -66,7 +66,7 @@ function GratitudeLogFormScreenContent() {
       <View className="flex-1">
         <TextInput
           autoFocus
-          className="text-text text-lg font-normal"
+          className="text-lg font-normal text-text"
           defaultValue={payload.content}
           multiline
           onChangeText={handleOnChangeText}
@@ -111,12 +111,12 @@ function GratitudeLogFormScreenImagePicker() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.gratitudeLog.screens.GratitudeLogFormScreen.GratitudeLogFormScreenImagePicker.title",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.gratitudeLog.screens.GratitudeLogFormScreen.GratitudeLogFormScreenImagePicker.description",
           )}
@@ -124,7 +124,7 @@ function GratitudeLogFormScreenImagePicker() {
       </View>
       <View className="flex-1">
         <InteractivePressable
-          className="bg-background dark:bg-card aspect-square items-center justify-center overflow-hidden rounded-2xl"
+          className="aspect-square items-center justify-center overflow-hidden rounded-2xl bg-background dark:bg-card"
           onPress={pickImage}
         >
           {payload.images[0] ? (
@@ -187,7 +187,7 @@ function GratitudeLogFormScreenFooterControls() {
   const { handleNext, step } = useGratitudeLogFormContext();
 
   return (
-    <View className="border-border border-t-hairline bg-card justify-center py-3">
+    <View className="justify-center border-t-hairline border-border bg-card py-3">
       <Button
         className="self-center"
         label={t(step === steps.length - 1 ? "common.save" : "common.next")}
@@ -204,7 +204,7 @@ function GratitudeLogFormScreenHeaderControls() {
 
   return (
     <View className="pt-safe bg-card">
-      <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
+      <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
           <IconSymbol
             color={theme.colors.primary}
@@ -214,7 +214,7 @@ function GratitudeLogFormScreenHeaderControls() {
         </InteractivePressable>
       </View>
       <Animated.View
-        className="bg-primary h-0.5 w-10"
+        className="h-0.5 w-10 bg-primary"
         layout={LinearTransition}
         style={{
           width: (WINDOW_WIDTH / steps.length) * (step + 1),

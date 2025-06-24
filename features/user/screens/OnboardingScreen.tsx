@@ -34,17 +34,17 @@ function OnboardingScreenPrivacyMessage() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenPrivacyMessage.title",
           )}
         </Text>
-        <Text className="text-text mt-3 text-xl font-semibold">
+        <Text className="mt-3 text-xl font-semibold text-text">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenPrivacyMessage.subtitle",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenPrivacyMessage.description",
           )}
@@ -66,7 +66,7 @@ function OnboardingScreenCommitment() {
       showsVerticalScrollIndicator={false}
     >
       <View>
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.user.screens.OnboardingScreen.OnboardingScreenCommitment.title",
           )}
@@ -86,7 +86,7 @@ function OnboardingScreenCommitment() {
                   size={24}
                 />
               </View>
-              <Text className="text-text text-xl font-semibold">
+              <Text className="text-xl font-semibold text-text">
                 {t(
                   `features.user.screens.OnboardingScreen.OnboardingScreenCommitment.items.${index}`,
                 )}
@@ -142,7 +142,7 @@ function OnboardingScreenFooterControls() {
   const { handleNext, step } = useOnboardingContext();
 
   return (
-    <View className="border-border border-t-hairline bg-card justify-center py-3">
+    <View className="justify-center border-t-hairline border-border bg-card py-3">
       <Button
         className="self-center"
         label={t(
@@ -163,7 +163,7 @@ function OnboardingScreenHeaderControls() {
 
   return (
     <View className="pt-safe bg-card">
-      <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
+      <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
           <IconSymbol
             color={theme.colors.primary}
@@ -173,7 +173,7 @@ function OnboardingScreenHeaderControls() {
         </InteractivePressable>
       </View>
       <Animated.View
-        className="bg-primary h-0.5 w-10"
+        className="h-0.5 w-10 bg-primary"
         layout={LinearTransition}
         style={{
           width: (WINDOW_WIDTH / steps.length) * (step + 1),
@@ -199,7 +199,7 @@ function OnboardingScreenHandler() {
           key="successContent"
         >
           <Text style={{ fontSize: 48 }}>🎉</Text>
-          <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
+          <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
             {t("features.user.screens.OnboardingScreen.successTitle", {
               name: user?.name,
             })}

@@ -80,15 +80,15 @@ export function GratitudeLogFormSuccessScreen() {
           <Text className="text-center" style={{ fontSize: 48 }}>
             {message.emoji}
           </Text>
-          <Text className="text-text text-center text-3xl font-semibold">
+          <Text className="text-center text-3xl font-semibold text-text">
             {t(message.title)}
           </Text>
-          <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
+          <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
             {t(message.description)}
           </Text>
         </View>
       </View>
-      <View className="border-t-hairline border-border bg-card pb-safe-offset-6 items-center p-6">
+      <View className="pb-safe-offset-6 items-center border-t-hairline border-border bg-card p-6">
         <Button
           label={t(
             "features.gratitudeLog.screens.GratitudeLogFormSuccessScreen.buttonLabel",

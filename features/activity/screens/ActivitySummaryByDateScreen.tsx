@@ -145,7 +145,7 @@ export default function ActivitySummaryByDateScreen() {
       />
       <View className="flex-1">
         <View className="pt-safe bg-card">
-          <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
+          <View className="h-16 items-center justify-center border-b-hairline border-border px-6">
             <InteractivePressable
               className="self-start"
               onPress={router.back}
@@ -157,7 +157,7 @@ export default function ActivitySummaryByDateScreen() {
                 size={24}
               />
             </InteractivePressable>
-            <Text className="text-text absolute text-lg font-semibold">
+            <Text className="absolute text-lg font-semibold text-text">
               {title}
             </Text>
           </View>
@@ -168,10 +168,10 @@ export default function ActivitySummaryByDateScreen() {
         >
           <View className="max-w-sm items-center justify-center gap-3 self-center">
             <Text style={{ fontSize: 48 }}>{feedbackMessage.emoji}</Text>
-            <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
+            <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
               {t(feedbackMessage.title)}
             </Text>
-            <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
+            <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
               {t(feedbackMessage.description)}
             </Text>
           </View>
@@ -204,10 +204,10 @@ export default function ActivitySummaryByDateScreen() {
                     />
                   </View>
                   <View>
-                    <Text className="text-text text-xl font-semibold">
+                    <Text className="text-xl font-semibold text-text">
                       {t(task.title)}
                     </Text>
-                    <Text className="text-text/50 text-base font-normal">
+                    <Text className="text-base font-normal text-text/50">
                       {t(task.description)}
                     </Text>
                   </View>

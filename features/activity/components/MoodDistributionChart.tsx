@@ -56,8 +56,8 @@ export function MoodDistributionChart({
   );
 
   return (
-    <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
-      <Text className="text-primary text-lg font-bold">
+    <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+      <Text className="text-lg font-bold text-primary">
         {t("features.activity.components.MoodDistributionChart.title")}
       </Text>
       <View
@@ -79,7 +79,7 @@ export function MoodDistributionChart({
           <View key={item.mood} className="flex-1 items-center">
             <View className="w-14 items-center gap-1">
               <Text
-                className="text-text text-center text-base font-medium"
+                className="text-center text-base font-medium text-text"
                 style={{
                   color:
                     twColors[moodTypes[item.mood].color.token][
@@ -90,7 +90,7 @@ export function MoodDistributionChart({
                 {`${item.value}%`}
               </Text>
               <View
-                className={`bg-card items-center justify-center rounded-2xl border-2`}
+                className={`items-center justify-center rounded-2xl border-2 bg-card`}
                 style={{
                   height: 36,
                   width: 36,
@@ -105,7 +105,7 @@ export function MoodDistributionChart({
                 </Text>
               </View>
               <Text
-                className="text-text text-center text-sm font-medium"
+                className="text-center text-sm font-medium text-text"
                 style={{
                   color:
                     twColors[moodTypes[item.mood].color.token][

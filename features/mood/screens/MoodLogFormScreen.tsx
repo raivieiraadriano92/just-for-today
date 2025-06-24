@@ -30,12 +30,12 @@ function MoodLogFormScreenMoodPicker() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenMoodPicker.title",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenMoodPicker.description",
           )}
@@ -52,7 +52,7 @@ function MoodLogFormScreenMoodPicker() {
             >
               <View className="flex-row items-center gap-6">
                 <View
-                  className={`bg-card h-14 w-14 items-center justify-center rounded-2xl border-2`}
+                  className={`h-14 w-14 items-center justify-center rounded-2xl border-2 bg-card`}
                   style={{
                     borderColor:
                       twColors[moodTypes[moodType].color.token][
@@ -74,7 +74,7 @@ function MoodLogFormScreenMoodPicker() {
                 <View className="flex-1">
                   <View className="flex-row items-center justify-between">
                     <Text
-                      className="text-text text-xl font-semibold"
+                      className="text-xl font-semibold text-text"
                       style={{
                         color:
                           twColors[moodTypes[moodType].color.token][
@@ -98,7 +98,7 @@ function MoodLogFormScreenMoodPicker() {
                       size={24}
                     />
                   </View>
-                  <Text className="text-text/50 text-base font-normal">
+                  <Text className="text-base font-normal text-text/50">
                     {t(`features.moodLog.moodTypes.${moodType}.description`)}
                   </Text>
                 </View>
@@ -122,13 +122,13 @@ function MoodLogFormScreenFeelingsPicker() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(`features.moodLog.moodTypes.${payload.mood}.messageTitle`)}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(`features.moodLog.moodTypes.${payload.mood}.messageBody`)}
         </Text>
-        <Text className="text-text mt-3 text-xl font-semibold">
+        <Text className="mt-3 text-xl font-semibold text-text">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenFeelingsPicker.title",
           )}
@@ -190,12 +190,12 @@ function MoodLogFormScreenNote() {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-3">
-        <Text className="text-text text-3xl font-semibold">
+        <Text className="text-3xl font-semibold text-text">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenNote.title",
           )}
         </Text>
-        <Text className="text-text/60 dark:text-text/80 text-lg font-normal">
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
           {t(
             "features.moodLog.screens.MoodLogFormScreen.MoodLogFormScreenNote.description",
           )}
@@ -203,7 +203,7 @@ function MoodLogFormScreenNote() {
       </View>
       <View className="flex-1">
         <TextInput
-          className="text-text text-lg font-normal"
+          className="text-lg font-normal text-text"
           defaultValue={payload.note}
           multiline
           onChangeText={handleOnChangeText}
@@ -262,7 +262,7 @@ function MoodLogFormScreenFooterControls() {
   const { handleNext, step } = useMoodLogFormContext();
 
   return (
-    <View className="border-border border-t-hairline bg-card justify-center py-3">
+    <View className="justify-center border-t-hairline border-border bg-card py-3">
       <Button
         className="self-center"
         label={t(step === steps.length - 1 ? "common.save" : "common.next")}
@@ -279,7 +279,7 @@ function MoodLogFormScreenHeaderControls() {
 
   return (
     <View className="pt-safe bg-card">
-      <View className="border-b-hairline border-border h-16 flex-row items-center justify-start px-6">
+      <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
           <IconSymbol
             color={theme.colors.primary}
@@ -289,7 +289,7 @@ function MoodLogFormScreenHeaderControls() {
         </InteractivePressable>
       </View>
       <Animated.View
-        className="bg-primary h-0.5 w-10"
+        className="h-0.5 w-10 bg-primary"
         layout={LinearTransition}
         style={{
           width: (WINDOW_WIDTH / steps.length) * (step + 1),

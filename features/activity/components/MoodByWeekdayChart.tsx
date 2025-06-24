@@ -56,15 +56,15 @@ export function MoodByWeekdayChart({ moodLogRows }: MoodByWeekdayChartProps) {
   const data = getMoodByWeekdayData(moodLogRows, theme.dark);
 
   return (
-    <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
-      <Text className="text-primary text-lg font-bold">
+    <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+      <Text className="text-lg font-bold text-primary">
         {t("features.activity.components.MoodByWeekdayChart.title")}
       </Text>
       <View className="flex-row gap-3">
         <View className="justify-between pb-8">
           {moodTypesList.map((moodType) => (
             <View
-              className={`bg-card items-center justify-center rounded-2xl border-2`}
+              className={`items-center justify-center rounded-2xl border-2 bg-card`}
               key={moodType}
               style={{
                 height: 36,
@@ -99,7 +99,7 @@ export function MoodByWeekdayChart({ moodLogRows }: MoodByWeekdayChartProps) {
             {data.map((item) => (
               <View className="flex-1 items-center" key={item.label}>
                 <Text
-                  className="text-text text-sm font-medium"
+                  className="text-sm font-medium text-text"
                   style={{
                     color: item.svg.fill,
                     width: 40,

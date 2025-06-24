@@ -334,8 +334,8 @@ export function StatsScreen() {
   return (
     <View className="flex-1">
       <View className="pt-safe bg-card">
-        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
-          <Text className="text-text absolute text-lg font-semibold">
+        <View className="h-16 items-center justify-center border-b-hairline border-border px-6">
+          <Text className="absolute text-lg font-semibold text-text">
             {t("features.activity.screens.StatsScreen.title")}
           </Text>
         </View>

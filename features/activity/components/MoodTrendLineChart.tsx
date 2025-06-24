@@ -57,15 +57,15 @@ export function MoodTrendLineChart({
   const { t } = useTranslation();
 
   return (
-    <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
-      <Text className="text-primary text-lg font-bold">
+    <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+      <Text className="text-lg font-bold text-primary">
         {t("features.activity.components.MoodTrendLineChart.title")}
       </Text>
       <View className="flex-row">
         <View className="justify-start gap-1 pt-10">
           {moodTypesList.map((moodType) => (
             <View
-              className={`bg-card items-center justify-center rounded-2xl border-2`}
+              className={`items-center justify-center rounded-2xl border-2 bg-card`}
               key={moodType}
               style={{
                 height: 36,

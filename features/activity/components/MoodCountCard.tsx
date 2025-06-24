@@ -47,8 +47,8 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
   const totalCount = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
-      <Text className="text-primary text-lg font-bold">
+    <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+      <Text className="text-lg font-bold text-primary">
         {t("features.activity.components.MoodCountCard.title")}
       </Text>
       <View style={{ height: 100 }}>
@@ -65,7 +65,7 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
           <View key={item.mood} className="flex-1 items-center">
             <View className="w-14 items-center gap-1">
               <Text
-                className="text-text text-center text-base font-medium"
+                className="text-center text-base font-medium text-text"
                 style={{
                   color:
                     twColors[moodTypes[item.mood].color.token][
@@ -76,7 +76,7 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
                 {`${item.value}x`}
               </Text>
               <View
-                className={`bg-card h-10 w-10 items-center justify-center rounded-2xl border-2`}
+                className={`h-10 w-10 items-center justify-center rounded-2xl border-2 bg-card`}
                 style={{
                   borderColor:
                     twColors[moodTypes[item.mood].color.token][
@@ -89,7 +89,7 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
                 </Text>
               </View>
               <Text
-                className="text-text text-center text-sm font-medium"
+                className="text-center text-sm font-medium text-text"
                 style={{
                   color:
                     twColors[moodTypes[item.mood].color.token][
@@ -103,7 +103,7 @@ export function MoodCountCard({ moodLogRows }: MoodCountCardProps) {
           </View>
         ))}
       </View>
-      <Text className="text-primary text-lg font-bold">
+      <Text className="text-lg font-bold text-primary">
         {t("features.activity.components.MoodCountCard.totalLogs", {
           count: totalCount,
         })}
