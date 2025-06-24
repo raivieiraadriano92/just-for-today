@@ -7,7 +7,7 @@ import { create } from "zustand";
 
 export type IntentionRow = typeof intentionsTable.$inferSelect;
 
-type IntentionPayload = Pick<IntentionRow, "intention">;
+export type IntentionPayload = Pick<IntentionRow, "intention">;
 
 type TodaysIntentionStoreState = {
   todaysIntention: IntentionRow | null;

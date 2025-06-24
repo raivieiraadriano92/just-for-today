@@ -20,7 +20,7 @@ export function IntentionGreetingCard() {
 
   if (todaysIntention) {
     return (
-      <View className="bg-card flex-1 items-center justify-center gap-3 rounded-2xl p-6">
+      <View className="flex-1 items-center justify-center gap-3 rounded-2xl bg-card p-6">
         <View className="absolute left-6 top-6 opacity-10 dark:opacity-30">
           <IconSymbol
             color={theme.colors.text}
@@ -46,10 +46,10 @@ export function IntentionGreetingCard() {
             </InteractivePressable>
           </Link>
         </View>
-        <Text className="text-text text-center text-2xl font-medium leading-relaxed">
+        <Text className="text-center text-2xl font-medium leading-relaxed text-text">
           {`${t("features.intention.components.IntentionGreetingCard.intentionPrefix")} `}
         </Text>
-        <Text className="text-text text-center text-3xl font-bold leading-relaxed">
+        <Text className="text-center text-3xl font-bold leading-relaxed text-text">
           {`${todaysIntention.intention}`}
         </Text>
       </View>
@@ -57,7 +57,7 @@ export function IntentionGreetingCard() {
   }
 
   return (
-    <View className="bg-card flex-1 items-center justify-center gap-6 rounded-2xl p-6">
+    <View className="flex-1 items-center justify-center gap-6 rounded-2xl bg-card p-6">
       <View className="absolute left-6 top-6 opacity-10">
         <IconSymbol color={theme.colors.text} name="quote.opening" size={80} />
       </View>
@@ -66,16 +66,16 @@ export function IntentionGreetingCard() {
       </View>
       <View className="items-center gap-3">
         <View className="flex-row items-center gap-2">
-          <Text className="text-text text-center text-2xl font-medium leading-relaxed">
+          <Text className="text-center text-2xl font-medium leading-relaxed text-text">
             {t("features.intention.components.IntentionGreetingCard.greeting", {
               name: user?.name,
             })}
           </Text>
           <HelloWave />
         </View>
-        <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
+        <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
           {`${t("features.intention.components.IntentionGreetingCard.quote.part1")} `}
-          <Text className="text-text text-center text-3xl font-bold leading-relaxed">
+          <Text className="text-center text-3xl font-bold leading-relaxed text-text">
             {t(
               "features.intention.components.IntentionGreetingCard.quote.part2",
             )}

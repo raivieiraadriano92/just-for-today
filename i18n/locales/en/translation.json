@@ -154,9 +154,20 @@
       },
       "screens": {
         "IntentionFormScreen": {
-          "title": "Set your intention for today",
-          "description": "You have the power to shape your day. Set an intention that supports who you want to be.",
-          "placeholder": "Just for Today, I choose..."
+          "finishButtonLabel": "🖐 High five to commit",
+          "IntentionFormScreenIntro": {
+            "title": "{{name}}, this is your moment",
+            "description": "You have the power to shape your day. Set an intention that supports who you want to be."
+          },
+          "IntentionFormScreenIntention": {
+            "title": "Just for Today",
+            "inputPlaceholder": "I choose..."
+          },
+          "IntentionFormScreenCommit": {
+            "title": "It's time to commit",
+            "subtitle": "Read out loud...",
+            "message": "My name is {{name}} and Just for Today I choose {{intention}}."
+          }
         },
         "IntentionFormSuccessScreen": {
           "moodQuestion": "Let's check in with your mood?",

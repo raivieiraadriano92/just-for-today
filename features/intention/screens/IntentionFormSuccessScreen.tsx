@@ -75,21 +75,21 @@ export default function IntentionFormSuccessScreen() {
             <Text className="text-center" style={{ fontSize: 48 }}>
               {message.emoji}
             </Text>
-            <Text className="text-text text-center text-3xl font-semibold">
+            <Text className="text-center text-3xl font-semibold text-text">
               {t(message.title)}
             </Text>
-            <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
+            <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
               {t(message.description)}
             </Text>
           </View>
-          <Text className="text-text text-center text-xl font-semibold">
+          <Text className="text-center text-xl font-semibold text-text">
             {t(
               "features.intention.screens.IntentionFormSuccessScreen.moodQuestion",
             )}
           </Text>
         </View>
       </View>
-      <View className="border-t-hairline border-border bg-card pb-safe-offset-6 flex-row gap-6 p-6">
+      <View className="pb-safe-offset-6 flex-row gap-6 border-t-hairline border-border bg-card p-6">
         <Button
           className="flex-1"
           label={t("common.notNow")}
