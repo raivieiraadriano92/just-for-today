@@ -69,7 +69,7 @@ export function MoodDistributionChart({
           data={pieData}
           radius={CHART_RADIUS}
           showText
-          textColor="white"
+          textColor={theme.dark ? theme.colors.background : theme.colors.text}
           textSize={12}
           showValuesAsLabels
         />
@@ -119,14 +119,6 @@ export function MoodDistributionChart({
           </View>
         ))}
       </View>
-      {/* <View className="mt-4 space-y-2">
-        {getMoodDistributionData(data).map((item) => (
-          <Text key={item.mood} className="text-sm">
-            <Text style={{ color: item.color }}>{item.label}:</Text>{" "}
-            {item.value}%
-          </Text>
-        ))}
-      </View> */}
     </View>
   );
 }
