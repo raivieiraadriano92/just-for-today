@@ -18,10 +18,10 @@ export default function WelcomeScreen() {
           style={{ width: LOGO_SIZE, height: LOGO_SIZE }}
         />
         <View className="max-w-sm gap-2 self-center">
-          <Text className="text-text text-center text-3xl font-bold">
+          <Text className="text-center text-3xl font-bold text-text">
             {t("common.justForToday")}
           </Text>
-          <Text className="text-text/60 text-center text-lg font-normal">
+          <Text className="text-center text-lg font-normal text-text/60">
             {t("app.welcome.welcomeMessage")}
           </Text>
         </View>

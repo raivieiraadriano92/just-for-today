@@ -100,7 +100,8 @@ const theme = {
 export default Sentry.wrap(function RootLayout() {
   const { colorScheme } = useColorScheme();
 
-  const { success, error } = useMigrations(drizzleDb, migrations);
+  // { success, error }
+  useMigrations(drizzleDb, migrations); // Apply migrations to the database
 
   // if (!loaded) {
   //   // Async font loading only occurs in development.

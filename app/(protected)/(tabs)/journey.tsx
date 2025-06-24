@@ -139,8 +139,8 @@ export default function JourneyScreen() {
   return (
     <View className="flex-1">
       <View className="pt-safe bg-card">
-        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
-          <Text className="text-text absolute text-lg font-semibold">
+        <View className="h-16 items-center justify-center border-b-hairline border-border px-6">
+          <Text className="absolute text-lg font-semibold text-text">
             {t("app.journey.title")}
           </Text>
         </View>
@@ -151,7 +151,7 @@ export default function JourneyScreen() {
         ListFooterComponent={() =>
           data.length > 7 ? (
             <View className="items-center gap-3 py-6">
-              <Text className="text-text/60 dark:text-text/80 text-base font-normal">
+              <Text className="text-base font-normal text-text/60 dark:text-text/80">
                 {t("app.journey.endOfListTitle")}
               </Text>
               <Text style={{ fontSize: 20 }}>✌️</Text>
@@ -176,8 +176,8 @@ export default function JourneyScreen() {
 
           return (
             <View className="px-6">
-              <View className="bg-card flex-1 gap-6 rounded-2xl p-6">
-                <Text className="text-primary text-base font-semibold">
+              <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+                <Text className="text-base font-semibold text-primary">
                   {title}
                 </Text>
                 <View className="gap-6">
@@ -186,10 +186,10 @@ export default function JourneyScreen() {
                       case "intention":
                         return (
                           <View className="gap-2" key={entry.date}>
-                            <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
+                            <Text className="text-base font-semibold text-text/60 dark:text-text/80">
                               {t("app.journey.intentionTitle")}
                             </Text>
-                            <Text className="text-text text-2xl font-bold">
+                            <Text className="text-2xl font-bold text-text">
                               {`“${entry.intention}”`}
                             </Text>
                           </View>
@@ -198,14 +198,14 @@ export default function JourneyScreen() {
                         return (
                           <View className="gap-2" key={entry.id}>
                             <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-primary text-base font-semibold">
+                              <Text className="text-base font-semibold text-primary">
                                 {format(entry.time, "h:mm a")}
                               </Text>
-                              <View className="border-hairline border-border flex-1" />
+                              <View className="flex-1 border-hairline border-border" />
                             </View>
                             <View className="flex-row gap-6">
                               <View
-                                className={`bg-card h-14 w-14 items-center justify-center rounded-2xl border-2`}
+                                className={`h-14 w-14 items-center justify-center rounded-2xl border-2 bg-card`}
                                 style={{
                                   borderColor:
                                     twColors[moodTypes[entry.mood].color.token][
@@ -222,7 +222,7 @@ export default function JourneyScreen() {
                               <View className="flex-1 gap-2">
                                 <View className="flex-row items-center justify-between">
                                   <Text
-                                    className="text-text text-xl font-semibold"
+                                    className="text-xl font-semibold text-text"
                                     style={{
                                       color:
                                         twColors[
@@ -249,7 +249,7 @@ export default function JourneyScreen() {
                                   </Link>
                                 </View>
                                 {!!entry.note && (
-                                  <Text className="text-text text-base">
+                                  <Text className="text-base text-text">
                                     {`“${entry.note}”`}
                                   </Text>
                                 )}
@@ -287,14 +287,14 @@ export default function JourneyScreen() {
                         return (
                           <View className="gap-2" key={entry.id}>
                             <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-primary text-base font-semibold">
+                              <Text className="text-base font-semibold text-primary">
                                 {format(entry.time, "h:mm a")}
                               </Text>
-                              <View className="border-hairline border-border flex-1" />
+                              <View className="flex-1 border-hairline border-border" />
                             </View>
                             <View className="gap-2">
                               <View className="flex-row items-center justify-between">
-                                <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
+                                <Text className="text-base font-semibold text-text/60 dark:text-text/80">
                                   {`${t("app.journey.gratitudeLogTitle")} 🙏`}
                                 </Text>
                                 <Link asChild href={`/gratitude/${entry.id}`}>
@@ -307,7 +307,7 @@ export default function JourneyScreen() {
                                   </InteractivePressable>
                                 </Link>
                               </View>
-                              <Text className="text-text text-2xl font-bold">
+                              <Text className="text-2xl font-bold text-text">
                                 {`“${entry.content}”`}
                               </Text>
                               {!!entry.images[0] && (
@@ -324,14 +324,14 @@ export default function JourneyScreen() {
                         return (
                           <View className="gap-2" key={entry.id}>
                             <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-primary text-base font-semibold">
+                              <Text className="text-base font-semibold text-primary">
                                 {format(entry.time, "h:mm a")}
                               </Text>
-                              <View className="border-hairline border-border flex-1" />
+                              <View className="flex-1 border-hairline border-border" />
                             </View>
                             <View className="gap-2">
                               <View className="flex-row items-center justify-between">
-                                <Text className="text-text/60 dark:text-text/80 text-base font-semibold">
+                                <Text className="text-base font-semibold text-text/60 dark:text-text/80">
                                   {`${t("app.journey.reflectionTitle")} 📝`}
                                 </Text>
                                 <Link asChild href={`/reflection/${entry.id}`}>
@@ -344,7 +344,7 @@ export default function JourneyScreen() {
                                   </InteractivePressable>
                                 </Link>
                               </View>
-                              <Text className="text-text text-2xl font-bold">
+                              <Text className="text-2xl font-bold text-text">
                                 {`“${entry.content}”`}
                               </Text>
                               {!!entry.images[0] && (

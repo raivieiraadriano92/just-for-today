@@ -15,7 +15,7 @@ export default function UserNameScreen() {
   return (
     <>
       <View className="pt-safe bg-card">
-        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
+        <View className="h-16 items-center justify-center border-b-hairline border-border px-6">
           <InteractivePressable
             className="self-start"
             onPress={router.back}
@@ -30,7 +30,7 @@ export default function UserNameScreen() {
         </View>
       </View>
       <UserNameForm />
-      <View className="border-border border-t-hairline bg-card pb-safe-offset-3 justify-center pt-3">
+      <View className="pb-safe-offset-3 justify-center border-t-hairline border-border bg-card pt-3">
         <Button
           className="self-center"
           label={t("common.save")}

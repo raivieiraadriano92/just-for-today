@@ -25,7 +25,7 @@ export default function HomeScreen() {
               name="flame.fill"
               size={24}
             />
-            <Text className="text-primary text-base font-medium">
+            <Text className="text-base font-medium text-primary">
               {streak.currentStreak}
             </Text>
           </InteractivePressable>
@@ -68,13 +68,13 @@ export default function HomeScreen() {
           },
         ].map((item) => (
           <InteractivePressable
-            className="bg-card h-16 flex-row items-center gap-4 rounded-2xl px-4"
+            className="h-16 flex-row items-center gap-4 rounded-2xl bg-card px-4"
             key={item.label}
             onPress={() => router.push(item.href)}
           >
             <View className="flex-row items-center justify-center gap-2">
               <Text style={{ fontSize: 16 }}>{t(item.icon)}</Text>
-              <Text className="text-text text-lg font-medium">
+              <Text className="text-lg font-medium text-text">
                 {t(item.label)}
               </Text>
             </View>
