@@ -47,7 +47,8 @@
           "project": "just-for-today",
           "organization": "monsters-sa"
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

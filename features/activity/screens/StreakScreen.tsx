@@ -17,7 +17,7 @@ export default function StreakScreen() {
   return (
     <View className="flex-1">
       <View className="pt-safe bg-card">
-        <View className="border-b-hairline border-border h-16 items-center justify-center px-6">
+        <View className="h-16 items-center justify-center border-b-hairline border-border px-6">
           <InteractivePressable
             className="self-start"
             onPress={router.back}
@@ -41,7 +41,7 @@ export default function StreakScreen() {
               `features.activity.screens.StreakScreen.states.${streak.state}.emoji`,
             )}
           </Text>
-          <Text className="text-text text-center text-3xl font-semibold leading-relaxed">
+          <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
             {t(
               `features.activity.screens.StreakScreen.states.${streak.state}.title`,
               {
@@ -51,7 +51,7 @@ export default function StreakScreen() {
               },
             )}
           </Text>
-          <Text className="text-text/60 dark:text-text/80 text-center text-lg font-normal">
+          <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
             {t(
               `features.activity.screens.StreakScreen.states.${streak.state}.description`,
               {
@@ -64,7 +64,12 @@ export default function StreakScreen() {
         {(streak.state === "no_streak_yet" ||
           streak.state === "streak_broken") && (
           <Link asChild href="/intention">
-            <Button className="self-center" label="Just for Today, I will..." />
+            <Button
+              className="self-center"
+              label={t(
+                "features.activity.screens.StreakScreen.intentionButtonLabel",
+              )}
+            />
           </Link>
         )}
         <View className="gap-3">
@@ -109,13 +114,13 @@ export default function StreakScreen() {
             <View className="flex-row gap-3" key={rowIndex}>
               {row.map((item) => (
                 <View
-                  className="border-border border-hairline bg-card flex-1 gap-1 rounded-2xl p-6"
+                  className="flex-1 gap-1 rounded-2xl border-hairline border-border bg-card p-6"
                   key={item.title}
                 >
-                  <Text className="text-text text-3xl font-semibold">
+                  <Text className="text-3xl font-semibold text-text">
                     {item.count}
                   </Text>
-                  <Text className="text-text/50 text-md font-medium">
+                  <Text className="text-md font-medium text-text/50">
                     {t(item.title, { count: item.count })}
                   </Text>
                 </View>
