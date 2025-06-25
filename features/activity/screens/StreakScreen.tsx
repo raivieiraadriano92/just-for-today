@@ -5,6 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import { Link, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import { Counters } from "../components/Counters";
 import { useActivityStore } from "../store/activityStore";
 
 export default function StreakScreen() {
@@ -72,62 +73,12 @@ export default function StreakScreen() {
             />
           </Link>
         )}
-        <View className="gap-3">
-          {[
-            [
-              {
-                count: counters.intentions,
-                title:
-                  "features.activity.screens.StreakScreen.counters.intentions",
-              },
-              {
-                count: counters.moodLogs,
-                title:
-                  "features.activity.screens.StreakScreen.counters.moodLogs",
-              },
-            ],
-            [
-              {
-                count: counters.gratitudeLogs,
-                title:
-                  "features.activity.screens.StreakScreen.counters.gratitudeLogs",
-              },
-              {
-                count: counters.reflections,
-                title:
-                  "features.activity.screens.StreakScreen.counters.reflections",
-              },
-            ],
-            // [
-            //   {
-            //     count: counters.wordsWritten,
-            //     title:
-            //       "features.activity.screens.StreakScreen.counters.wordsWritten",
-            //   },
-            //   {
-            //     count: streak.longestStreak,
-            //     title:
-            //       "features.activity.screens.StreakScreen.counters.longestStreak",
-            //   },
-            // ],
-          ].map((row, rowIndex) => (
-            <View className="flex-row gap-3" key={rowIndex}>
-              {row.map((item) => (
-                <View
-                  className="flex-1 gap-1 rounded-2xl border-hairline border-border bg-card p-6"
-                  key={item.title}
-                >
-                  <Text className="text-3xl font-semibold text-text">
-                    {item.count || "-"}
-                  </Text>
-                  <Text className="text-md font-medium text-text/50">
-                    {t(item.title, { count: item.count })}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          ))}
-        </View>
+        <Counters
+          intentions={counters.intentions}
+          moodLogs={counters.moodLogs}
+          gratitudeLogs={counters.gratitudeLogs}
+          reflections={counters.reflections}
+        />
       </ScrollView>
     </View>
   );

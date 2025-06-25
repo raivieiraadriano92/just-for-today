@@ -31,7 +31,6 @@ type ActivityStoreState = {
     moodLogs: number;
     gratitudeLogs: number;
     reflections: number;
-    wordsWritten: number;
   };
   streak: {
     loading: boolean;
@@ -150,7 +149,6 @@ export const useActivityStore = create<ActivityStore>()((set, get) => ({
         moodLogs: moodLogs.length,
         gratitudeLogs: gratitudeLogs.length,
         reflections: reflections.length,
-        wordsWritten,
       },
     });
 

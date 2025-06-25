@@ -1,9 +1,18 @@
 import { Button } from "@/components/ui/Button";
 import { drizzleDb } from "@/db/client";
-import { moodLogsTable } from "@/db/schema";
+import {
+  gratitudeLogsTable,
+  intentionsTable,
+  moodLogsTable,
+  reflectionsTable,
+} from "@/db/schema";
+import { GratitudeLogRow } from "@/features/gratitude/store/gratitudeStore";
+import { IntentionRow } from "@/features/intention/store/todaysIntentionStore";
 import { MoodLogRow, MoodType } from "@/features/mood/store/moodLogStore";
+import { ReflectionRow } from "@/features/reflection/store/reflectionStore";
 import {
   endOfToday,
+  format,
   startOfDay,
   startOfMonth,
   startOfYear,
@@ -14,6 +23,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import { Counters } from "../components/Counters";
 import { MoodByTimeOfDayChart } from "../components/MoodByTimeOfDayChart";
 import { MoodByWeekdayChart } from "../components/MoodByWeekdayChart";
 import { MoodCountCard } from "../components/MoodCountCard";
@@ -24,7 +34,7 @@ type FilterType = "7d" | "month" | "year";
 
 const filterOptions: FilterType[] = ["7d", "month", "year"];
 
-const fetchMoodLogs = async (filter: FilterType) => {
+const fetchData = async (filter: FilterType) => {
   const today = endOfToday().toISOString();
 
   let from = startOfDay(subDays(new Date(), 6)).toISOString();
@@ -37,21 +47,61 @@ const fetchMoodLogs = async (filter: FilterType) => {
     from = startOfYear(new Date()).toISOString();
   }
 
-  const rows = await drizzleDb
-    .select()
-    .from(moodLogsTable)
-    .where(
-      and(
-        gte(moodLogsTable.datetime, from),
-        lte(moodLogsTable.datetime, today),
+  const [intentions, moodLogs, gratitudeLogs, reflections] = await Promise.all([
+    drizzleDb
+      .select()
+      .from(intentionsTable)
+      .where(
+        and(
+          gte(intentionsTable.date, format(from, "yyyy-MM-dd")),
+          lte(intentionsTable.date, format(today, "yyyy-MM-dd")),
+        ),
       ),
-    );
+    drizzleDb
+      .select()
+      .from(moodLogsTable)
+      .where(
+        and(
+          gte(moodLogsTable.datetime, from),
+          lte(moodLogsTable.datetime, today),
+        ),
+      ),
+    drizzleDb
+      .select()
+      .from(gratitudeLogsTable)
+      .where(
+        and(
+          gte(gratitudeLogsTable.datetime, from),
+          lte(gratitudeLogsTable.datetime, today),
+        ),
+      ),
+    drizzleDb
+      .select()
+      .from(reflectionsTable)
+      .where(
+        and(
+          gte(reflectionsTable.datetime, from),
+          lte(reflectionsTable.datetime, today),
+        ),
+      ),
+  ]);
 
-  return rows.map((row) => ({
-    ...row,
-    mood: row.mood as MoodType,
-    feelings: row.feelings.split(","),
-  }));
+  return {
+    intentions,
+    moodLogs: moodLogs.map((row) => ({
+      ...row,
+      mood: row.mood as MoodType,
+      feelings: row.feelings.split(","),
+    })),
+    gratitudeLogs: gratitudeLogs.map((row) => ({
+      ...row,
+      images: row.images.split(","),
+    })),
+    reflections: reflections.map((row) => ({
+      ...row,
+      images: row.images.split(","),
+    })),
+  };
 };
 
 export function StatsScreen() {
@@ -59,30 +109,21 @@ export function StatsScreen() {
 
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("7d");
 
-  const [moodLogRows, setMoodLogRows] = useState<MoodLogRow[]>([]);
-
-  // const filteredData = mockData.filter((log) => {
-  //   const logDate = parseISO(log.datetime);
-  //   const today = new Date();
-
-  //   switch (selectedFilter) {
-  //     case "7d":
-  //       // return logDate >= new Date(today.setDate(today.getDate() - 7));
-  //       return isAfter(logDate, new Date(today.setDate(today.getDate() - 6)));
-  //     case "month":
-  //       // return logDate >= new Date(today.setMonth(today.getMonth() - 1));
-  //       return format(logDate, "MM/yyyy") === format(today, "MM/yyyy");
-  //     case "year":
-  //       // return logDate >= new Date(today.setFullYear(today.getFullYear() - 1));
-  //       return format(logDate, "yyyy") === format(today, "yyyy");
-  //     default:
-  //       return true;
-  //   }
-  // });
+  const [data, setData] = useState<{
+    intentions: IntentionRow[];
+    moodLogs: MoodLogRow[];
+    gratitudeLogs: GratitudeLogRow[];
+    reflections: ReflectionRow[];
+  }>({
+    intentions: [],
+    moodLogs: [],
+    gratitudeLogs: [],
+    reflections: [],
+  });
 
   useFocusEffect(
     useCallback(() => {
-      fetchMoodLogs(selectedFilter).then(setMoodLogRows);
+      fetchData(selectedFilter).then(setData);
     }, [selectedFilter]),
   );
 
@@ -111,25 +152,31 @@ export function StatsScreen() {
             />
           ))}
         </View>
+        <Counters
+          intentions={data.intentions.length}
+          moodLogs={data.moodLogs.length}
+          gratitudeLogs={data.gratitudeLogs.length}
+          reflections={data.reflections.length}
+        />
         <MoodTrendLineChart
-          moodLogRows={moodLogRows}
+          moodLogRows={data.moodLogs}
           period={selectedFilter}
           // key={`MoodTrendLineChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodDistributionChart
-          moodLogRows={moodLogRows}
+          moodLogRows={data.moodLogs}
           // key={`MoodDistributionChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodCountCard
-          moodLogRows={moodLogRows}
+          moodLogRows={data.moodLogs}
           // key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodByWeekdayChart
-          moodLogRows={moodLogRows}
+          moodLogRows={data.moodLogs}
           // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodByTimeOfDayChart
-          moodLogRows={moodLogRows}
+          moodLogRows={data.moodLogs}
           // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
       </ScrollView>
