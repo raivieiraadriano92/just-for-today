@@ -84,7 +84,7 @@ export const useReflectionStore = create<ReflectionStore>()((set, get) => ({
       .insert(reflectionsTable)
       .values({ ...newRow, images: payload.images.join(",") });
 
-    Emitter.emit("reflection:changed", { type: "insert" });
+    Emitter.emit("reflection:created");
 
     //   set((state) => ({
     //     data: [...newRows, ...state.data],
@@ -103,7 +103,7 @@ export const useReflectionStore = create<ReflectionStore>()((set, get) => ({
       .set({ ...updatedPayload, images: payload.images.join(",") })
       .where(eq(reflectionsTable.id, id));
 
-    Emitter.emit("reflection:changed", { type: "update" });
+    Emitter.emit("reflection:updated");
 
     //   set((state) => ({
     //     data: state.data.map((row) =>
@@ -114,7 +114,7 @@ export const useReflectionStore = create<ReflectionStore>()((set, get) => ({
   deleteById: async (id) => {
     await drizzleDb.delete(reflectionsTable).where(eq(reflectionsTable.id, id));
 
-    Emitter.emit("reflection:changed", { type: "delete" });
+    Emitter.emit("reflection:deleted");
 
     //   set((state) => ({
     //     data: state.data.filter((row) => row.id !== id),

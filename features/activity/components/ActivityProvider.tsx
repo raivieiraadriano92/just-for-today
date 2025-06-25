@@ -7,6 +7,7 @@ import {
   useEffect,
 } from "react";
 import { AppState, AppStateStatus } from "react-native";
+import { customEvent } from "vexo-analytics";
 import { useActivityStore } from "../store/activityStore";
 
 export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
@@ -54,15 +55,34 @@ export const ActivityProvider: FunctionComponent<PropsWithChildren> = ({
   // This ensures that the activity data is always up-to-date when these events occur
   useEffect(() => {
     const events: EventKey[] = [
-      "intention:changed",
-      "moodLog:changed",
-      "gratitudeLog:changed",
-      "reflection:changed",
+      "intention:created",
+      "intention:updated",
+      "intention:deleted",
+      "moodLog:created",
+      "moodLog:updated",
+      "moodLog:deleted",
+      "gratitudeLog:created",
+      "gratitudeLog:updated",
+      "gratitudeLog:deleted",
+      "reflection:created",
+      "reflection:updated",
+      "reflection:deleted",
     ];
 
     Emitter.onMany(events, (event, payload) => {
-      console.log(`Event received: ${event}`, payload);
+      console.log(`Event received: ${event}`);
       loadActivityData();
+
+      if (
+        [
+          "intention:created",
+          "moodLog:created",
+          "gratitudeLog:created",
+          "reflection:created",
+        ].includes(event)
+      ) {
+        customEvent(event, {});
+      }
     });
 
     return () => {

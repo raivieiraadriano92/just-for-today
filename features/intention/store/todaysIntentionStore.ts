@@ -65,7 +65,7 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
 
       await drizzleDb.insert(intentionsTable).values(newRow);
 
-      Emitter.emit("intention:changed", { type: "insert" });
+      Emitter.emit("intention:created");
 
       set(() => ({
         todaysIntention: newRow,
@@ -89,7 +89,7 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
         .set(updatedPayload)
         .where(eq(intentionsTable.date, todaysIntention.date));
 
-      Emitter.emit("intention:changed", { type: "update" });
+      Emitter.emit("intention:updated");
 
       set(() => ({
         todaysIntention: {

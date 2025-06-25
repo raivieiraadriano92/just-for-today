@@ -85,7 +85,7 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
       .insert(gratitudeLogsTable)
       .values({ ...newRow, images: payload.images.join(",") });
 
-    Emitter.emit("gratitudeLog:changed", { type: "insert" });
+    Emitter.emit("gratitudeLog:created");
 
     //   set((state) => ({
     //     data: [...newRows, ...state.data],
@@ -104,7 +104,7 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
       .set({ ...updatedPayload, images: payload.images.join(",") })
       .where(eq(gratitudeLogsTable.id, id));
 
-    Emitter.emit("gratitudeLog:changed", { type: "update" });
+    Emitter.emit("gratitudeLog:updated");
 
     //   set((state) => ({
     //     data: state.data.map((row) =>
@@ -117,7 +117,7 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
       .delete(gratitudeLogsTable)
       .where(eq(gratitudeLogsTable.id, id));
 
-    Emitter.emit("gratitudeLog:changed", { type: "delete" });
+    Emitter.emit("gratitudeLog:deleted");
 
     //   set((state) => ({
     //     data: state.data.filter((row) => row.id !== id),

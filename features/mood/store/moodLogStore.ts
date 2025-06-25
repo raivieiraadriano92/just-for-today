@@ -89,7 +89,7 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
       .insert(moodLogsTable)
       .values({ ...newRow, feelings: newRow.feelings.join(",") });
 
-    Emitter.emit("moodLog:changed", { type: "insert" });
+    Emitter.emit("moodLog:created");
 
     // set((state) => ({
     //   data: [newRow, ...state.data],
@@ -103,7 +103,7 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
       .set({ ...updatedPayload, feelings: updatedPayload.feelings.join(",") })
       .where(eq(moodLogsTable.id, id));
 
-    Emitter.emit("moodLog:changed", { type: "update" });
+    Emitter.emit("moodLog:updated");
 
     // set((state) => ({
     //   data: state.data.map((row) =>
@@ -114,7 +114,7 @@ export const useMoodLogStore = create<MoodLogStore>()((set, get) => ({
   deleteById: async (id) => {
     await drizzleDb.delete(moodLogsTable).where(eq(moodLogsTable.id, id));
 
-    Emitter.emit("moodLog:changed", { type: "delete" });
+    Emitter.emit("moodLog:deleted");
 
     // set((state) => ({
     //   data: state.data.filter((row) => row.id !== id),
