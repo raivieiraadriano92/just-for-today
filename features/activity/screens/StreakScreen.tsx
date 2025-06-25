@@ -118,7 +118,7 @@ export default function StreakScreen() {
                   key={item.title}
                 >
                   <Text className="text-3xl font-semibold text-text">
-                    {item.count}
+                    {item.count || "-"}
                   </Text>
                   <Text className="text-md font-medium text-text/50">
                     {t(item.title, { count: item.count })}

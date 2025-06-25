@@ -58,9 +58,14 @@ export function MoodTrendLineChart({
 
   return (
     <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
-      <Text className="text-lg font-bold text-primary">
-        {t("features.activity.components.MoodTrendLineChart.title")}
-      </Text>
+      <View className="gap-1">
+        <Text className="text-lg font-bold text-primary">
+          {t("features.activity.components.MoodTrendLineChart.title")}
+        </Text>
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
+          {t("features.activity.components.MoodTrendLineChart.description")}
+        </Text>
+      </View>
       <View className="flex-row">
         <View className="justify-start gap-1 pt-10">
           {moodTypesList.map((moodType) => (
@@ -82,7 +87,7 @@ export function MoodTrendLineChart({
         </View>
         <View className="flex-1 overflow-hidden">
           <LineChart
-            isAnimated
+            // isAnimated
             initialSpacing={0}
             yAxisColor={theme.colors.border}
             xAxisColor={theme.colors.border}
@@ -101,7 +106,7 @@ export function MoodTrendLineChart({
             yAxisTextStyle={{ fontSize: 16 }}
             // yAxisLabelTexts={[" ", " ", " ", " ", " ", " ", " "]}
             hideYAxisText
-            label
+            // label
             spacing={80}
             xAxisLabelTextStyle={{
               marginLeft: 25,

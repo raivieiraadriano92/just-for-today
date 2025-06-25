@@ -7,29 +7,58 @@ import { Text, View } from "react-native";
 import { BarChart } from "react-native-svg-charts";
 import twColors from "tailwindcss/colors";
 
-type MoodByWeekdayChartProps = {
+type MoodByTimeOfDayChartProps = {
   moodLogRows: MoodLogRow[];
 };
 
-const weekdayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const timeSlots = [
+  {
+    label: "features.activity.components.MoodByTimeOfDayChart.morning",
+    start: 5,
+    end: 11,
+  }, // 5am–11:59am
+  {
+    label: "features.activity.components.MoodByTimeOfDayChart.afternoon",
+    start: 12,
+    end: 17,
+  }, // 12pm–5:59pm
+  {
+    label: "features.activity.components.MoodByTimeOfDayChart.evening",
+    start: 18,
+    end: 21,
+  }, // 6pm–9:59pm
+  {
+    label: "features.activity.components.MoodByTimeOfDayChart.night",
+    start: 22,
+    end: 4,
+  }, // 10pm–4:59am (wraps around)
+];
 
-function getMoodByWeekdayData(logs: MoodLogRow[], isDark = false) {
-  const grouped: Record<number, number[]> = {};
+function getMoodByTimeOfDayData(logs: MoodLogRow[], isDark = false) {
+  const groups: Record<string, number[]> = {};
 
   logs.forEach((log) => {
     const date =
       typeof log.datetime === "string"
         ? parseISO(log.datetime)
         : new Date(log.datetime);
-    const weekday = date.getDay(); // 0 = Sun, 6 = Sat
-    if (!grouped[weekday]) grouped[weekday] = [];
-    grouped[weekday].push(moodTypes[log.mood].value);
+    const hour = date.getHours();
+
+    const slot = timeSlots.find(({ start, end, label }) => {
+      if (start < end) return hour >= start && hour <= end;
+      else return hour >= start || hour <= end; // for Night (22–4)
+    });
+
+    if (slot) {
+      if (!groups[slot.label]) groups[slot.label] = [];
+      groups[slot.label].push(moodTypes[log.mood].value);
+    }
   });
 
-  return weekdayLabels.map((label, index) => {
-    const moods = grouped[index] || [];
-    const avg = moods.length
-      ? moods.reduce((a, b) => a + b, 0) / moods.length
+  return timeSlots.map(({ label }) => {
+    const values = groups[label] || [];
+    const avg = values.length
+      ? values.reduce((a, b) => a + b, 0) / values.length
       : 0;
 
     const color = Object.values(moodTypes).find(
@@ -48,21 +77,23 @@ function getMoodByWeekdayData(logs: MoodLogRow[], isDark = false) {
   });
 }
 
-export function MoodByWeekdayChart({ moodLogRows }: MoodByWeekdayChartProps) {
+export function MoodByTimeOfDayChart({
+  moodLogRows,
+}: MoodByTimeOfDayChartProps) {
   const { t } = useTranslation();
 
   const theme = useTheme();
 
-  const data = getMoodByWeekdayData(moodLogRows, theme.dark);
+  const data = getMoodByTimeOfDayData(moodLogRows, theme.dark);
 
   return (
     <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
       <View className="gap-1">
         <Text className="text-lg font-bold text-primary">
-          {t("features.activity.components.MoodByWeekdayChart.title")}
+          {t("features.activity.components.MoodByTimeOfDayChart.title")}
         </Text>
         <Text className="text-lg font-normal text-text/60 dark:text-text/80">
-          {t("features.activity.components.MoodByWeekdayChart.description")}
+          {t("features.activity.components.MoodByTimeOfDayChart.description")}
         </Text>
       </View>
       <View className="flex-row gap-3">
@@ -107,11 +138,11 @@ export function MoodByWeekdayChart({ moodLogRows }: MoodByWeekdayChartProps) {
                   className="text-sm font-medium text-text"
                   style={{
                     color: item.svg.fill,
-                    width: 40,
+                    // width: 40,
                     textAlign: "center",
                   }}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </Text>
               </View>
             ))}

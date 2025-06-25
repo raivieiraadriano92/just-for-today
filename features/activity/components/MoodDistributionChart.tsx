@@ -57,9 +57,14 @@ export function MoodDistributionChart({
 
   return (
     <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
-      <Text className="text-lg font-bold text-primary">
-        {t("features.activity.components.MoodDistributionChart.title")}
-      </Text>
+      <View className="gap-1">
+        <Text className="text-lg font-bold text-primary">
+          {t("features.activity.components.MoodDistributionChart.title")}
+        </Text>
+        <Text className="text-lg font-normal text-text/60 dark:text-text/80">
+          {t("features.activity.components.MoodDistributionChart.description")}
+        </Text>
+      </View>
       <View
         className="items-center justify-center"
         style={{ minHeight: CHART_RADIUS * 2 }}

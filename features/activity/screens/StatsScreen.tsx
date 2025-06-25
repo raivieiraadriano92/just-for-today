@@ -1,8 +1,20 @@
 import { Button } from "@/components/ui/Button";
-import { format, isAfter, parseISO } from "date-fns";
-import { useState } from "react";
+import { drizzleDb } from "@/db/client";
+import { moodLogsTable } from "@/db/schema";
+import { MoodLogRow, MoodType } from "@/features/mood/store/moodLogStore";
+import {
+  endOfToday,
+  startOfDay,
+  startOfMonth,
+  startOfYear,
+  subDays,
+} from "date-fns";
+import { and, gte, lte } from "drizzle-orm";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import { MoodByTimeOfDayChart } from "../components/MoodByTimeOfDayChart";
 import { MoodByWeekdayChart } from "../components/MoodByWeekdayChart";
 import { MoodCountCard } from "../components/MoodCountCard";
 import { MoodDistributionChart } from "../components/MoodDistributionChart";
@@ -12,324 +24,67 @@ type FilterType = "7d" | "month" | "year";
 
 const filterOptions: FilterType[] = ["7d", "month", "year"];
 
-const mockData = [
-  {
-    datetime: "2025-06-23T09:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-22T20:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-22T22:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-21T17:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-21T07:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-21T18:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-20T19:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-20T09:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-20T20:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-19T17:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-18T09:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-17T17:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-17T09:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-16T17:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-16T13:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-16T13:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-15T17:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-14T13:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-13T15:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-13T16:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-13T08:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-12T18:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-11T20:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-11T10:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-11T16:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-10T06:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-09T16:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-06-09T22:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-09T07:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-08T07:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-08T22:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-07T10:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-06T10:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-05T06:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-04T07:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-04T08:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-04T12:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-03T09:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-03T15:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-06-03T20:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-06-02T06:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-06-01T08:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-06-01T08:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-05-31T17:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-05-31T19:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-05-30T06:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-05-30T22:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-05-29T18:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-05-29T08:00:00",
-    mood: "really_bad",
-    // value: 1,
-  },
-  {
-    datetime: "2025-05-29T15:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-05-28T18:00:00",
-    mood: "really_good",
-    // value: 5,
-  },
-  {
-    datetime: "2025-05-28T20:00:00",
-    mood: "okay",
-    // value: 3,
-  },
-  {
-    datetime: "2025-05-28T12:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-05-27T06:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-05-27T10:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-  {
-    datetime: "2025-05-26T17:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-05-25T07:00:00",
-    mood: "good",
-    // value: 4,
-  },
-  {
-    datetime: "2025-05-25T12:00:00",
-    mood: "bad",
-    // value: 2,
-  },
-].sort(
-  (a, b) => parseISO(a.datetime).getTime() - parseISO(b.datetime).getTime(),
-);
+const fetchMoodLogs = async (filter: FilterType) => {
+  const today = endOfToday().toISOString();
+
+  let from = startOfDay(subDays(new Date(), 6)).toISOString();
+
+  if (filter === "month") {
+    from = startOfMonth(new Date()).toISOString();
+  }
+
+  if (filter === "year") {
+    from = startOfYear(new Date()).toISOString();
+  }
+
+  const rows = await drizzleDb
+    .select()
+    .from(moodLogsTable)
+    .where(
+      and(
+        gte(moodLogsTable.datetime, from),
+        lte(moodLogsTable.datetime, today),
+      ),
+    );
+
+  return rows.map((row) => ({
+    ...row,
+    mood: row.mood as MoodType,
+    feelings: row.feelings.split(","),
+  }));
+};
 
 export function StatsScreen() {
   const { t } = useTranslation();
 
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("7d");
 
-  const filteredData = mockData.filter((log) => {
-    const logDate = parseISO(log.datetime);
-    const today = new Date();
+  const [moodLogRows, setMoodLogRows] = useState<MoodLogRow[]>([]);
 
-    switch (selectedFilter) {
-      case "7d":
-        // return logDate >= new Date(today.setDate(today.getDate() - 7));
-        return isAfter(logDate, new Date(today.setDate(today.getDate() - 6)));
-      case "month":
-        // return logDate >= new Date(today.setMonth(today.getMonth() - 1));
-        return format(logDate, "MM/yyyy") === format(today, "MM/yyyy");
-      case "year":
-        // return logDate >= new Date(today.setFullYear(today.getFullYear() - 1));
-        return format(logDate, "yyyy") === format(today, "yyyy");
-      default:
-        return true;
-    }
-  });
+  // const filteredData = mockData.filter((log) => {
+  //   const logDate = parseISO(log.datetime);
+  //   const today = new Date();
+
+  //   switch (selectedFilter) {
+  //     case "7d":
+  //       // return logDate >= new Date(today.setDate(today.getDate() - 7));
+  //       return isAfter(logDate, new Date(today.setDate(today.getDate() - 6)));
+  //     case "month":
+  //       // return logDate >= new Date(today.setMonth(today.getMonth() - 1));
+  //       return format(logDate, "MM/yyyy") === format(today, "MM/yyyy");
+  //     case "year":
+  //       // return logDate >= new Date(today.setFullYear(today.getFullYear() - 1));
+  //       return format(logDate, "yyyy") === format(today, "yyyy");
+  //     default:
+  //       return true;
+  //   }
+  // });
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMoodLogs(selectedFilter).then(setMoodLogRows);
+    }, [selectedFilter]),
+  );
 
   return (
     <View className="flex-1">
@@ -357,21 +112,25 @@ export function StatsScreen() {
           ))}
         </View>
         <MoodTrendLineChart
-          moodLogRows={filteredData}
+          moodLogRows={moodLogRows}
           period={selectedFilter}
-          key={`MoodTrendLineChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          // key={`MoodTrendLineChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodDistributionChart
-          moodLogRows={filteredData}
-          key={`MoodDistributionChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          moodLogRows={moodLogRows}
+          // key={`MoodDistributionChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodCountCard
-          moodLogRows={filteredData}
-          key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          moodLogRows={moodLogRows}
+          // key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
         <MoodByWeekdayChart
-          moodLogRows={filteredData}
-          key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          moodLogRows={moodLogRows}
+          // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+        />
+        <MoodByTimeOfDayChart
+          moodLogRows={moodLogRows}
+          // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
         />
       </ScrollView>
     </View>

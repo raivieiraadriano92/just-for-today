@@ -37,16 +37,28 @@
       "components": {
         "MoodCountCard": {
           "title": "Mood Count",
+          "description": "",
           "totalLogs": "Total: {{count}} logs"
         },
         "MoodTrendLineChart": {
-          "title": "Mood Trend"
+          "title": "Mood Trend",
+          "description": "See how your mood has evolved over time."
         },
         "MoodDistributionChart": {
-          "title": "Mood Distribution"
+          "title": "Mood Distribution",
+          "description": "Discover how often you’ve felt each type of mood."
         },
         "MoodByWeekdayChart": {
-          "title": "Mood by Weekday"
+          "title": "Mood by Weekday",
+          "description": "Uncover which days of the week tend to lift you up — or weigh you down."
+        },
+        "MoodByTimeOfDayChart": {
+          "title": "Mood by Time of Day",
+          "description": "Understand how your mood shifts throughout the day.",
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "evening": "Evening",
+          "night": "Night"
         }
       },
       "screens": {
