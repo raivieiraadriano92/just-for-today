@@ -1,0 +1,8 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Sólo por Hoy"
+  },
+  "android": {
+    "app_name": "Sólo por Hoy"
+  }
+}

@@ -12,8 +12,14 @@
       "supportsTablet": false,
       "bundleIdentifier": "app.justfortoday",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleAllowMixedLocalizations": true
       }
+    },
+    "locales": {
+      "en": "./i18n/locales/en/metadata.json",
+      "es": "./i18n/locales/es/metadata.json",
+      "pt": "./i18n/locales/pt/metadata.json"
     },
     "android": {
       "adaptiveIcon": {

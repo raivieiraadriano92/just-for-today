@@ -3,13 +3,13 @@ import { getLocales } from "expo-localization";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationEn from "./locales/en/translation.json";
-// import translationEs from "./locales/es/translation.json";
-// import translationPt from "./locales/pt/translation.json";
+import translationEs from "./locales/es/translation.json";
+import translationPt from "./locales/pt/translation.json";
 
 const resources = {
-  // pt: { translation: translationPt },
+  pt: { translation: translationPt },
   en: { translation: translationEn },
-  // es: { translation: translationEs },
+  es: { translation: translationEs },
 };
 
 const initI18n = async () => {
