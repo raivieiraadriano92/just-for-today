@@ -24,6 +24,7 @@
     "drizzle-orm": "^0.44.2",
     "eventemitter3": "^5.0.1",
     "expo": "~53.0.12",
+    "expo-application": "~6.1.4",
     "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.6",
     "expo-crypto": "^14.1.5",

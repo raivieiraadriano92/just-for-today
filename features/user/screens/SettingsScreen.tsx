@@ -1,6 +1,7 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useTheme } from "@react-navigation/native";
+import * as Application from "expo-application";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -30,7 +31,7 @@ export function SettingsScreen() {
           </Text>
         </View>
       </View>
-      <ScrollView contentContainerClassName="p-6 pb-safe-offset-6">
+      <ScrollView contentContainerClassName="p-6 pb-safe-offset-6 gap-12">
         <View className="rounded-2xl bg-background px-6 dark:bg-card">
           <TouchableOpacity
             className="flex-row items-center justify-between py-6"
@@ -60,6 +61,10 @@ export function SettingsScreen() {
             />
           </TouchableOpacity>
         </View>
+        <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
+          Version {Application.nativeApplicationVersion} (
+          {Application.nativeBuildVersion})
+        </Text>
       </ScrollView>
     </>
   );
