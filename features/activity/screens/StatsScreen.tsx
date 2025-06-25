@@ -127,6 +127,11 @@ export function StatsScreen() {
     }, [selectedFilter]),
   );
 
+  const hasEnoughData =
+    data.moodLogs.length >= 5 &&
+    new Set(data.moodLogs.map((log) => format(log.datetime, "yyyy-MM-dd")))
+      .size >= 7;
+
   return (
     <View className="flex-1">
       <View className="pt-safe bg-card">
@@ -136,50 +141,64 @@ export function StatsScreen() {
           </Text>
         </View>
       </View>
-      <ScrollView
-        contentContainerClassName="p-6 gap-6"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-row items-center justify-center">
-          {filterOptions.map((option) => (
-            <Button
-              key={option}
-              label={t(
-                `features.activity.screens.StatsScreen.filters.${option}`,
-              )}
-              onPress={() => setSelectedFilter(option)}
-              variant={selectedFilter === option ? "solid" : "ghost"}
-            />
-          ))}
+      {hasEnoughData ? (
+        <ScrollView
+          contentContainerClassName="p-6 gap-6"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="flex-row items-center justify-center">
+            {filterOptions.map((option) => (
+              <Button
+                key={option}
+                label={t(
+                  `features.activity.screens.StatsScreen.filters.${option}`,
+                )}
+                onPress={() => setSelectedFilter(option)}
+                variant={selectedFilter === option ? "solid" : "ghost"}
+              />
+            ))}
+          </View>
+          <Counters
+            intentions={data.intentions.length}
+            moodLogs={data.moodLogs.length}
+            gratitudeLogs={data.gratitudeLogs.length}
+            reflections={data.reflections.length}
+          />
+          <MoodTrendLineChart
+            moodLogRows={data.moodLogs}
+            period={selectedFilter}
+            // key={`MoodTrendLineChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          />
+          <MoodDistributionChart
+            moodLogRows={data.moodLogs}
+            // key={`MoodDistributionChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          />
+          <MoodCountCard
+            moodLogRows={data.moodLogs}
+            // key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          />
+          <MoodByWeekdayChart
+            moodLogRows={data.moodLogs}
+            // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          />
+          <MoodByTimeOfDayChart
+            moodLogRows={data.moodLogs}
+            // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
+          />
+        </ScrollView>
+      ) : (
+        <View className="max-w-sm flex-1 items-center justify-center gap-3 self-center p-6">
+          <Text className="text-center" style={{ fontSize: 48 }}>
+            🧘‍♀️
+          </Text>
+          <Text className="text-center text-3xl font-semibold text-text">
+            {t("features.activity.screens.StatsScreen.emptyState.title")}
+          </Text>
+          <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
+            {t("features.activity.screens.StatsScreen.emptyState.description")}
+          </Text>
         </View>
-        <Counters
-          intentions={data.intentions.length}
-          moodLogs={data.moodLogs.length}
-          gratitudeLogs={data.gratitudeLogs.length}
-          reflections={data.reflections.length}
-        />
-        <MoodTrendLineChart
-          moodLogRows={data.moodLogs}
-          period={selectedFilter}
-          // key={`MoodTrendLineChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
-        />
-        <MoodDistributionChart
-          moodLogRows={data.moodLogs}
-          // key={`MoodDistributionChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
-        />
-        <MoodCountCard
-          moodLogRows={data.moodLogs}
-          // key={`MoodCountCard-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
-        />
-        <MoodByWeekdayChart
-          moodLogRows={data.moodLogs}
-          // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
-        />
-        <MoodByTimeOfDayChart
-          moodLogRows={data.moodLogs}
-          // key={`MoodByWeekdayChart-${selectedFilter}-${filteredData.length}`} // Key to force re-render on filter change
-        />
-      </ScrollView>
+      )}
     </View>
   );
 }

@@ -102,6 +102,10 @@
         },
         "StatsScreen": {
           "title": "Stats",
+          "emptyState": {
+            "title": "No Data Available",
+            "description": "You haven’t logged enough entries to get insights yet. Keep checking in — every little step helps you understand yourself better."
+          },
           "filters": {
             "7d": "Last 7 days",
             "month": "Month",

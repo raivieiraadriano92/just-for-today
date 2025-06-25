@@ -1,4 +1,5 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
+import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { drizzleDb } from "@/db/client";
 import {
@@ -145,100 +146,189 @@ export default function JourneyScreen() {
           </Text>
         </View>
       </View>
-      <FlashList
-        data={data}
-        estimatedItemSize={100}
-        ListFooterComponent={() =>
-          data.length > 7 ? (
-            <View className="items-center gap-3 py-6">
-              <Text className="text-base font-normal text-text/60 dark:text-text/80">
-                {t("app.journey.endOfListTitle")}
-              </Text>
-              <Text style={{ fontSize: 20 }}>✌️</Text>
-            </View>
-          ) : (
-            <View className="h-6" />
-          )
-        }
-        ListHeaderComponent={() => <View className="h-6" />}
-        ItemSeparatorComponent={() => <View className="h-6" />}
-        keyExtractor={([date, data], index) => `${date}-${data.length}`}
-        renderItem={({ item }) => {
-          const date = parseISO(item[0]);
-
-          let title = format(date, "EEEE, MMMM d");
-
-          if (isToday(date)) {
-            title = "Today";
-          } else if (isYesterday(date)) {
-            title = "Yesterday";
-          }
-
-          return (
-            <View className="px-6">
-              <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
-                <Text className="text-base font-semibold text-primary">
-                  {title}
+      {data.length === 0 ? (
+        <View className="max-w-sm flex-1 items-center justify-center gap-3 self-center">
+          <Text style={{ fontSize: 48 }}>
+            {t(
+              `features.activity.screens.StreakScreen.states.no_streak_yet.emoji`,
+            )}
+          </Text>
+          <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
+            {t(
+              `features.activity.screens.StreakScreen.states.no_streak_yet.title`,
+            )}
+          </Text>
+          <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
+            {t(
+              `features.activity.screens.StreakScreen.states.no_streak_yet.description`,
+            )}
+          </Text>
+          <Link asChild href="/intention">
+            <Button
+              className="mt-9 self-center"
+              label={t(
+                "features.activity.screens.StreakScreen.intentionButtonLabel",
+              )}
+            />
+          </Link>
+        </View>
+      ) : (
+        <FlashList
+          data={data}
+          estimatedItemSize={100}
+          ListFooterComponent={() =>
+            data.length > 7 ? (
+              <View className="items-center gap-3 py-6">
+                <Text className="text-base font-normal text-text/60 dark:text-text/80">
+                  {t("app.journey.endOfListTitle")}
                 </Text>
-                <View className="gap-6">
-                  {item[1].map((entry) => {
-                    switch (entry.type) {
-                      case "intention":
-                        return (
-                          <View className="gap-2" key={entry.date}>
-                            <Text className="text-base font-semibold text-text/60 dark:text-text/80">
-                              {t("app.journey.intentionTitle")}
-                            </Text>
-                            <Text className="text-2xl font-bold text-text">
-                              {`“${entry.intention}”`}
-                            </Text>
-                          </View>
-                        );
-                      case "moodLog":
-                        return (
-                          <View className="gap-2" key={entry.id}>
-                            <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-base font-semibold text-primary">
-                                {format(entry.time, "h:mm a")}
+                <Text style={{ fontSize: 20 }}>✌️</Text>
+              </View>
+            ) : (
+              <View className="h-6" />
+            )
+          }
+          ListHeaderComponent={() => <View className="h-6" />}
+          ItemSeparatorComponent={() => <View className="h-6" />}
+          keyExtractor={([date, data], index) => `${date}-${data.length}`}
+          renderItem={({ item }) => {
+            const date = parseISO(item[0]);
+
+            let title = format(date, "EEEE, MMMM d");
+
+            if (isToday(date)) {
+              title = "Today";
+            } else if (isYesterday(date)) {
+              title = "Yesterday";
+            }
+
+            return (
+              <View className="px-6">
+                <View className="flex-1 gap-6 rounded-2xl bg-card p-6">
+                  <Text className="text-base font-semibold text-primary">
+                    {title}
+                  </Text>
+                  <View className="gap-6">
+                    {item[1].map((entry) => {
+                      switch (entry.type) {
+                        case "intention":
+                          return (
+                            <View className="gap-2" key={entry.date}>
+                              <Text className="text-base font-semibold text-text/60 dark:text-text/80">
+                                {t("app.journey.intentionTitle")}
                               </Text>
-                              <View className="flex-1 border-hairline border-border" />
+                              <Text className="text-2xl font-bold text-text">
+                                {`“${entry.intention}”`}
+                              </Text>
                             </View>
-                            <View className="flex-row gap-6">
-                              <View
-                                className={`h-14 w-14 items-center justify-center rounded-2xl border-2 bg-card`}
-                                style={{
-                                  borderColor:
-                                    twColors[moodTypes[entry.mood].color.token][
-                                      moodTypes[entry.mood].color[
-                                        theme.dark ? "dark" : "light"
-                                      ]
-                                    ],
-                                }}
-                              >
-                                <Text style={{ fontSize: 24 }}>
-                                  {moodTypes[entry.mood].icon}
+                          );
+                        case "moodLog":
+                          return (
+                            <View className="gap-2" key={entry.id}>
+                              <View className="mb-4 flex-row items-center justify-between gap-6">
+                                <Text className="text-base font-semibold text-primary">
+                                  {format(entry.time, "h:mm a")}
                                 </Text>
+                                <View className="flex-1 border-hairline border-border" />
                               </View>
-                              <View className="flex-1 gap-2">
-                                <View className="flex-row items-center justify-between">
-                                  <Text
-                                    className="text-xl font-semibold text-text"
-                                    style={{
-                                      color:
-                                        twColors[
-                                          moodTypes[entry.mood].color.token
-                                        ][
-                                          moodTypes[entry.mood].color[
-                                            theme.dark ? "dark" : "light"
-                                          ]
-                                        ],
-                                    }}
-                                  >
-                                    {t(
-                                      `features.moodLog.moodTypes.${entry.mood}.title`,
-                                    )}
+                              <View className="flex-row gap-6">
+                                <View
+                                  className={`h-14 w-14 items-center justify-center rounded-2xl border-2 bg-card`}
+                                  style={{
+                                    borderColor:
+                                      twColors[
+                                        moodTypes[entry.mood].color.token
+                                      ][
+                                        moodTypes[entry.mood].color[
+                                          theme.dark ? "dark" : "light"
+                                        ]
+                                      ],
+                                  }}
+                                >
+                                  <Text style={{ fontSize: 24 }}>
+                                    {moodTypes[entry.mood].icon}
                                   </Text>
-                                  <Link asChild href={`/mood/${entry.id}`}>
+                                </View>
+                                <View className="flex-1 gap-2">
+                                  <View className="flex-row items-center justify-between">
+                                    <Text
+                                      className="text-xl font-semibold text-text"
+                                      style={{
+                                        color:
+                                          twColors[
+                                            moodTypes[entry.mood].color.token
+                                          ][
+                                            moodTypes[entry.mood].color[
+                                              theme.dark ? "dark" : "light"
+                                            ]
+                                          ],
+                                      }}
+                                    >
+                                      {t(
+                                        `features.moodLog.moodTypes.${entry.mood}.title`,
+                                      )}
+                                    </Text>
+                                    <Link asChild href={`/mood/${entry.id}`}>
+                                      <InteractivePressable>
+                                        <IconSymbol
+                                          color={theme.colors.primary}
+                                          name="pencil"
+                                          size={20}
+                                        />
+                                      </InteractivePressable>
+                                    </Link>
+                                  </View>
+                                  {!!entry.note && (
+                                    <Text className="text-base text-text">
+                                      {`“${entry.note}”`}
+                                    </Text>
+                                  )}
+                                  {entry.feelings.length > 0 && (
+                                    <View className="flex-row flex-wrap items-center gap-4">
+                                      {entry.feelings.map((feeling) => (
+                                        <View
+                                          key={feeling}
+                                          className="rounded-2xl px-2 py-0.5"
+                                          style={{
+                                            backgroundColor:
+                                              twColors[
+                                                moodTypes[entry.mood].color
+                                                  .token
+                                              ][
+                                                moodTypes[entry.mood].color[
+                                                  theme.dark ? "dark" : "light"
+                                                ]
+                                              ],
+                                          }}
+                                        >
+                                          <Text className="text-sm font-medium text-white dark:text-black">
+                                            {t(
+                                              `features.moodLog.moodTypes.${entry.mood}.feelings.${feeling}`,
+                                            )}
+                                          </Text>
+                                        </View>
+                                      ))}
+                                    </View>
+                                  )}
+                                </View>
+                              </View>
+                            </View>
+                          );
+                        case "gratitudeLog":
+                          return (
+                            <View className="gap-2" key={entry.id}>
+                              <View className="mb-4 flex-row items-center justify-between gap-6">
+                                <Text className="text-base font-semibold text-primary">
+                                  {format(entry.time, "h:mm a")}
+                                </Text>
+                                <View className="flex-1 border-hairline border-border" />
+                              </View>
+                              <View className="gap-2">
+                                <View className="flex-row items-center justify-between">
+                                  <Text className="text-base font-semibold text-text/60 dark:text-text/80">
+                                    {`${t("app.journey.gratitudeLogTitle")} 🙏`}
+                                  </Text>
+                                  <Link asChild href={`/gratitude/${entry.id}`}>
                                     <InteractivePressable>
                                       <IconSymbol
                                         color={theme.colors.primary}
@@ -248,126 +338,71 @@ export default function JourneyScreen() {
                                     </InteractivePressable>
                                   </Link>
                                 </View>
-                                {!!entry.note && (
-                                  <Text className="text-base text-text">
-                                    {`“${entry.note}”`}
+                                <Text className="text-2xl font-bold text-text">
+                                  {`“${entry.content}”`}
+                                </Text>
+                                {!!entry.images[0] && (
+                                  <Image
+                                    className="aspect-square rounded-lg"
+                                    source={{ uri: entry.images[0] }}
+                                    resizeMode="cover"
+                                  />
+                                )}
+                              </View>
+                            </View>
+                          );
+                        case "reflection":
+                          return (
+                            <View className="gap-2" key={entry.id}>
+                              <View className="mb-4 flex-row items-center justify-between gap-6">
+                                <Text className="text-base font-semibold text-primary">
+                                  {format(entry.time, "h:mm a")}
+                                </Text>
+                                <View className="flex-1 border-hairline border-border" />
+                              </View>
+                              <View className="gap-2">
+                                <View className="flex-row items-center justify-between">
+                                  <Text className="text-base font-semibold text-text/60 dark:text-text/80">
+                                    {`${t("app.journey.reflectionTitle")} 📝`}
                                   </Text>
-                                )}
-                                {entry.feelings.length > 0 && (
-                                  <View className="flex-row flex-wrap items-center gap-4">
-                                    {entry.feelings.map((feeling) => (
-                                      <View
-                                        key={feeling}
-                                        className="rounded-2xl px-2 py-0.5"
-                                        style={{
-                                          backgroundColor:
-                                            twColors[
-                                              moodTypes[entry.mood].color.token
-                                            ][
-                                              moodTypes[entry.mood].color[
-                                                theme.dark ? "dark" : "light"
-                                              ]
-                                            ],
-                                        }}
-                                      >
-                                        <Text className="text-sm font-medium text-white dark:text-black">
-                                          {t(
-                                            `features.moodLog.moodTypes.${entry.mood}.feelings.${feeling}`,
-                                          )}
-                                        </Text>
-                                      </View>
-                                    ))}
-                                  </View>
+                                  <Link
+                                    asChild
+                                    href={`/reflection/${entry.id}`}
+                                  >
+                                    <InteractivePressable>
+                                      <IconSymbol
+                                        color={theme.colors.primary}
+                                        name="pencil"
+                                        size={20}
+                                      />
+                                    </InteractivePressable>
+                                  </Link>
+                                </View>
+                                <Text className="text-2xl font-bold text-text">
+                                  {`“${entry.content}”`}
+                                </Text>
+                                {!!entry.images[0] && (
+                                  <Image
+                                    className="aspect-square rounded-lg"
+                                    source={{ uri: entry.images[0] }}
+                                    resizeMode="cover"
+                                  />
                                 )}
                               </View>
                             </View>
-                          </View>
-                        );
-                      case "gratitudeLog":
-                        return (
-                          <View className="gap-2" key={entry.id}>
-                            <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-base font-semibold text-primary">
-                                {format(entry.time, "h:mm a")}
-                              </Text>
-                              <View className="flex-1 border-hairline border-border" />
-                            </View>
-                            <View className="gap-2">
-                              <View className="flex-row items-center justify-between">
-                                <Text className="text-base font-semibold text-text/60 dark:text-text/80">
-                                  {`${t("app.journey.gratitudeLogTitle")} 🙏`}
-                                </Text>
-                                <Link asChild href={`/gratitude/${entry.id}`}>
-                                  <InteractivePressable>
-                                    <IconSymbol
-                                      color={theme.colors.primary}
-                                      name="pencil"
-                                      size={20}
-                                    />
-                                  </InteractivePressable>
-                                </Link>
-                              </View>
-                              <Text className="text-2xl font-bold text-text">
-                                {`“${entry.content}”`}
-                              </Text>
-                              {!!entry.images[0] && (
-                                <Image
-                                  className="aspect-square rounded-lg"
-                                  source={{ uri: entry.images[0] }}
-                                  resizeMode="cover"
-                                />
-                              )}
-                            </View>
-                          </View>
-                        );
-                      case "reflection":
-                        return (
-                          <View className="gap-2" key={entry.id}>
-                            <View className="mb-4 flex-row items-center justify-between gap-6">
-                              <Text className="text-base font-semibold text-primary">
-                                {format(entry.time, "h:mm a")}
-                              </Text>
-                              <View className="flex-1 border-hairline border-border" />
-                            </View>
-                            <View className="gap-2">
-                              <View className="flex-row items-center justify-between">
-                                <Text className="text-base font-semibold text-text/60 dark:text-text/80">
-                                  {`${t("app.journey.reflectionTitle")} 📝`}
-                                </Text>
-                                <Link asChild href={`/reflection/${entry.id}`}>
-                                  <InteractivePressable>
-                                    <IconSymbol
-                                      color={theme.colors.primary}
-                                      name="pencil"
-                                      size={20}
-                                    />
-                                  </InteractivePressable>
-                                </Link>
-                              </View>
-                              <Text className="text-2xl font-bold text-text">
-                                {`“${entry.content}”`}
-                              </Text>
-                              {!!entry.images[0] && (
-                                <Image
-                                  className="aspect-square rounded-lg"
-                                  source={{ uri: entry.images[0] }}
-                                  resizeMode="cover"
-                                />
-                              )}
-                            </View>
-                          </View>
-                        );
-                      default:
-                        return null;
-                    }
-                  })}
+                          );
+                        default:
+                          return null;
+                      }
+                    })}
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        }}
-        showsVerticalScrollIndicator={false}
-      />
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </View>
   );
 }
