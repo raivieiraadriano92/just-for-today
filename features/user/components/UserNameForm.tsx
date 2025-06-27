@@ -42,6 +42,7 @@ export function UserNameForm() {
         <TextInput
           autoCorrect={false}
           autoFocus
+          autoCapitalize="words"
           className="text-lg font-normal text-text"
           defaultValue={user?.name || ""}
           onChangeText={handleOnChangeText}
