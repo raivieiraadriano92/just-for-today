@@ -1,7 +1,7 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { NotificationsForm } from "@/features/user/components/NotificationsForm";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -21,9 +21,9 @@ export default function NotificationsScreen() {
             onPress={router.back}
             hitSlop={10}
           >
-            <IconSymbol
+            <Ionicons
               color={theme.colors.primary}
-              name="chevron.left"
+              name="chevron-back"
               size={24}
             />
           </InteractivePressable>

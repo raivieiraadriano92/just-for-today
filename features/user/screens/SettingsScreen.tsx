@@ -1,5 +1,5 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import * as Application from "expo-application";
 import { router } from "expo-router";
@@ -20,9 +20,9 @@ export function SettingsScreen() {
             onPress={router.back}
             hitSlop={10}
           >
-            <IconSymbol
+            <Ionicons
               color={theme.colors.primary}
-              name="chevron.left"
+              name="chevron-back"
               size={24}
             />
           </InteractivePressable>
@@ -40,9 +40,9 @@ export function SettingsScreen() {
             <Text className="text-lg font-medium text-text">
               {t("features.user.screens.SettingsScreen.profile")}
             </Text>
-            <IconSymbol
+            <Ionicons
               color={theme.colors.primary}
-              name="chevron.right"
+              name="chevron-forward"
               size={24}
             />
           </TouchableOpacity>
@@ -54,9 +54,9 @@ export function SettingsScreen() {
             <Text className="text-lg font-medium text-text">
               {t("features.user.screens.SettingsScreen.notifications")}
             </Text>
-            <IconSymbol
+            <Ionicons
               color={theme.colors.primary}
-              name="chevron.right"
+              name="chevron-forward"
               size={24}
             />
           </TouchableOpacity>

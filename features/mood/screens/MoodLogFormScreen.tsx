@@ -1,6 +1,6 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { createRef, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -86,7 +86,7 @@ function MoodLogFormScreenMoodPicker() {
                     >
                       {t(`features.moodLog.moodTypes.${moodType}.title`)}
                     </Text>
-                    <IconSymbol
+                    <Ionicons
                       color={
                         twColors[moodTypes[moodType].color.token][
                           moodTypes[moodType].color[
@@ -94,7 +94,9 @@ function MoodLogFormScreenMoodPicker() {
                           ]
                         ]
                       }
-                      name={isSelected ? "checkmark.circle.fill" : "circle"}
+                      name={
+                        isSelected ? "checkmark-circle" : "radio-button-off"
+                      }
                       size={24}
                     />
                   </View>
@@ -281,9 +283,9 @@ function MoodLogFormScreenHeaderControls() {
     <View className="pt-safe bg-card">
       <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
-          <IconSymbol
+          <Ionicons
             color={theme.colors.primary}
-            name="chevron.left"
+            name="chevron-back"
             size={24}
           />
         </InteractivePressable>

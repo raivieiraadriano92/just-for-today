@@ -1,8 +1,8 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { WeeklyProgress } from "@/features/activity/components/WeeklyProgress";
 import { useActivityStore } from "@/features/activity/store/activityStore";
 import { IntentionGreetingCard } from "@/features/intention/components/IntentionGreetingCard";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { Link, router } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -20,11 +20,7 @@ export default function HomeScreen() {
       <View className="h-16 flex-row items-center justify-between  px-6">
         <Link asChild href="/streak">
           <InteractivePressable className="flex-row items-center gap-2">
-            <IconSymbol
-              color={theme.colors.primary}
-              name="flame.fill"
-              size={24}
-            />
+            <Ionicons color={theme.colors.primary} name="flame" size={24} />
             <Text className="text-base font-medium text-primary">
               {streak.currentStreak}
             </Text>
@@ -32,11 +28,7 @@ export default function HomeScreen() {
         </Link>
         <Link asChild href="/settings">
           <InteractivePressable>
-            <IconSymbol
-              color={theme.colors.primary}
-              name="gearshape.fill"
-              size={24}
-            />
+            <Ionicons color={theme.colors.primary} name="settings" size={24} />
           </InteractivePressable>
         </Link>
       </View>
@@ -78,7 +70,7 @@ export default function HomeScreen() {
                 {t(item.label)}
               </Text>
             </View>
-            <IconSymbol color={theme.colors.primary} name="plus" size={20} />
+            <Ionicons color={theme.colors.primary} name="add" size={20} />
           </InteractivePressable>
         ))}
       </ScrollView>

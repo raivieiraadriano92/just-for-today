@@ -1,6 +1,5 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { drizzleDb } from "@/db/client";
 import {
   gratitudeLogsTable,
@@ -13,6 +12,7 @@ import { IntentionRow } from "@/features/intention/store/todaysIntentionStore";
 import { moodTypes } from "@/features/mood/moodTypes";
 import { MoodLogRow, MoodType } from "@/features/mood/store/moodLogStore";
 import { ReflectionRow } from "@/features/reflection/store/reflectionStore";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import { format, isToday, isYesterday, parseISO } from "date-fns";
@@ -20,7 +20,6 @@ import { Link, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, Text, View } from "react-native";
-
 import twColors from "tailwindcss/colors";
 
 type Data = (
@@ -270,7 +269,7 @@ export default function JourneyScreen() {
                                     </Text>
                                     <Link asChild href={`/mood/${entry.id}`}>
                                       <InteractivePressable>
-                                        <IconSymbol
+                                        <Ionicons
                                           color={theme.colors.primary}
                                           name="pencil"
                                           size={20}
@@ -330,7 +329,7 @@ export default function JourneyScreen() {
                                   </Text>
                                   <Link asChild href={`/gratitude/${entry.id}`}>
                                     <InteractivePressable>
-                                      <IconSymbol
+                                      <Ionicons
                                         color={theme.colors.primary}
                                         name="pencil"
                                         size={20}
@@ -370,7 +369,7 @@ export default function JourneyScreen() {
                                     href={`/reflection/${entry.id}`}
                                   >
                                     <InteractivePressable>
-                                      <IconSymbol
+                                      <Ionicons
                                         color={theme.colors.primary}
                                         name="pencil"
                                         size={20}

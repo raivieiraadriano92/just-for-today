@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { TabBarButton } from "@/components/TabBarButton";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ export default function TabLayout() {
         options={{
           title: t("app.tabs.home.label"),
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol size={size} name="house.fill" color={color} />
+            <Ionicons color={color} name="home" size={size} />
           ),
         }}
       />
@@ -45,7 +45,7 @@ export default function TabLayout() {
         options={{
           title: t("app.tabs.journey.label"),
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol size={size} name="book.fill" color={color} />
+            <Ionicons color={color} name="book" size={size} />
           ),
         }}
       />
@@ -54,7 +54,7 @@ export default function TabLayout() {
         options={{
           title: t("app.tabs.stats.label"),
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol size={size} name="chart.bar.fill" color={color} />
+            <Ionicons color={color} name="stats-chart" size={size} />
           ),
         }}
       />

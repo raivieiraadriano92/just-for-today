@@ -1,7 +1,7 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useUserStore } from "@/features/user/store/userStore";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { createRef, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -189,9 +189,9 @@ function IntentionFormScreenHeaderControls() {
     <View className="pt-safe bg-card">
       <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
-          <IconSymbol
+          <Ionicons
             color={theme.colors.primary}
-            name="chevron.left"
+            name="chevron-back"
             size={24}
           />
         </InteractivePressable>

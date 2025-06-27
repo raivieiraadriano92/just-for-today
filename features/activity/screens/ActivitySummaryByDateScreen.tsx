@@ -1,6 +1,6 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useActivityStore } from "@/features/activity/store/activityStore";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { format, isToday, isValid, isYesterday, parseISO } from "date-fns";
 import { router, useLocalSearchParams } from "expo-router";
@@ -8,7 +8,6 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { Confetti } from "react-native-fast-confetti";
-
 import twColors from "tailwindcss/colors";
 
 export default function ActivitySummaryByDateScreen() {
@@ -151,9 +150,9 @@ export default function ActivitySummaryByDateScreen() {
               onPress={router.back}
               hitSlop={10}
             >
-              <IconSymbol
+              <Ionicons
                 color={theme.colors.primary}
-                name="chevron.left"
+                name="chevron-back"
                 size={24}
               />
             </InteractivePressable>
@@ -187,7 +186,7 @@ export default function ActivitySummaryByDateScreen() {
                   <View
                     className={`h-14 w-14 items-center justify-center rounded-2xl border-2 ${task.isCompleted ? "border-green-500 dark:border-green-400" : "border-border"}`}
                   >
-                    <IconSymbol
+                    <Ionicons
                       color={
                         task.isCompleted
                           ? theme.dark
@@ -196,9 +195,7 @@ export default function ActivitySummaryByDateScreen() {
                           : theme.colors.border
                       }
                       name={
-                        task.isCompleted
-                          ? "checkmark.circle.fill"
-                          : "x.circle.fill"
+                        task.isCompleted ? "checkmark-circle" : "close-circle"
                       }
                       size={24}
                     />

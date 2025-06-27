@@ -1,6 +1,6 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { createRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -80,9 +80,9 @@ function OnboardingScreenCommitment() {
             )}
             <View className="flex-row items-center gap-6">
               <View className="h-14 w-14 items-center justify-center rounded-2xl border-2 border-green-500 dark:border-green-400">
-                <IconSymbol
+                <Ionicons
                   color={theme.dark ? twColors.green[400] : twColors.green[500]}
-                  name={"checkmark.circle.fill"}
+                  name="checkmark-circle"
                   size={24}
                 />
               </View>
@@ -165,9 +165,9 @@ function OnboardingScreenHeaderControls() {
     <View className="pt-safe bg-card">
       <View className="h-16 flex-row items-center justify-start border-b-hairline border-border px-6">
         <InteractivePressable onPress={handleBack} hitSlop={10}>
-          <IconSymbol
+          <Ionicons
             color={theme.colors.primary}
-            name="chevron.left"
+            name="chevron-back"
             size={24}
           />
         </InteractivePressable>

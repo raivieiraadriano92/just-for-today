@@ -1,7 +1,8 @@
 import { InteractivePressable } from "@/components/InteractivePressable";
 import { Button } from "@/components/ui/Button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useUserStore } from "@/features/user/store/userStore";
+import Entypo from "@expo/vector-icons/Entypo";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -21,28 +22,19 @@ export function IntentionGreetingCard() {
   if (todaysIntention) {
     return (
       <View className="flex-1 items-center justify-center gap-3 rounded-2xl bg-card p-6">
-        <View className="absolute left-6 top-6 opacity-10 dark:opacity-30">
-          <IconSymbol
-            color={theme.colors.text}
-            name="quote.opening"
-            size={80}
-          />
+        <View
+          className="absolute left-6 top-6 opacity-10 dark:opacity-30"
+          style={{ transform: [{ rotate: "180deg" }] }}
+        >
+          <Entypo color={theme.colors.text} name="quote" size={80} />
         </View>
         <View className="absolute bottom-6 right-6 opacity-10 dark:opacity-30">
-          <IconSymbol
-            color={theme.colors.text}
-            name="quote.closing"
-            size={80}
-          />
+          <Entypo color={theme.colors.text} name="quote" size={80} />
         </View>
         <View className="absolute right-6 top-6">
           <Link asChild href="/intention">
             <InteractivePressable>
-              <IconSymbol
-                color={theme.colors.primary}
-                name="pencil"
-                size={24}
-              />
+              <Ionicons color={theme.colors.primary} name="pencil" size={24} />
             </InteractivePressable>
           </Link>
         </View>
@@ -58,11 +50,14 @@ export function IntentionGreetingCard() {
 
   return (
     <View className="flex-1 items-center justify-center gap-6 rounded-2xl bg-card p-6">
-      <View className="absolute left-6 top-6 opacity-10">
-        <IconSymbol color={theme.colors.text} name="quote.opening" size={80} />
+      <View
+        className="absolute left-6 top-6 opacity-10 dark:opacity-30"
+        style={{ transform: [{ rotate: "180deg" }] }}
+      >
+        <Entypo color={theme.colors.text} name="quote" size={80} />
       </View>
-      <View className="absolute bottom-6 right-6 opacity-10">
-        <IconSymbol color={theme.colors.text} name="quote.closing" size={80} />
+      <View className="absolute bottom-6 right-6 opacity-10 dark:opacity-30">
+        <Entypo color={theme.colors.text} name="quote" size={80} />
       </View>
       <View className="items-center gap-3">
         <View className="flex-row items-center gap-2">
