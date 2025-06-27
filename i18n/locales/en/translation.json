@@ -429,17 +429,17 @@
         "MORNING_NOTIFICATION": {
           "settingLabel": "☀️ Start your day with intention",
           "messageTitle": "Good morning, {{user}} ☀️",
-          "messageBody": "What will you choose, Just for Today?"
+          "messageBody": "What do you choose, Just for Today?"
         },
         "AFTERNOON_NOTIFICATION": {
           "settingLabel": "🫶 Midday check-in",
-          "messageTitle": "Midday check-in 🫶",
-          "messageBody": "{{user}}, how’s your day unfolding? Just notice."
+          "messageTitle": "Quick check-in 🫶",
+          "messageBody": "Hey {{user}}, how’s your day going? Still with your intention?"
         },
         "EVENING_NOTIFICATION": {
-          "settingLabel": "🌙 Ending your day",
-          "messageTitle": "Winding down 🌙",
-          "messageBody": "{{user}}, take a moment to gently notice how you’re feeling."
+          "settingLabel": "You made it 🌙",
+          "messageTitle": "Time to wind down 🌙",
+          "messageBody": "You did what you could today, {{user}}. That’s more than enough."
         }
       },
       "screens": {
