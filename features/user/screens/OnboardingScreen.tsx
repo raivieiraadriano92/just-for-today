@@ -73,27 +73,31 @@ function OnboardingScreenCommitment() {
         </Text>
       </View>
       <View>
-        {[...Array.from({ length: 7 }, (_, index) => index)].map((_, index) => (
-          <View key={index}>
-            {!!index && (
-              <View className="ml-7 h-6 w-0.5 bg-green-500 dark:bg-green-400" />
-            )}
-            <View className="flex-row items-center gap-6">
-              <View className="h-14 w-14 items-center justify-center rounded-2xl border-2 border-green-500 dark:border-green-400">
-                <Ionicons
-                  color={theme.dark ? twColors.green[400] : twColors.green[500]}
-                  name="checkmark-circle"
-                  size={24}
-                />
+        {[...Array.from({ length: 11 }, (_, index) => index)].map(
+          (_, index) => (
+            <View key={index}>
+              {!!index && (
+                <View className="ml-7 h-6 w-0.5 bg-green-500 dark:bg-green-400" />
+              )}
+              <View className="flex-row items-center gap-6">
+                <View className="h-14 w-14 items-center justify-center rounded-2xl border-2 border-green-500 dark:border-green-400">
+                  <Ionicons
+                    color={
+                      theme.dark ? twColors.green[400] : twColors.green[500]
+                    }
+                    name="checkmark-circle"
+                    size={24}
+                  />
+                </View>
+                <Text className="text-xl font-semibold text-text">
+                  {t(
+                    `features.user.screens.OnboardingScreen.OnboardingScreenCommitment.items.${index}`,
+                  )}
+                </Text>
               </View>
-              <Text className="text-xl font-semibold text-text">
-                {t(
-                  `features.user.screens.OnboardingScreen.OnboardingScreenCommitment.items.${index}`,
-                )}
-              </Text>
             </View>
-          </View>
-        ))}
+          ),
+        )}
       </View>
     </ScrollView>
   );
