@@ -126,11 +126,10 @@ export function StatsScreen() {
       fetchData(selectedFilter).then(setData);
     }, [selectedFilter]),
   );
-
+  console.log("StatsScreen data", data.moodLogs.length);
   const hasEnoughData =
-    data.moodLogs.length >= 5 &&
     new Set(data.moodLogs.map((log) => format(log.datetime, "yyyy-MM-dd")))
-      .size >= 7;
+      .size >= 3;
 
   return (
     <View className="flex-1">

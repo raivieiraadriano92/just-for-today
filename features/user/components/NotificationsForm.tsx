@@ -58,7 +58,7 @@ export function NotificationsForm() {
             return (
               <View
                 key={notificationType}
-                className="gap-3 rounded-2xl bg-card p-6"
+                className="gap-3 rounded-2xl bg-background p-6 dark:bg-card"
               >
                 <Text className="text-lg font-medium text-text">
                   {t(
