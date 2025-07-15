@@ -147,3 +147,12 @@ Free forever. No ads. Open-hearted and built to help.
 
 Want to help more people live one mindful day at a time?  
 Pull requests are welcome. Let's build something meaningful together.
+
+---
+
+## 📲 Download the App
+
+Start your journey today — available for free on iOS and Android:
+
+- [**App Store (iOS)**](https://apps.apple.com/us/app/just-for-today-daily-journal/id6747355776)
+- [**Google Play (Android)**](https://play.google.com/store/apps/details?id=app.justfortoday)
