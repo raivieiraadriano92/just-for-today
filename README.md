@@ -1,50 +1,149 @@
-# Welcome to your Expo app 👋
+# 🌞 Just for Today — Daily Intention & Mood Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Just for Today** is a beautifully designed, offline-first mobile app focused on emotional well-being and mindfulness. Inspired by the poem _Just for Today_ by Sybil F. Partridge, the app helps users live one day at a time with intention, emotional clarity, and gratitude.
 
-## Get started
+![Just for Today Logo](./assets/images/logo.png)
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Features
 
-2. Start the app
+Just for Today is built around a daily ritual of self-awareness and emotional care:
 
-   ```bash
-   npx expo start
-   ```
+### 🌼 1. Daily Intention
 
-In the output, you'll find options to open the app in a
+Set a gentle, personal commitment like “Today I’ll be kind to myself” or “Today I won’t rush.” This small act of self-direction starts the day with clarity and meaning.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 🧠 2. Mood Logging
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Track how you're feeling with a two-step mood log:
 
-## Get a fresh project
+- Choose a **primary mood** (e.g. Fantastic, Good, Meh, Not Good, Terrible)
+- Select **secondary feelings** to better understand your emotional landscape
+- Optionally, add a **note** to describe why you're feeling this way
 
-When you're ready, run:
+### 🙏 3. Gratitude Practice
 
-```bash
-npm run reset-project
-```
+Right after logging your mood, reflect on what you’re grateful for. This scientifically backed practice improves mood and nurtures perspective.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 📓 4. Evening Reflection
 
-## Learn more
+At the end of the day, write a short journal reflection. Review your mood again if you’d like, and close the day with emotional clarity.
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🔔 Gentle Notifications
 
-## Join the community
+The app sends three friendly nudges:
 
-Join our community of developers creating universal apps.
+- **Morning** – Start your day with intention, mood check, and gratitude
+- **Afternoon** – A soft reminder to revisit your intention
+- **Evening** – Wind down with reflection and gratitude
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 📊 Insights
+
+Visualize your emotional journey with:
+
+- Mood trends and distribution
+- Mood by time of day or weekday
+- Streaks and weekly progress
+- Gratitude and reflection patterns
+
+---
+
+## 🛠 Tech Stack
+
+Just for Today is built with:
+
+- **React Native** + **TypeScript**
+- **Expo** (offline-ready and performant)
+- **Drizzle ORM + SQLite (expo-sqlite)** for local-first data storage
+- **Zustand** for state management
+- **NativeWind + TailwindCSS** for styling
+- **Expo Router** for navigation
+
+Offline-first, fast, and private by design.
+
+---
+
+## 🧠 Architecture Overview
+
+The app is structured by features:  
+Each major domain (intention, mood, gratitude, reflection, user) includes:
+
+- **Screens** — powered by `expo-router` with success and form flows
+- **Components** — form providers, display widgets, etc.
+- **Stores** — Zustand-powered state management with async persistence
+- **Utils** — including mock data generators for development/testing
+
+Key folders:
+
+- `app/`: route-based navigation using expo-router
+- `features/`: isolated logic and UI per feature
+- `db/`: drizzle schema and client
+- `components/ui/`: shared UI primitives
+- `i18n/`: internationalization setup for EN, PT-BR, ES
+
+---
+
+## 🌍 Multilingual
+
+- 🇺🇸 English
+- 🇧🇷 Português
+- 🇪🇸 Español  
+  More languages to come!
+
+---
+
+## 🔒 Privacy-First
+
+Just for Today is **private by design**. All your data stays on your device.  
+No ads. No data mining. Ever.  
+We may offer an optional premium subscription in the future for AI-based insights — but your privacy will always come first.
+
+---
+
+## 📦 Dependencies Highlights
+
+- **Navigation**: `expo-router`, `react-navigation`
+- **Charts**: `react-native-svg-charts`, `gifted-charts`
+- **Animation/UI**: `react-native-reanimated`, `expo-blur`, `expo-haptics`
+- **Offline-first DB**: `drizzle-orm`, `expo-sqlite`
+- **Storage**: `expo-file-system`, `@react-native-async-storage/async-storage`
+- **State**: `zustand`
+- **Localization**: `i18next`, `react-i18next`, `expo-localization`
+- **UI**: `nativewind`, `@expo/vector-icons`, `react-native-skia`
+- **Performance**: `@shopify/flash-list`
+
+---
+
+## 📱 iOS Widgets (Coming Soon)
+
+Show your daily intention right on your home screen. If no intention is set, you’ll get a warm reminder.
+
+---
+
+## 🚧 Development
+
+This project uses:
+
+- **Expo Dev Client**
+- **Drizzle Studio Plugin** for local schema browsing
+- **Babel inline import** for loading `.svg` files
+- **EventEmitter** for inter-component communication
+- **Sentry** for error tracking (optional)
+
+---
+
+## 🤍 License
+
+Free forever. No ads. Open-hearted and built to help.
+
+---
+
+## 🙌 Contributing
+
+Want to help more people live one mindful day at a time?  
+Pull requests are welcome. Let's build something meaningful together.
