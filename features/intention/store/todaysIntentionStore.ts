@@ -1,8 +1,11 @@
 import { drizzleDb } from "@/db/client";
 import { intentionsTable } from "@/db/schema";
+import { useUserStore } from "@/features/user/store/userStore";
 import { Emitter } from "@/utils/emitter";
+import { ExtensionStorage } from "@bacons/apple-targets";
 import { format } from "date-fns/format";
 import { eq } from "drizzle-orm";
+import { Platform } from "react-native";
 import { create } from "zustand";
 
 export type IntentionRow = typeof intentionsTable.$inferSelect;
@@ -23,6 +26,10 @@ type TodaysIntentionStoreActions = {
 
 export type TodaysIntentionStore = TodaysIntentionStoreState &
   TodaysIntentionStoreActions;
+
+const intentionWidgetStorage = new ExtensionStorage(
+  "group.app.justfortoday.intention.widget",
+);
 
 export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
   (set, get) => ({
@@ -70,6 +77,20 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
       set(() => ({
         todaysIntention: newRow,
       }));
+
+      if (Platform.OS === "ios") {
+        try {
+          const user = useUserStore.getState().user;
+
+          intentionWidgetStorage.set("userDisplayName", user?.name || "");
+          intentionWidgetStorage.set("intention", newRow.intention);
+          intentionWidgetStorage.set("date", newRow.date);
+
+          ExtensionStorage.reloadWidget();
+        } catch (error) {
+          console.error("Failed to update intention widget storage:", error);
+        }
+      }
     },
 
     updateTodaysIntention: async (payload) => {
@@ -91,12 +112,28 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
 
       Emitter.emit("intention:updated");
 
+      const updatedRow = {
+        ...todaysIntention,
+        ...updatedPayload,
+      };
+
       set(() => ({
-        todaysIntention: {
-          ...todaysIntention,
-          ...updatedPayload,
-        },
+        todaysIntention: updatedRow,
       }));
+
+      if (Platform.OS === "ios") {
+        try {
+          const user = useUserStore.getState().user;
+
+          intentionWidgetStorage.set("userDisplayName", user?.name || "");
+          intentionWidgetStorage.set("intention", updatedRow.intention);
+          intentionWidgetStorage.set("date", updatedRow.date);
+
+          ExtensionStorage.reloadWidget();
+        } catch (error) {
+          console.error("Failed to update intention widget storage:", error);
+        }
+      }
     },
   }),
 );
