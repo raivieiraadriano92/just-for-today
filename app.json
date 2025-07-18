@@ -14,6 +14,12 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleAllowMixedLocalizations": true
+      },
+      "appleTeamId": "2W3CZ62JW3",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.app.justfortoday.intention.widget"
+        ]
       }
     },
     "locales": {
@@ -58,7 +64,8 @@
           "organization": "monsters-sa"
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      "@bacons/apple-targets"
     ],
     "experiments": {
       "typedRoutes": true
