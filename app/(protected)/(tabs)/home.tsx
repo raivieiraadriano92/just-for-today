@@ -2,9 +2,11 @@ import { InteractivePressable } from "@/components/InteractivePressable";
 import { WeeklyProgress } from "@/features/activity/components/WeeklyProgress";
 import { useActivityStore } from "@/features/activity/store/activityStore";
 import { IntentionGreetingCard } from "@/features/intention/components/IntentionGreetingCard";
+import { useUserStore } from "@/features/user/store/userStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
-import { Link, router } from "expo-router";
+import { Link, router, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
@@ -13,7 +15,21 @@ export default function HomeScreen() {
 
   const theme = useTheme();
 
-  const { streak } = useActivityStore();
+  const { counters, streak } = useActivityStore();
+
+  const { isHomeWidgetsPresentationCompleted } = useUserStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      const timeout = setTimeout(() => {
+        if (!isHomeWidgetsPresentationCompleted && counters.intentions === 1) {
+          router.push("/widgets");
+        }
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }, [counters.intentions, isHomeWidgetsPresentationCompleted]),
+  );
 
   return (
     <View className="pt-safe flex-1 pb-6">

@@ -34,12 +34,14 @@ export type User = {
 };
 
 type UserStoreState = {
+  isHomeWidgetsPresentationCompleted: boolean;
   isOnboardingCompleted: boolean;
   settings: Settings;
   user: User | null;
 };
 
 type UserStoreActions = {
+  completeHomeWidgetsPresentation: () => void;
   completeOnboarding: () => void;
   setUser: (user: User) => void;
   setEnabledNotification: (
@@ -84,6 +86,7 @@ const handleNotificationSchedule = async ({
 export const useUserStore = create<UserStore>()(
   persist(
     (set, get) => ({
+      isHomeWidgetsPresentationCompleted: false,
       isOnboardingCompleted: false,
       settings: {
         notifications: {
@@ -102,6 +105,12 @@ export const useUserStore = create<UserStore>()(
         },
       },
       user: null,
+
+      completeHomeWidgetsPresentation: () => {
+        const current = get().user;
+        if (!current) return;
+        set({ isHomeWidgetsPresentationCompleted: true });
+      },
 
       completeOnboarding: () => {
         const current = get().user;
@@ -167,6 +176,8 @@ export const useUserStore = create<UserStore>()(
       name: "user-store",
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
+        isHomeWidgetsPresentationCompleted:
+          state.isHomeWidgetsPresentationCompleted,
         isOnboardingCompleted: state.isOnboardingCompleted,
         settings: state.settings,
         user: state.user,

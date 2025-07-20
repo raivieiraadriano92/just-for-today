@@ -4,6 +4,7 @@
     "justForToday": "Just for Today",
     "next": "Next",
     "notNow": "Not now",
+    "ok": "Ok",
     "save": "Save",
     "today": "Today",
     "yes": "Yes",
@@ -34,6 +35,17 @@
     "welcome": {
       "welcomeMessage": "Each sunrise brings a new choice.",
       "buttonLabel": "Get Started"
+    },
+    "widgets": {
+      "title": "Bring peace to your Home Screen",
+      "description": "Keep your daily intention and moments of gratitude close, even outside the app. Add a Just for Today widget to your Home Screen and let small reminders support your emotional journey.",
+      "guide": {
+        "title": "To add the widget:",
+        "step1": "Long-press on your Home Screen",
+        "step2": "Tap the + button",
+        "step3": "Search for Just for Today",
+        "step4": "Pick a widget size and tap Add Widget"
+      }
     }
   },
   "features": {
