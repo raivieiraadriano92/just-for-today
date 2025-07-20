@@ -36,6 +36,7 @@ export type User = {
 type UserStoreState = {
   isHomeWidgetsPresentationCompleted: boolean;
   isOnboardingCompleted: boolean;
+  lastReviewRequestDate?: string; // ISO format
   settings: Settings;
   user: User | null;
 };
@@ -43,6 +44,7 @@ type UserStoreState = {
 type UserStoreActions = {
   completeHomeWidgetsPresentation: () => void;
   completeOnboarding: () => void;
+  setLastReviewRequestDate: (date: string) => void;
   setUser: (user: User) => void;
   setEnabledNotification: (
     type: NotificationType,
@@ -118,6 +120,10 @@ export const useUserStore = create<UserStore>()(
         set({ isOnboardingCompleted: true });
       },
 
+      setLastReviewRequestDate: (date) => {
+        set({ lastReviewRequestDate: date });
+      },
+
       setUser: (user) => set({ user }),
 
       setEnabledNotification: async (type, enabled) => {
@@ -179,6 +185,7 @@ export const useUserStore = create<UserStore>()(
         isHomeWidgetsPresentationCompleted:
           state.isHomeWidgetsPresentationCompleted,
         isOnboardingCompleted: state.isOnboardingCompleted,
+        lastReviewRequestDate: state.lastReviewRequestDate,
         settings: state.settings,
         user: state.user,
       }),

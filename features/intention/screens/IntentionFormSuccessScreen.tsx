@@ -3,6 +3,7 @@ import {
   PROGRESS_MULTIPLIER,
   useActivityStore,
 } from "@/features/activity/store/activityStore";
+import { requestReview } from "@/utils/requestReview";
 import { router } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -57,6 +58,12 @@ export default function IntentionFormSuccessScreen() {
     };
   }, [counters.intentions, streak.state, weeklyProgress.data]);
 
+  const handleBackPress = () => {
+    router.back();
+
+    requestReview();
+  };
+
   if (isLoading) {
     return null; // or a loading spinner
   }
@@ -93,7 +100,7 @@ export default function IntentionFormSuccessScreen() {
         <Button
           className="flex-1"
           label={t("common.notNow")}
-          onPress={router.back}
+          onPress={handleBackPress}
           variant="outline"
         />
         <Button

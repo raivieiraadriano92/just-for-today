@@ -3,6 +3,7 @@ import {
   PROGRESS_MULTIPLIER,
   useActivityStore,
 } from "@/features/activity/store/activityStore";
+import { requestReview } from "@/utils/requestReview";
 import { router } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,6 +64,12 @@ export function GratitudeLogFormSuccessScreen() {
     };
   }, [counters.gratitudeLogs, streak.state, t, weeklyProgress.data]);
 
+  const handleBackPress = () => {
+    router.back();
+
+    requestReview();
+  };
+
   if (isLoading) {
     return null; // or a loading spinner
   }
@@ -93,7 +100,7 @@ export function GratitudeLogFormSuccessScreen() {
           label={t(
             "features.gratitudeLog.screens.GratitudeLogFormSuccessScreen.buttonLabel",
           )}
-          onPress={router.back}
+          onPress={handleBackPress}
         />
       </View>
     </>
