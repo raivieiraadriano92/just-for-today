@@ -8,7 +8,13 @@
     "save": "Save",
     "today": "Today",
     "yes": "Yes",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "later": "Later"
+  },
+  "requestReview": {
+    "title": "Thanks for using Just For Today!",
+    "description": "If you enjoy it, please consider leaving a review.",
+    "cta": "Rate Now"
   },
   "generalError": {
     "title": "Something went wrong",
@@ -497,7 +503,9 @@
         "SettingsScreen": {
           "title": "Settings",
           "profile": "Profile",
-          "notifications": "Notifications"
+          "notifications": "Notifications",
+          "version": "Version",
+          "requestReview": "Leave a review"
         }
       }
     }

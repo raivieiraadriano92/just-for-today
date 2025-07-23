@@ -1,11 +1,12 @@
 import { useActivityStore } from "@/features/activity/store/activityStore";
 import { useUserStore } from "@/features/user/store/userStore";
+import i18n from "@/i18n";
 import { differenceInDays, parseISO } from "date-fns";
 import Constants from "expo-constants";
 import * as StoreReview from "expo-store-review";
 import { Alert, Linking, Platform } from "react-native";
 
-export async function requestReview() {
+export async function requestReview(shouldValidate = true) {
   const { counters } = useActivityStore.getState();
 
   const { lastReviewRequestDate, setLastReviewRequestDate } =
@@ -15,7 +16,8 @@ export async function requestReview() {
     counters.gratitudeLogs > 3 ||
     counters.intentions > 3 ||
     counters.moodLogs > 3 ||
-    counters.reflections > 3
+    counters.reflections > 3 ||
+    !shouldValidate
   ) {
     const lastDate = lastReviewRequestDate
       ? parseISO(lastReviewRequestDate)
@@ -23,7 +25,7 @@ export async function requestReview() {
 
     const diffInDays = differenceInDays(new Date(), lastDate);
 
-    if (!lastReviewRequestDate || diffInDays > 14) {
+    if (!lastReviewRequestDate || diffInDays > 14 || !shouldValidate) {
       const hasAction = await StoreReview.hasAction();
 
       if (hasAction) {
@@ -38,15 +40,15 @@ export async function requestReview() {
 
         if (url && canOpen) {
           Alert.alert(
-            "Thanks for using Just For Today!",
-            "If you enjoy it, please consider leaving a review.",
+            i18n.t("requestReview.title"),
+            i18n.t("requestReview.description"),
             [
               {
-                text: "Later",
+                text: i18n.t("common.later"),
                 style: "cancel",
               },
               {
-                text: "Rate Now",
+                text: i18n.t("requestReview.cta"),
                 onPress: () => {
                   Linking.openURL(url);
                 },
