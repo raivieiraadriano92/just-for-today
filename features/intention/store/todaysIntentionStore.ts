@@ -5,9 +5,9 @@ import { Emitter } from "@/utils/emitter";
 import { ExtensionStorage } from "@bacons/apple-targets";
 import { format } from "date-fns/format";
 import { eq } from "drizzle-orm";
+import JustForTodayAndroidWidgets from "just-for-today-android-widgets";
 import { Platform } from "react-native";
 import { create } from "zustand";
-
 export type IntentionRow = typeof intentionsTable.$inferSelect;
 
 export type IntentionPayload = Pick<IntentionRow, "intention">;
@@ -78,18 +78,25 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
         todaysIntention: newRow,
       }));
 
-      if (Platform.OS === "ios") {
-        try {
-          const user = useUserStore.getState().user;
+      try {
+        const user = useUserStore.getState().user;
 
+        if (Platform.OS === "ios") {
           intentionWidgetStorage.set("userDisplayName", user?.name || "");
           intentionWidgetStorage.set("intention:intention", newRow.intention);
           intentionWidgetStorage.set("intention:date", newRow.date);
-
-          ExtensionStorage.reloadWidget();
-        } catch (error) {
-          console.error("Failed to update intention widget storage:", error);
+        } else if (Platform.OS === "android") {
+          JustForTodayAndroidWidgets.setUserDisplayName(user?.name || "");
+          JustForTodayAndroidWidgets.setIntention(
+            newRow.intention,
+            newRow.date,
+          );
+          JustForTodayAndroidWidgets.updateIntentionWidget();
         }
+
+        ExtensionStorage.reloadWidget();
+      } catch (error) {
+        console.error("Failed to update intention widget storage:", error);
       }
     },
 
@@ -121,21 +128,28 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
         todaysIntention: updatedRow,
       }));
 
-      if (Platform.OS === "ios") {
-        try {
-          const user = useUserStore.getState().user;
+      try {
+        const user = useUserStore.getState().user;
 
+        if (Platform.OS === "ios") {
           intentionWidgetStorage.set("userDisplayName", user?.name || "");
           intentionWidgetStorage.set(
             "intention:intention",
             updatedRow.intention,
           );
           intentionWidgetStorage.set("intention:date", updatedRow.date);
-
-          ExtensionStorage.reloadWidget();
-        } catch (error) {
-          console.error("Failed to update intention widget storage:", error);
+        } else if (Platform.OS === "android") {
+          JustForTodayAndroidWidgets.setUserDisplayName(user?.name || "");
+          JustForTodayAndroidWidgets.setIntention(
+            updatedRow.intention,
+            updatedRow.date,
+          );
+          JustForTodayAndroidWidgets.updateIntentionWidget();
         }
+
+        ExtensionStorage.reloadWidget();
+      } catch (error) {
+        console.error("Failed to update intention widget storage:", error);
       }
     },
   }),

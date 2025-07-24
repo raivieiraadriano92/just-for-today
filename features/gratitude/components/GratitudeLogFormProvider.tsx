@@ -96,16 +96,20 @@ export const GratitudeLogFormProvider: FunctionComponent<
   };
 
   const handleSave = async (payload: GratitudeLogPayload) => {
-    const images = await saveImages(payload.images);
+    try {
+      const images = await saveImages(payload.images);
 
-    if (id && id !== "new") {
-      await updateById(id, { ...payload, images });
-    } else {
-      await insert({ ...payload, images });
+      if (id && id !== "new") {
+        await updateById(id, { ...payload, images });
+      } else {
+        await insert({ ...payload, images });
+      }
+
+      // After saving, redirect to success page
+      router.replace("/gratitude/success");
+    } catch (error) {
+      console.error("Error saving gratitude log:", error);
     }
-
-    // After saving, redirect to success page
-    router.replace("/gratitude/success");
   };
 
   const handleNext = async () => {

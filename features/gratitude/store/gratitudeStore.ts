@@ -1,6 +1,7 @@
 import { drizzleDb } from "@/db/client";
 import { gratitudeLogsTable } from "@/db/schema";
 import { useUserStore } from "@/features/user/store/userStore";
+import JustForTodayAndroidWidgetsModule from "@/modules/just-for-today-android-widgets/src/JustForTodayAndroidWidgetsModule";
 import { Emitter } from "@/utils/emitter";
 import { ExtensionStorage } from "@bacons/apple-targets";
 import { eq } from "drizzle-orm";
@@ -98,18 +99,21 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
     //     data: [...newRows, ...state.data],
     //   }));
 
-    if (Platform.OS === "ios") {
-      try {
-        const user = useUserStore.getState().user;
+    try {
+      const user = useUserStore.getState().user;
 
+      if (Platform.OS === "ios") {
         gratitudeWidgetStorage.set("userDisplayName", user?.name || "");
         gratitudeWidgetStorage.set("gratitudeLog:content", newRow.content);
-        gratitudeWidgetStorage.set("gratitudeLog:id", newRow.id);
 
         ExtensionStorage.reloadWidget();
-      } catch (error) {
-        console.error("Failed to update gratitude widget storage:", error);
+      } else if (Platform.OS === "android") {
+        JustForTodayAndroidWidgetsModule.setUserDisplayName(user?.name || "");
+        JustForTodayAndroidWidgetsModule.setGratitude(newRow.content);
+        JustForTodayAndroidWidgetsModule.updateGratitudeWidget();
       }
+    } catch (error) {
+      console.error("Failed to update gratitude widget storage:", error);
     }
 
     return { id };
@@ -127,21 +131,23 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
 
     Emitter.emit("gratitudeLog:updated");
 
-    if (
-      Platform.OS === "ios" &&
-      payload.content &&
-      id === gratitudeWidgetStorage.get("gratitudeLog:id")
-    ) {
-      try {
-        const user = useUserStore.getState().user;
+    try {
+      const user = useUserStore.getState().user;
 
-        gratitudeWidgetStorage.set("userDisplayName", user?.name || "");
-        gratitudeWidgetStorage.set("gratitudeLog:content", payload.content);
+      if (payload.content) {
+        if (Platform.OS === "ios") {
+          gratitudeWidgetStorage.set("userDisplayName", user?.name || "");
+          gratitudeWidgetStorage.set("gratitudeLog:content", payload.content);
 
-        ExtensionStorage.reloadWidget();
-      } catch (error) {
-        console.error("Failed to update gratitude widget storage:", error);
+          ExtensionStorage.reloadWidget();
+        } else if (Platform.OS === "android") {
+          JustForTodayAndroidWidgetsModule.setUserDisplayName(user?.name || "");
+          JustForTodayAndroidWidgetsModule.setGratitude(payload.content);
+          JustForTodayAndroidWidgetsModule.updateGratitudeWidget();
+        }
       }
+    } catch (error) {
+      console.error("Failed to update gratitude widget storage:", error);
     }
 
     //   set((state) => ({
