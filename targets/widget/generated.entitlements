@@ -4,7 +4,7 @@
   <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-      <string>group.app.justfortoday.intention.widget</string>
+      <string>group.app.justfortoday.widgets</string>
     </array>
   </dict>
 </plist>

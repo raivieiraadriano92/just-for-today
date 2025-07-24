@@ -28,7 +28,7 @@ export type TodaysIntentionStore = TodaysIntentionStoreState &
   TodaysIntentionStoreActions;
 
 const intentionWidgetStorage = new ExtensionStorage(
-  "group.app.justfortoday.intention.widget",
+  "group.app.justfortoday.widgets",
 );
 
 export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
@@ -83,8 +83,8 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
           const user = useUserStore.getState().user;
 
           intentionWidgetStorage.set("userDisplayName", user?.name || "");
-          intentionWidgetStorage.set("intention", newRow.intention);
-          intentionWidgetStorage.set("date", newRow.date);
+          intentionWidgetStorage.set("intention:intention", newRow.intention);
+          intentionWidgetStorage.set("intention:date", newRow.date);
 
           ExtensionStorage.reloadWidget();
         } catch (error) {
@@ -126,8 +126,11 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
           const user = useUserStore.getState().user;
 
           intentionWidgetStorage.set("userDisplayName", user?.name || "");
-          intentionWidgetStorage.set("intention", updatedRow.intention);
-          intentionWidgetStorage.set("date", updatedRow.date);
+          intentionWidgetStorage.set(
+            "intention:intention",
+            updatedRow.intention,
+          );
+          intentionWidgetStorage.set("intention:date", updatedRow.date);
 
           ExtensionStorage.reloadWidget();
         } catch (error) {

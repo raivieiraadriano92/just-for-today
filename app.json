@@ -19,7 +19,7 @@
       "appleTeamId": "2W3CZ62JW3",
       "entitlements": {
         "com.apple.security.application-groups": [
-          "group.app.justfortoday.intention.widget"
+          "group.app.justfortoday.widgets"
         ]
       }
     },

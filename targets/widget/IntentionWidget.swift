@@ -1,19 +1,19 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
-    func getEntryFromUserDefaults() -> SimpleEntry {
-        let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.intention.widget")
+struct IntentionWidgetProvider: TimelineProvider {
+    func getEntryFromUserDefaults() -> IntentionEntry {
+        let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.widgets")
         let storedUserDisplayName = userDefaults?.string(forKey: "userDisplayName")
-        let storedDateString = userDefaults?.string(forKey: "date")
-        let intentionText = userDefaults?.string(forKey: "intention")
+        let storedDateString = userDefaults?.string(forKey: "intention:date")
+        let intentionText = userDefaults?.string(forKey: "intention:intention")
 
         let today = Date()
         let todayString = ISO8601DateFormatter().string(from: today).prefix(10) // "yyyy-MM-dd"
 
         let isValid = (storedDateString ?? "") == todayString
       
-        return SimpleEntry(
+        return IntentionEntry(
             userDisplayName: storedUserDisplayName ?? "there",
             date: today,
             hasIntention: isValid,
@@ -21,22 +21,22 @@ struct Provider: TimelineProvider {
         )
     }
   
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(userDisplayName: "there", date: Date(), hasIntention: false, intention: nil)
+    func placeholder(in context: Context) -> IntentionEntry {
+      IntentionEntry(userDisplayName: "there", date: Date(), hasIntention: false, intention: nil)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (IntentionEntry) -> ()) {
         let entry = getEntryFromUserDefaults()
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<IntentionEntry>) -> ()) {
         let entry = getEntryFromUserDefaults()
         completion(Timeline(entries: [entry], policy: .never)) // no auto-refresh
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct IntentionEntry: TimelineEntry {
     let userDisplayName: String
     let date: Date
     let hasIntention: Bool
@@ -141,8 +141,8 @@ struct IntentionView: View {
   }
 }
 
-struct widgetEntryView : View {
-    var entry: SimpleEntry
+struct IntentionWidgetEntryView : View {
+    var entry: IntentionEntry
     @Environment(\.widgetFamily) var family
 
     var body: some View {
@@ -154,20 +154,20 @@ struct widgetEntryView : View {
     }
 }
 
-struct widget: Widget {
-    let kind: String = "widget"
+struct IntentionWidget: Widget {
+    let kind: String = "intention-widget"
 
     var body: some WidgetConfiguration {
-      StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            widgetEntryView(entry: entry)
+      StaticConfiguration(kind: kind, provider: IntentionWidgetProvider()) { entry in
+        IntentionWidgetEntryView(entry: entry)
           .containerBackground(.background, for: .widget)
         }
     }
 }
 
 #Preview(as: .systemSmall) {
-    widget()
+  IntentionWidget()
 } timeline: {
-    SimpleEntry(userDisplayName: "John", date: .now, hasIntention: true, intention: "Be kind to myself.")
-    SimpleEntry(userDisplayName: "John", date: .now, hasIntention: false, intention: nil)
+  IntentionEntry(userDisplayName: "John", date: .now, hasIntention: true, intention: "Be kind to myself.")
+  IntentionEntry(userDisplayName: "John", date: .now, hasIntention: false, intention: nil)
 }
