@@ -8,7 +8,7 @@ import { useTheme } from "@react-navigation/native";
 import { Link, router, useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Platform, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -21,19 +21,14 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      if (Platform.OS === "ios") {
-        const timeout = setTimeout(() => {
-          if (
-            !isHomeWidgetsPresentationCompleted &&
-            counters.intentions === 1
-          ) {
-            router.push("/widgets");
-            return;
-          }
-        }, 1000);
+      const timeout = setTimeout(() => {
+        if (!isHomeWidgetsPresentationCompleted && counters.intentions === 1) {
+          router.push("/widgets");
+          return;
+        }
+      }, 1000);
 
-        return () => clearTimeout(timeout);
-      }
+      return () => clearTimeout(timeout);
     }, [counters.intentions, isHomeWidgetsPresentationCompleted]),
   );
 

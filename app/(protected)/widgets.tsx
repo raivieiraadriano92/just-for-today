@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, Platform, ScrollView, Text, View } from "react-native";
 import twColors from "tailwindcss/colors";
 
 export default function HomeWidgetScreen() {
@@ -26,7 +26,10 @@ export default function HomeWidgetScreen() {
       >
         <Image
           className="h-80 max-w-full"
-          source={require("@/assets/images/ios-home-widget.png")}
+          source={Platform.select({
+            ios: require("@/assets/images/ios-home-widget.png"),
+            android: require("@/assets/images/android-home-widget.png"),
+          })}
           resizeMode="contain"
         />
         <View className="gap-3">
@@ -50,10 +53,10 @@ export default function HomeWidgetScreen() {
             ].map((task, index) => (
               <View key={task}>
                 {!!index && (
-                  <View className="ml-5 h-6 w-0.5 bg-green-500 dark:bg-green-400" />
+                  <View className="ml-6 h-6 w-0.5 bg-green-500 dark:bg-green-400" />
                 )}
                 <View className="flex-row items-center gap-4">
-                  <View className="h-10 w-10 items-center justify-center rounded-2xl border-2 border-green-500 dark:border-green-400">
+                  <View className="h-12 w-12 items-center justify-center rounded-2xl border-2 border-green-500 dark:border-green-400">
                     <Ionicons
                       color={
                         theme.dark ? twColors.green[400] : twColors.green[500]
@@ -62,7 +65,7 @@ export default function HomeWidgetScreen() {
                       size={18}
                     />
                   </View>
-                  <View>
+                  <View className="flex-1">
                     <Text className="text-base font-medium text-text/60 dark:text-text/80">
                       {task}
                     </Text>
