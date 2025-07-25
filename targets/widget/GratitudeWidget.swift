@@ -1,6 +1,31 @@
 import WidgetKit
 import SwiftUI
 
+private let localizedGratitudeTexts: [String: [String: String]] = [
+  "en": [
+    "hi": "Hi",
+    "emptyState": "Did you know a few moments of gratitude can lift your mood?",
+    "title": "Reasons to be grateful 🙏",
+    "cta": "Let's try it",
+    "mockLog": "Feeling supported, even in small ways."
+  ],
+  "pt": [
+    "hi": "Oi",
+    "emptyState": "Você sabia que alguns momentos de gratidão podem melhorar seu humor?",
+    "title": "Motivos para agradecer 🙏",
+    "cta": "Vamos tentar?",
+    "mockLog": "Sentindo-me apoiado, mesmo que em pequenas coisas."
+  ]
+]
+
+func localizedGratitudeText(for key: String) -> String {
+  let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.widgets")
+  let languageCode = userDefaults?.string(forKey: "language") ?? "en"
+  
+  let fallbackLanguage = "en"
+  return localizedGratitudeTexts[languageCode]?[key] ?? localizedGratitudeTexts[fallbackLanguage]?[key] ?? key
+}
+
 struct GratitudeWidgetProvider: TimelineProvider {
     func getEntryFromUserDefaults() -> GratitudeEntry {
         let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.widgets")
@@ -12,7 +37,7 @@ struct GratitudeWidgetProvider: TimelineProvider {
         let isValid = gratitudeText != nil ? true : false
       
         return GratitudeEntry(
-            userDisplayName: storedUserDisplayName ?? "there",
+            userDisplayName: storedUserDisplayName ?? nil,
             date: today,
             hasGratitude: isValid,
             gratitude: isValid ? gratitudeText : nil
@@ -20,7 +45,7 @@ struct GratitudeWidgetProvider: TimelineProvider {
     }
   
     func placeholder(in context: Context) -> GratitudeEntry {
-      GratitudeEntry(userDisplayName: "there", date: Date(), hasGratitude: false, gratitude: nil)
+      GratitudeEntry(userDisplayName: nil, date: Date(), hasGratitude: false, gratitude: nil)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (GratitudeEntry) -> ()) {
@@ -35,14 +60,14 @@ struct GratitudeWidgetProvider: TimelineProvider {
 }
 
 struct GratitudeEntry: TimelineEntry {
-    let userDisplayName: String
+    let userDisplayName: String?
     let date: Date
     let hasGratitude: Bool
     let gratitude: String?
 }
 
 struct EmptyGratitudeView: View {
-    let userName: String
+    let userName: String?
     let widgetFamily: WidgetFamily
 
     var body: some View {
@@ -56,16 +81,16 @@ struct EmptyGratitudeView: View {
     private var content: some View {
         VStack(alignment: alignment, spacing: spacing) {
           VStack(spacing: 8) {
-            Text("Hi, \(userName)! 👋")
+            Text(userName != nil ? "\(localizedGratitudeText(for: "hi")), \(userName ?? "")! 👋" : "\(localizedGratitudeText(for: "hi"))! 👋")
               .font(.callout).fontWeight(.medium)
             
-            Text("Did you know a few moments of gratitude can lift your mood?")
+            Text(localizedGratitudeText(for: "emptyState"))
               .font(.caption)
               .foregroundStyle(.secondary)
           }
 
             if widgetFamily != .systemSmall {
-                Text("Let's try it")
+                Text(localizedGratitudeText(for: "cta"))
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundStyle(.background)
@@ -109,7 +134,7 @@ struct GratitudeView: View {
           .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottomTrailing)
 
         VStack(alignment: alignment, spacing: 8) {
-          Text("Reasons to be grateful 🙏")
+          Text(localizedGratitudeText(for: "title"))
             .font(justForTodaySize)
             .foregroundColor(.secondary)
           Text(gratitude)
@@ -147,7 +172,7 @@ struct GratitudeWidgetEntryView : View {
       if entry.hasGratitude, let gratitude = entry.gratitude {
         GratitudeView(gratitude: gratitude, widgetFamily: family)
       } else {
-        EmptyGratitudeView(userName: entry.userDisplayName, widgetFamily: family)
+        EmptyGratitudeView(userName: entry.userDisplayName ?? nil, widgetFamily: family)
       }
     }
 }
@@ -166,6 +191,7 @@ struct GratitudeWidget: Widget {
 #Preview(as: .systemSmall) {
   GratitudeWidget()
 } timeline: {
-  GratitudeEntry(userDisplayName: "John", date: .now, hasGratitude: true, gratitude: "Feeling supported, even in small ways.")
+  GratitudeEntry(userDisplayName: "John", date: .now, hasGratitude: true, gratitude: localizedGratitudeText(for: "mockLog"))
   GratitudeEntry(userDisplayName: "John", date: .now, hasGratitude: false, gratitude: nil)
+  GratitudeEntry(userDisplayName: nil, date: .now, hasGratitude: false, gratitude: nil)
 }

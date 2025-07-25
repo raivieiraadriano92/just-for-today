@@ -4,6 +4,7 @@ import {
   requestNotificationPermission,
   scheduleDailyNotification,
 } from "@/utils/notifications";
+import { reloadWidgets, setWidgetUserDisplayName } from "@/utils/widgets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -124,7 +125,16 @@ export const useUserStore = create<UserStore>()(
         set({ lastReviewRequestDate: date });
       },
 
-      setUser: (user) => set({ user }),
+      setUser: (user) => {
+        try {
+          setWidgetUserDisplayName(user.name);
+          reloadWidgets();
+        } catch (error) {
+          console.error("Error setting widget user display name:", error);
+        }
+
+        set({ user });
+      },
 
       setEnabledNotification: async (type, enabled) => {
         const userName = get().user?.name;

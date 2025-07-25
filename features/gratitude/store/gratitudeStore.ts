@@ -1,12 +1,9 @@
 import { drizzleDb } from "@/db/client";
 import { gratitudeLogsTable } from "@/db/schema";
-import { useUserStore } from "@/features/user/store/userStore";
-import JustForTodayAndroidWidgetsModule from "@/modules/just-for-today-android-widgets/src/JustForTodayAndroidWidgetsModule";
 import { Emitter } from "@/utils/emitter";
-import { ExtensionStorage } from "@bacons/apple-targets";
+import { reloadWidgets, setWidgetGratitude } from "@/utils/widgets";
 import { eq } from "drizzle-orm";
 import { randomUUID } from "expo-crypto";
-import { Platform } from "react-native";
 import { create } from "zustand";
 
 export type GratitudeLogRow = Omit<
@@ -37,10 +34,6 @@ type GratitudeLogStoreActions = {
 
 export type GratitudeLogStore = GratitudeLogStoreState &
   GratitudeLogStoreActions;
-
-const gratitudeWidgetStorage = new ExtensionStorage(
-  "group.app.justfortoday.widgets",
-);
 
 export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
   // data: [],
@@ -100,18 +93,8 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
     //   }));
 
     try {
-      const user = useUserStore.getState().user;
-
-      if (Platform.OS === "ios") {
-        gratitudeWidgetStorage.set("userDisplayName", user?.name || "");
-        gratitudeWidgetStorage.set("gratitudeLog:content", newRow.content);
-
-        ExtensionStorage.reloadWidget();
-      } else if (Platform.OS === "android") {
-        JustForTodayAndroidWidgetsModule.setUserDisplayName(user?.name || "");
-        JustForTodayAndroidWidgetsModule.setGratitude(newRow.content);
-        JustForTodayAndroidWidgetsModule.updateGratitudeWidget();
-      }
+      setWidgetGratitude(newRow.content);
+      reloadWidgets();
     } catch (error) {
       console.error("Failed to update gratitude widget storage:", error);
     }
@@ -132,19 +115,9 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
     Emitter.emit("gratitudeLog:updated");
 
     try {
-      const user = useUserStore.getState().user;
-
       if (payload.content) {
-        if (Platform.OS === "ios") {
-          gratitudeWidgetStorage.set("userDisplayName", user?.name || "");
-          gratitudeWidgetStorage.set("gratitudeLog:content", payload.content);
-
-          ExtensionStorage.reloadWidget();
-        } else if (Platform.OS === "android") {
-          JustForTodayAndroidWidgetsModule.setUserDisplayName(user?.name || "");
-          JustForTodayAndroidWidgetsModule.setGratitude(payload.content);
-          JustForTodayAndroidWidgetsModule.updateGratitudeWidget();
-        }
+        setWidgetGratitude(payload.content);
+        reloadWidgets();
       }
     } catch (error) {
       console.error("Failed to update gratitude widget storage:", error);

@@ -23,4 +23,9 @@ export type JustForTodayAndroidWidgetsModule = {
    * Sets the user display name for the widget
    */
   setUserDisplayName: (name: string) => void;
+
+  /**
+   * Sets the language for the widget
+   */
+  setLanguage: (language: string) => void;
 };

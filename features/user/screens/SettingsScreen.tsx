@@ -61,12 +61,27 @@ export function SettingsScreen() {
               size={24}
             />
           </TouchableOpacity>
+          <View className="border-t-hairline border-border" />
           <TouchableOpacity
             className="flex-row items-center justify-between py-6"
             onPress={() => requestReview(false)}
           >
             <Text className="text-lg font-medium text-text">
               {t("features.user.screens.SettingsScreen.requestReview")}
+            </Text>
+            <Ionicons
+              color={theme.colors.primary}
+              name="chevron-forward"
+              size={24}
+            />
+          </TouchableOpacity>
+          <View className="border-t-hairline border-border" />
+          <TouchableOpacity
+            className="flex-row items-center justify-between py-6"
+            onPress={() => router.push("/settings/language")}
+          >
+            <Text className="text-lg font-medium text-text">
+              {t("features.user.screens.SettingsScreen.language")}
             </Text>
             <Ionicons
               color={theme.colors.primary}

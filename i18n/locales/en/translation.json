@@ -155,20 +155,17 @@
               "title": "Start with just one day",
               "description": "Every journey begins gently. Set your first intention when the moment feels right."
             },
-
             "active_streak": {
               "emoji": "✨",
               "title_one": "{{currentStreak}} day of showing up",
               "title_other": "{{currentStreak}} days of showing up",
               "description": "You’re building something meaningful, one peaceful moment at a time."
             },
-
             "streak_broken": {
               "emoji": "🌙",
               "title": "You paused — and that’s okay",
               "description": "Your {{lastStreak}}-day streak was a beautiful act of care. When you're ready, your journey continues."
             },
-
             "streak_restarted": {
               "emoji": "☀️",
               "title": "You're back — {{currentStreak}} day in",
@@ -430,7 +427,6 @@
         },
         "ReflectionFormSuccessScreen": {
           "moodQuestion": "Let's check in with your mood?",
-
           "firstReflection": {
             "title": "Your first reflection",
             "description": "You took a moment to look inward — that’s a powerful beginning."
@@ -505,7 +501,11 @@
           "profile": "Profile",
           "notifications": "Notifications",
           "version": "Version",
-          "requestReview": "Leave a review"
+          "requestReview": "Leave a review",
+          "language": "Language"
+        },
+        "LanguageScreen": {
+          "title": "Language"
         }
       }
     }

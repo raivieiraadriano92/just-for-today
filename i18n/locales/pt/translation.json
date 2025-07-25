@@ -1,0 +1,509 @@
+{
+  "common": {
+    "goHome": "Ir para a página inicial",
+    "justForToday": "Só por Hoje",
+    "next": "Próximo",
+    "notNow": "Agora não",
+    "ok": "Ok",
+    "save": "Salvar",
+    "today": "Hoje",
+    "yes": "Sim",
+    "yesterday": "Ontem",
+    "later": "Mais tarde"
+  },
+  "requestReview": {
+    "title": "Obrigado(a) por usar o Só por Hoje!",
+    "description": "Se você está gostando, por favor, considere deixar uma avaliação.",
+    "cta": "Avaliar agora"
+  },
+  "app": {
+    "home": {
+      "addMoodLogButtonLabel": "Humor",
+      "addGratitudeButtonLabel": "Gratidão",
+      "addReflectionButtonLabel": "Reflexão"
+    },
+    "journey": {
+      "title": "Sua Jornada",
+      "intentionTitle": "Só por Hoje, eu escolho...",
+      "gratitudeLogTitle": "Motivos para ser grato(a)",
+      "reflectionTitle": "Momento de reflexão",
+      "endOfListTitle": "Sua jornada começou aqui."
+    },
+    "tabs": {
+      "home": { "label": "Início" },
+      "journey": { "label": "Jornada" },
+      "stats": { "label": "Estatísticas" }
+    },
+    "welcome": {
+      "welcomeMessage": "Cada nascer do sol traz consigo a chance de uma nova escolha.",
+      "buttonLabel": "Começar"
+    },
+    "widgets": {
+      "title": "Leve paz para sua Tela de Início",
+      "description": "Mantenha sua intenção diária e momentos de gratidão por perto, mesmo fora do aplicativo. Adicione um widget do Só por Hoje à sua Tela de Início e deixe pequenos lembretes apoiarem sua jornada emocional.",
+      "guide": {
+        "title": "Para adicionar o widget:",
+        "step1": "Pressione e segure na sua Tela de Início",
+        "step2": "Toque no botão de edição no canto superior esquerdo e selecione Widgets ou Adicionar Widgets",
+        "step3": "Procure por Só por Hoje",
+        "step4": "Escolha um tamanho de widget e toque em Adicionar Widget"
+      }
+    }
+  },
+  "features": {
+    "activity": {
+      "components": {
+        "MoodCountCard": {
+          "title": "Contagem de Humor",
+          "description": "",
+          "totalLogs": "Total: {{count}} registros"
+        },
+        "MoodTrendLineChart": {
+          "title": "Tendência de Humor",
+          "description": "Veja como seu humor tem evoluído ao longo do tempo."
+        },
+        "MoodDistributionChart": {
+          "title": "Distribuição de Humor",
+          "description": "Descubra com que frequência você tem sentido cada tipo de humor."
+        },
+        "MoodByWeekdayChart": {
+          "title": "Humor por Dia da Semana",
+          "description": "Descubra quais dias da semana tendem a te animar — ou te deixar para baixo."
+        },
+        "MoodByTimeOfDayChart": {
+          "title": "Humor por Período do Dia",
+          "description": "Entenda como seu humor muda ao longo do dia.",
+          "morning": "Manhã",
+          "afternoon": "Tarde",
+          "evening": "Noite",
+          "night": "Madrugada"
+        }
+      },
+      "screens": {
+        "ActivitySummaryByDateScreen": {
+          "status": {
+            "allCompleted": {
+              "title": "Você fez tudo — lindamente!",
+              "description": "Isso é um dia inteiro de autocuidado. Intenção, emoção, gratidão e reflexão — sua alma agradece."
+            },
+            "partialCompleted": {
+              "title": "Você apareceu",
+              "description": "Você tirou um momento para si mesmo(a) — isso é algo para se sentir bem."
+            },
+            "notCompletedToday": {
+              "title": "O dia de hoje ainda não acabou…",
+              "description": "Até um momento de atenção plena pode mudar o seu dia."
+            },
+            "notCompletedPast": {
+              "title": "Tudo bem ter dias ruins",
+              "description": "Alguns dias são mais calmos — e isso é perfeitamente humano. Amanhã é uma nova chance para começar de novo."
+            }
+          },
+          "tasks": {
+            "intention": {
+              "description": "Você fez uma pausa para definir seu caminho.",
+              "title": "Intenção diária"
+            },
+            "moodLog": {
+              "description": "Você ouviu seu interior, profundo e verdadeiro.",
+              "title": "Registro de humor"
+            },
+            "gratitudeLog": {
+              "description": "Você encontrou a luz em alegrias simples.",
+              "title": "Prática de gratidão"
+            },
+            "reflection": {
+              "description": "Você gentilmente olhou para trás também.",
+              "title": "Autorreflexão"
+            }
+          }
+        },
+        "StatsScreen": {
+          "title": "Estatísticas",
+          "emptyState": {
+            "title": "Nenhum dado disponível",
+            "description": "Você não registrou entradas suficientes para obter insights ainda. Continue registrando — cada pequeno passo te ajuda a se entender melhor."
+          },
+          "filters": {
+            "7d": "Últimos 7 dias",
+            "month": "Mês",
+            "year": "Ano"
+          }
+        },
+        "StreakScreen": {
+          "intentionButtonLabel": "Só por Hoje, eu escolho...",
+          "counters": {
+            "intentions_one": "Dia com\nintenção",
+            "intentions_other": "Dias com\nintenção",
+            "moodLogs_one": "Registro\nemocional",
+            "moodLogs_other": "Registros\nemocionais",
+            "gratitudeLogs_one": "Motivo para\nser grato(a)",
+            "gratitudeLogs_other": "Motivos para\nser grato(a)",
+            "reflections_one": "Momento de\nautorreflexão",
+            "reflections_other": "Momentos de\nautorreflexão",
+            "wordsWritten_one": "Palavra\nescrita",
+            "wordsWritten_other": "Palavras\nescritas",
+            "longestStreak": "Maior\nsequência"
+          },
+          "states": {
+            "no_streak_yet": {
+              "emoji": "🌱",
+              "title": "Comece com apenas um dia",
+              "description": "Toda jornada começa suavemente. Defina sua primeira intenção quando o momento parecer certo."
+            },
+            "active_streak": {
+              "emoji": "✨",
+              "title_one": "{{currentStreak}} dia de presença",
+              "title_other": "{{currentStreak}} dias de presença",
+              "description": "Você está construindo algo significativo, um momento de paz por vez."
+            },
+            "streak_broken": {
+              "emoji": "🌙",
+              "title": "Você pausou — e tudo bem",
+              "description": "Sua sequência de {{lastStreak}} dias foi um lindo ato de cuidado. Quando estiver pronto(a), sua jornada continua."
+            },
+            "streak_restarted": {
+              "emoji": "☀️",
+              "title": "Você está de volta — {{currentStreak}} dia de recomeço",
+              "description": "Bem-vindo(a) de volta. Você já deu o primeiro passo — agora continue gentilmente."
+            }
+          }
+        }
+      }
+    },
+    "intention": {
+      "components": {
+        "IntentionGreetingCard": {
+          "greeting": "Olá, {{name}}!",
+          "quote": {
+            "part1": "Cada nascer do sol traz consigo a chance de uma nova escolha — o que você vai escolher,",
+            "part2": "Só por Hoje?"
+          },
+          "ctaLabel": "Hoje eu escolho...",
+          "intentionPrefix": "Só por Hoje, eu escolho..."
+        }
+      },
+      "screens": {
+        "IntentionFormScreen": {
+          "finishButtonLabel": "🖐 Toca aqui para se comprometer",
+          "IntentionFormScreenIntro": {
+            "title": "{{name}}, este é o seu momento",
+            "description": "Você tem o poder de moldar seu dia. Defina uma intenção que apoie quem você quer ser."
+          },
+          "IntentionFormScreenIntention": {
+            "title": "Só por Hoje",
+            "inputPlaceholder": "Eu escolho..."
+          },
+          "IntentionFormScreenCommit": {
+            "title": "É hora de se comprometer",
+            "subtitle": "Leia em voz alta...",
+            "message": "Meu nome é {{name}} e Só por Hoje eu escolho {{intention}}."
+          }
+        },
+        "IntentionFormSuccessScreen": {
+          "moodQuestion": "Vamos verificar como está seu humor?",
+          "firstIntention": {
+            "title": "Sua primeira intenção foi definida",
+            "description": "É aqui que tudo começa — uma pequena e consciente escolha para cuidar de si mesmo(a)."
+          },
+          "backInStreak": {
+            "title": "Bem-vindo(a) de volta",
+            "description": "Não importa o tempo de ausência, você está aqui de novo — e isso significa tudo."
+          },
+          "inStreak": {
+            "title": "Mais um dia com intenção",
+            "description": "Você está se mantendo conectado(a), um dia de cada vez — isso é algo para se orgulhar."
+          }
+        }
+      }
+    },
+    "moodLog": {
+      "moodTypes": {
+        "really_good": {
+          "title": "Muito Bem",
+          "description": "Sentindo-se ótimo(a) e cheio(a) de energia.",
+          "feelings": {
+            "joyful": "Alegre",
+            "happy": "Feliz",
+            "love": "Amor",
+            "playful": "Brincalhão(ona)",
+            "connected": "Conectado(a)",
+            "proud": "Orgulhoso(a)",
+            "brave": "Corajoso(a)",
+            "confident": "Confiante",
+            "free": "Livre",
+            "energetic": "Energético(a)",
+            "creative": "Criativo(a)",
+            "excited": "Animado(a)",
+            "elevated": "Elevado(a)"
+          },
+          "messageTitle": "A alegria está no ar",
+          "messageBody": "Algo hoje está te iluminando — deixe esse calor durar um pouco mais.",
+          "messageMostFrequentMood": "Você tem se sentido muito bem ultimamente — isso é algo para celebrar."
+        },
+        "good": {
+          "title": "Bem",
+          "description": "Calmo(a), contente e estável.",
+          "feelings": {
+            "calm": "Calmo(a)",
+            "peaceful": "Tranquilo(a)",
+            "safe": "Seguro(a)",
+            "comfortable": "Confortável",
+            "balanced": "Equilibrado(a)",
+            "content": "Contente",
+            "appreciated": "Valorizado(a)",
+            "warm": "Aconchegante",
+            "respected": "Respeitado(a)",
+            "open": "Aberto(a)",
+            "grateful": "Grato(a)",
+            "curious": "Curioso(a)",
+            "inspired": "Inspirado(a)",
+            "recharged": "Recarregado(a)",
+            "motivated": "Motivado(a)",
+            "optimistic": "Otimista",
+            "satisfied": "Satisfeito(a)",
+            "relieved": "Aliviado(a)"
+          },
+          "messageTitle": "Um bom ritmo",
+          "messageBody": "Há uma sensação de leveza hoje. Permita-se seguir gentilmente com isso.",
+          "messageMostFrequentMood": "Muitos dos seus dias têm sido bons — essa calma constante importa."
+        },
+        "okay": {
+          "title": "Normal",
+          "description": "Neutro. Apenas seguindo em frente.",
+          "feelings": {
+            "meh": "Mais ou menos",
+            "flat": "Sem graça",
+            "blank": "Vazio(a)",
+            "dull": "Entediado(a)",
+            "bored": "Entediado(a)",
+            "unsure": "Inseguro(a)",
+            "confused": "Confuso(a)",
+            "awkward": "Constrangido(a)",
+            "tired": "Cansado(a)",
+            "distracted": "Distraído(a)",
+            "impatient": "Impaciente",
+            "neutral": "Neutro(a)"
+          },
+          "messageTitle": "Um meio termo tranquilo",
+          "messageBody": "Nem todo dia precisa ser um pico. Estar presente para o comum também é poderoso.",
+          "messageMostFrequentMood": "Você tem se sentido normal com mais frequência — às vezes, a neutralidade calma é exatamente o que você precisa."
+        },
+        "bad": {
+          "title": "Mal",
+          "description": "Sentindo-se para baixo ou diferente hoje.",
+          "feelings": {
+            "unmotivated": "Desmotivado(a)",
+            "exhausted": "Exausto(a)",
+            "discouraged": "Desanimado(a)",
+            "unfulfilled": "Insatisfeito(a)",
+            "restless": "Inquieto(a)",
+            "tired": "Cansado(a)",
+            "lonely": "Solitário(a)",
+            "isolated": "Isolado(a)",
+            "misunderstood": "Mal compreendido(a)",
+            "hurt": "Magoado(a)",
+            "jealous": "Com ciúmes",
+            "insecure": "Inseguro(a)",
+            "guilty": "Culpado(a)",
+            "worried": "Preocupado(a)",
+            "nervous": "Nervoso(a)",
+            "overwhelmed": "Sobrecarrregado(a)",
+            "pessimistic": "Pessimista",
+            "sad": "Triste",
+            "annoyed": "Irritado(a)",
+            "disappointed": "Decepcionado(a)",
+            "tense": "Tenso(a)",
+            "irritable": "Irritado(a)",
+            "stuck": "Preso(a)"
+          },
+          "messageTitle": "Ondas vêm e vão",
+          "messageBody": "Este momento parece mais pesado — seja gentil consigo mesmo(a) e vá devagar.",
+          "messageMostFrequentMood": "Você teve alguns dias difíceis ultimamente — é corajoso(a) notá-los e registrá-los."
+        },
+        "really_bad": {
+          "title": "Muito Mal",
+          "description": "Sobrecarregado(a) ou realmente em dificuldades.",
+          "feelings": {
+            "grieved": "Enlutado(a)",
+            "hopeless": "Sem esperança",
+            "worthless": "Inútil",
+            "ashamed": "Envergonhado(a)",
+            "abandoned": "Abandonado(a)",
+            "angry": "Com raiva",
+            "frustrated": "Frustrado(a)",
+            "panicked": "Em pânico",
+            "fearful": "Com medo",
+            "anxious": "Ansioso(a)",
+            "rejected": "Rejeitado(a)",
+            "disrespected": "Desrespeitado(a)",
+            "embarrassed": "Envergonhado(a)",
+            "numb": "Dormente",
+            "disgusted": "Com nojo"
+          },
+          "messageTitle": "Um céu pesado",
+          "messageBody": "Hoje parece difícil. Mesmo notar isso é um ato de cuidado — talvez tente escrever uma pequena coisa pela qual você é grato(a).",
+          "messageMostFrequentMood": "Você passou por momentos muito difíceis — ser honesto(a) sobre eles é poderoso."
+        }
+      },
+      "screens": {
+        "MoodLogFormScreen": {
+          "MoodLogFormScreenMoodPicker": {
+            "title": "Como você está se sentindo agora?",
+            "description": "Tire um momento para perceber o que está presente — sem pressa, sem julgamento."
+          },
+          "MoodLogFormScreenFeelingsPicker": {
+            "title": "Quer ir um pouco mais fundo?"
+          },
+          "MoodLogFormScreenNote": {
+            "title": "Quer explorar esse sentimento um pouco mais?",
+            "description": "Não há certo ou errado — apenas seus pensamentos, escritos com carinho.",
+            "inputPlaceholder": "O que está em sua mente?"
+          }
+        },
+        "MoodLogFormSuccessScreen": {
+          "gratitudeQuestion": "Você sabia que alguns momentos de gratidão podem melhorar seu humor?\n\nVamos tentar?",
+          "firstMoodLog": {
+            "title": "Primeiro registro de humor feito",
+            "description": "Perceber como você se sente é um primeiro passo poderoso em direção ao autoconhecimento."
+          },
+          "backInStreak": {
+            "title": "Bem-vindo(a) de volta",
+            "description": "Não importa o tempo de ausência, você está aqui de novo — e isso significa tudo."
+          },
+          "inStreak": {
+            "title": "Registro de humor completo",
+            "description": "Você está se mantendo conectado(a) aos seus sentimentos — isso é algo para celebrar."
+          }
+        }
+      }
+    },
+    "gratitudeLog": {
+      "screens": {
+        "GratitudeLogFormScreen": {
+          "GratitudeLogFormScreenContent": {
+            "title": "Pelo que você é grato(a) hoje?",
+            "description": "Mesmo um pequeno momento — um sorriso, uma brisa, uma palavra gentil — pode iluminar o dia todo.",
+            "inputPlaceholder": "Sou grato(a) por..."
+          },
+          "GratitudeLogFormScreenImagePicker": {
+            "title": "Incluir uma foto?",
+            "description": "Às vezes, uma foto captura o momento melhor do que as palavras poderiam."
+          }
+        },
+        "GratitudeLogFormSuccessScreen": {
+          "buttonLabel": "Isso foi bom",
+          "firstGratitudeLog": {
+            "title": "Sua primeira gratidão",
+            "description": "Esse é um lindo começo — uma pequena pausa para notar algo bom."
+          },
+          "backInStreak": {
+            "title": "Bem-vindo(a) de volta",
+            "description": "Não importa o tempo de ausência, você está aqui de novo — e isso significa tudo."
+          },
+          "inStreak": {
+            "title": "Mais um momento para apreciar",
+            "description": "Você está construindo algo bonito — uma pequena reflexão de cada vez."
+          }
+        }
+      }
+    },
+    "reflection": {
+      "screens": {
+        "ReflectionFormScreen": {
+          "ReflectionFormScreenContent": {
+            "title": "Tire um momento para refletir",
+            "description": "Seja para encerrar o dia ou simplesmente fazer uma pausa, este é o seu espaço para se conectar com o que está dentro.",
+            "inputPlaceholder": "Escreva o que está em sua mente..."
+          },
+          "ReflectionFormScreenImagePicker": {
+            "title": "Incluir uma foto?",
+            "description": "Às vezes, uma foto captura o momento melhor do que as palavras poderiam."
+          }
+        },
+        "ReflectionFormSuccessScreen": {
+          "moodQuestion": "Vamos verificar como está seu humor?",
+          "firstReflection": {
+            "title": "Sua primeira reflexão",
+            "description": "Você tirou um momento para olhar para dentro — esse é um começo poderoso."
+          },
+          "backInStreak": {
+            "title": "Bem-vindo(a) de volta",
+            "description": "Não importa o tempo de ausência, você está aqui de novo — e isso significa tudo."
+          },
+          "inStreak": {
+            "title": "Mais um dia, refletido",
+            "description": "Você está construindo insights, um pensamento tranquilo de cada vez."
+          }
+        }
+      }
+    },
+    "user": {
+      "notifications": {
+        "MORNING_NOTIFICATION": {
+          "settingLabel": "☀️ Comece seu dia com intenção",
+          "messageTitle": "Bom dia, {{user}} ☀️",
+          "messageBody": "O que você escolhe, Só por Hoje?"
+        },
+        "AFTERNOON_NOTIFICATION": {
+          "settingLabel": "🫶 Checagem de meio-dia",
+          "messageTitle": "Checagem rápida 🫶",
+          "messageBody": "Oi {{user}}, como está seu dia? Ainda com sua intenção?"
+        },
+        "EVENING_NOTIFICATION": {
+          "settingLabel": "Você conseguiu 🌙",
+          "messageTitle": "Hora de relaxar 🌙",
+          "messageBody": "Você fez o que pôde hoje, {{user}}. Isso é mais do que suficiente."
+        }
+      },
+      "screens": {
+        "OnboardingScreen": {
+          "finishButtonLabel": "🖐 Toca aqui para aceitar",
+          "successTitle": "{{name}}, sua jornada começa agora!",
+          "OnboardingScreenName": {
+            "title": "Como devemos te chamar?",
+            "description": "Apenas seu nome — para que este espaço pareça um pouco mais seu.",
+            "inputPlaceholder": "Seu primeiro nome"
+          },
+          "OnboardingScreenNotifications": {
+            "title": "Seus lembretes gentis",
+            "description": "Defina notificações calmas e gentis para te ajudar a pausar, refletir e retornar a si mesmo(a) ao longo do dia.",
+            "inputPlaceholder": "Seu primeiro nome"
+          },
+          "OnboardingScreenPrivacyMessage": {
+            "title": "Só por Hoje é seu — de verdade.",
+            "subtitle": "Privado, sem anúncios e feito para o seu bem-estar.",
+            "description": "Tudo o que você registra permanece no seu dispositivo. Não armazenamos, acessamos ou compartilhamos. \n\nMonitoramos apenas estatísticas de uso simples para melhorar o aplicativo — nunca seus dados pessoais. \n\nNo futuro, podemos oferecer insights opcionais de IA e outros recursos adicionais através de um plano premium, mas sua privacidade sempre virá em primeiro lugar."
+          },
+          "OnboardingScreenCommitment": {
+            "title": "Vamos fazer um contrato?",
+            "items": [
+              "Só por hoje, eu escolho a mim.",
+              "Não estou aqui para consertar o universo.",
+              "Nem resolver todas as emoções.",
+              "Nem buscar a perfeição.",
+              "Estou apenas aqui para respirar.",
+              "Para sentir o que é real.",
+              "Para celebrar as pequenas vitórias.",
+              "Ser gentil — especialmente comigo.",
+              "Um respiro. Um passo. Um dia.",
+              "Isso é suficiente.",
+              "Isso é tudo."
+            ]
+          }
+        },
+        "SettingsScreen": {
+          "title": "Configurações",
+          "profile": "Perfil",
+          "notifications": "Notificações",
+          "version": "Versão",
+          "requestReview": "Deixar uma avaliação",
+          "language": "Idioma"
+        },
+        "LanguageScreen": {
+          "title": "Idioma"
+        }
+      }
+    }
+  }
+}

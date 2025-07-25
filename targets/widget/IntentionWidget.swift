@@ -1,6 +1,31 @@
 import WidgetKit
 import SwiftUI
 
+private let localizedIntentionTexts: [String: [String: String]] = [
+  "en": [
+    "hi": "Hi",
+    "emptyState": "Each sunrise brings a new choice — what will you choose, Just for Today?",
+    "title": "Just for Today, I choose...",
+    "cta": "Today I choose...",
+    "mockIntention": "Be kind to myself."
+  ],
+  "pt": [
+    "hi": "Oi",
+    "emptyState": "Cada nascer do sol traz consigo a chance de uma nova escolha — o que você vai escolher, Só por Hoje?",
+    "title": "Só por Hoje, eu escolho...",
+    "cta": "Hoje eu escolho...",
+    "mockIntention": "Ser gentil comigo mesmo."
+  ],
+]
+
+func localizedIntentionText(for key: String) -> String {
+  let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.widgets")
+  let languageCode = userDefaults?.string(forKey: "language") ?? "en"
+  
+  let fallbackLanguage = "en"
+  return localizedIntentionTexts[languageCode]?[key] ?? localizedIntentionTexts[fallbackLanguage]?[key] ?? key
+}
+
 struct IntentionWidgetProvider: TimelineProvider {
     func getEntryFromUserDefaults() -> IntentionEntry {
         let userDefaults = UserDefaults(suiteName: "group.app.justfortoday.widgets")
@@ -14,7 +39,7 @@ struct IntentionWidgetProvider: TimelineProvider {
         let isValid = (storedDateString ?? "") == todayString
       
         return IntentionEntry(
-            userDisplayName: storedUserDisplayName ?? "there",
+            userDisplayName: storedUserDisplayName ?? nil,
             date: today,
             hasIntention: isValid,
             intention: isValid ? intentionText : nil
@@ -37,14 +62,14 @@ struct IntentionWidgetProvider: TimelineProvider {
 }
 
 struct IntentionEntry: TimelineEntry {
-    let userDisplayName: String
+    let userDisplayName: String?
     let date: Date
     let hasIntention: Bool
     let intention: String?
 }
 
 struct EmptyIntentionView: View {
-    let userName: String
+    let userName: String?
     let widgetFamily: WidgetFamily
 
     var body: some View {
@@ -58,16 +83,16 @@ struct EmptyIntentionView: View {
     private var content: some View {
         VStack(alignment: alignment, spacing: spacing) {
           VStack(spacing: 8) {
-            Text("Hi, \(userName)! 👋")
+            Text(userName != nil ? "\(localizedIntentionText(for: "hi")), \(userName ?? "")! 👋" : "\(localizedIntentionText(for: "hi"))! 👋")
               .font(.callout).fontWeight(.medium)
             
-            Text("Each sunrise brings a new choice — what will you choose, Just for Today?")
+            Text(localizedIntentionText(for: "emptyState"))
               .font(.caption)
               .foregroundStyle(.secondary)
           }
 
             if widgetFamily != .systemSmall {
-                Text("Today I choose...")
+                Text(localizedIntentionText(for: "cta"))
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundStyle(.background)
@@ -111,7 +136,7 @@ struct IntentionView: View {
           .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottomTrailing)
 
         VStack(alignment: alignment, spacing: 8) {
-          Text("Just for Today, I’ll...")
+          Text(localizedIntentionText(for: "title"))
             .font(justForTodaySize)
             .foregroundColor(.secondary)
           Text(intention)
@@ -168,6 +193,7 @@ struct IntentionWidget: Widget {
 #Preview(as: .systemSmall) {
   IntentionWidget()
 } timeline: {
-  IntentionEntry(userDisplayName: "John", date: .now, hasIntention: true, intention: "Be kind to myself.")
+  IntentionEntry(userDisplayName: "John", date: .now, hasIntention: true, intention: localizedIntentionText(for: "mockIntention"))
   IntentionEntry(userDisplayName: "John", date: .now, hasIntention: false, intention: nil)
+  IntentionEntry(userDisplayName: nil, date: .now, hasIntention: false, intention: nil)
 }
