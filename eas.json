@@ -33,10 +33,7 @@
       "env": {
         "APP_VARIANT": "production"
       },
-      "channel": "production",
-      "android": {
-        "buildType": "apk"
-      }
+      "channel": "production"
     }
   },
   "submit": {
