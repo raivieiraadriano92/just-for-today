@@ -83,7 +83,7 @@ struct EmptyIntentionView: View {
     private var content: some View {
         VStack(alignment: alignment, spacing: spacing) {
           VStack(spacing: 8) {
-            Text(userName != nil ? "\(localizedIntentionText(for: "hi")), \(userName ?? "")! 👋" : "\(localizedIntentionText(for: "hi"))! 👋")
+            Text(userName != nil ? "\(localizedIntentionText(for: "hi")), \(userName ?? "") 👋" : "\(localizedIntentionText(for: "hi")) 👋")
               .font(.callout).fontWeight(.medium)
             
             Text(localizedIntentionText(for: "emptyState"))

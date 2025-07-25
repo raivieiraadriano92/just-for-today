@@ -81,7 +81,7 @@ struct EmptyGratitudeView: View {
     private var content: some View {
         VStack(alignment: alignment, spacing: spacing) {
           VStack(spacing: 8) {
-            Text(userName != nil ? "\(localizedGratitudeText(for: "hi")), \(userName ?? "")! 👋" : "\(localizedGratitudeText(for: "hi"))! 👋")
+            Text(userName != nil ? "\(localizedGratitudeText(for: "hi")), \(userName ?? "") 👋" : "\(localizedGratitudeText(for: "hi")) 👋")
               .font(.callout).fontWeight(.medium)
             
             Text(localizedGratitudeText(for: "emptyState"))
