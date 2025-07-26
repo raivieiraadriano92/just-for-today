@@ -16,6 +16,10 @@
     "description": "Se você está gostando, por favor, considere deixar uma avaliação.",
     "cta": "Avaliar agora"
   },
+  "generalError": {
+    "title": "Algo deu errado",
+    "description": "Lamentamos por isso.\nPor favor, tente reiniciar o aplicativo."
+  },
   "app": {
     "home": {
       "addMoodLogButtonLabel": "Humor",
