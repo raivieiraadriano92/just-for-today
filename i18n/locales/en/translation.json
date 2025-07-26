@@ -9,6 +9,10 @@
     "yes": "Yes",
     "yesterday": "Yesterday"
   },
+  "generalError": {
+    "title": "Something went wrong",
+    "description": "We’re sorry about this.\nPlease try to restart the app."
+  },
   "app": {
     "home": {
       "addMoodLogButtonLabel": "Mood",

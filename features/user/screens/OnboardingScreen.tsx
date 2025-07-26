@@ -5,15 +5,9 @@ import { useTheme } from "@react-navigation/native";
 import { createRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, Text, View } from "react-native";
-import { Confetti } from "react-native-fast-confetti";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import PagerView from "react-native-pager-view";
-import Animated, {
-  BounceIn,
-  FadeIn,
-  FadeOut,
-  LinearTransition,
-} from "react-native-reanimated";
+import Animated, { FadeOut, LinearTransition } from "react-native-reanimated";
 import twColors from "tailwindcss/colors";
 import { NotificationsForm } from "../components/NotificationsForm";
 import {
@@ -188,38 +182,6 @@ function OnboardingScreenHeaderControls() {
 }
 
 function OnboardingScreenHandler() {
-  const { isCommitmentAccepted } = useOnboardingContext();
-
-  const { completeOnboarding, user } = useUserStore();
-
-  const { t } = useTranslation();
-
-  if (isCommitmentAccepted) {
-    return (
-      <Animated.View className="flex-1" entering={FadeIn} key="successScreen">
-        <Animated.View
-          className="max-w-sm flex-1 items-center justify-center gap-3 self-center"
-          entering={BounceIn}
-          key="successContent"
-        >
-          <Text style={{ fontSize: 48 }}>🎉</Text>
-          <Text className="text-center text-3xl font-semibold leading-relaxed text-text">
-            {t("features.user.screens.OnboardingScreen.successTitle", {
-              name: user?.name,
-            })}
-          </Text>
-        </Animated.View>
-        <Confetti
-          autoplay
-          count={400}
-          fallDuration={3000}
-          isInfinite={false}
-          onAnimationEnd={completeOnboarding}
-        />
-      </Animated.View>
-    );
-  }
-
   return (
     <Animated.View className="flex-1" exiting={FadeOut} key="onboardingScreen">
       <OnboardingScreenHeaderControls />

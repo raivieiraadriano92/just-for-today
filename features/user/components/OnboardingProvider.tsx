@@ -45,7 +45,7 @@ export const OnboardingProvider: FunctionComponent<OnboardingProviderProps> = ({
       const nextStep = prev + 1;
 
       if (nextStep >= stepsLength) {
-        setIsCommitmentAccepted(true);
+        router.replace("/onboarding/success");
         return prev;
       }
 

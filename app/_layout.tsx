@@ -19,7 +19,8 @@ import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "nativewind";
 import { Suspense } from "react";
-import { ActivityIndicator } from "react-native";
+import { useTranslation } from "react-i18next";
+import { ActivityIndicator, Text, View } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { vexo } from "vexo-analytics";
 
@@ -100,21 +101,36 @@ const theme = {
 export default Sentry.wrap(function RootLayout() {
   const { colorScheme } = useColorScheme();
 
-  // { success, error }
-  useMigrations(drizzleDb, migrations); // Apply migrations to the database
+  const { t } = useTranslation();
 
-  // if (!loaded) {
-  //   // Async font loading only occurs in development.
-  //   return null;
-  // }
+  const { error, success } = useMigrations(drizzleDb, migrations); // Apply migrations to the database
+
+  if (error) {
+    console.error("Migration failed:", error);
+
+    return (
+      <View className="flex-1 items-center justify-center gap-3 p-6">
+        <Text className="text-center text-3xl font-semibold text-text">
+          {t("generalError.title")}
+        </Text>
+        <Text className="text-center text-lg font-normal text-text/60 dark:text-text/80">
+          {t("generalError.description")}
+        </Text>
+      </View>
+    );
+  }
+
+  if (!success) {
+    return (
+      <View className="flex-1 items-center justify-center p-6">
+        <ActivityIndicator size="large" color={theme.default.colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <Suspense fallback={<ActivityIndicator size="large" />}>
-      <SQLiteProvider
-        databaseName={DATABASE_NAME}
-        options={{ enableChangeListener: true }}
-        useSuspense
-      >
+      <SQLiteProvider databaseName={DATABASE_NAME} useSuspense>
         <KeyboardProvider>
           <ThemeProvider
             value={colorScheme === "dark" ? theme.dark : theme.default}
