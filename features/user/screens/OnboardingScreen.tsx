@@ -83,7 +83,7 @@ function OnboardingScreenCommitment() {
                     size={24}
                   />
                 </View>
-                <Text className="text-xl font-semibold text-text">
+                <Text className="flex-1 text-xl font-semibold text-text">
                   {t(
                     `features.user.screens.OnboardingScreen.OnboardingScreenCommitment.items.${index}`,
                   )}

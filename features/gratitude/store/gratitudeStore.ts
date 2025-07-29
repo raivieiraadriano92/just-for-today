@@ -1,6 +1,7 @@
 import { drizzleDb } from "@/db/client";
 import { gratitudeLogsTable } from "@/db/schema";
 import { Emitter } from "@/utils/emitter";
+import { reloadWidgets, setWidgetGratitude } from "@/utils/widgets";
 import { eq } from "drizzle-orm";
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
@@ -91,6 +92,13 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
     //     data: [...newRows, ...state.data],
     //   }));
 
+    try {
+      setWidgetGratitude(newRow.content);
+      reloadWidgets();
+    } catch (error) {
+      console.error("Failed to update gratitude widget storage:", error);
+    }
+
     return { id };
   },
   updateById: async (id, payload) => {
@@ -105,6 +113,15 @@ export const useGratitudeLogStore = create<GratitudeLogStore>()((set, get) => ({
       .where(eq(gratitudeLogsTable.id, id));
 
     Emitter.emit("gratitudeLog:updated");
+
+    try {
+      if (payload.content) {
+        setWidgetGratitude(payload.content);
+        reloadWidgets();
+      }
+    } catch (error) {
+      console.error("Failed to update gratitude widget storage:", error);
+    }
 
     //   set((state) => ({
     //     data: state.data.map((row) =>

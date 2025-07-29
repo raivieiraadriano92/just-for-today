@@ -4,10 +4,17 @@
     "justForToday": "Just for Today",
     "next": "Next",
     "notNow": "Not now",
+    "ok": "Ok",
     "save": "Save",
     "today": "Today",
     "yes": "Yes",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "later": "Later"
+  },
+  "requestReview": {
+    "title": "Thanks for using Just For Today!",
+    "description": "If you enjoy it, please consider leaving a review.",
+    "cta": "Rate Now"
   },
   "generalError": {
     "title": "Something went wrong",
@@ -34,6 +41,17 @@
     "welcome": {
       "welcomeMessage": "Each sunrise brings a new choice.",
       "buttonLabel": "Get Started"
+    },
+    "widgets": {
+      "title": "Bring peace to your Home Screen",
+      "description": "Keep your daily intention and moments of gratitude close, even outside the app. Add a Just for Today widget to your Home Screen and let small reminders support your emotional journey.",
+      "guide": {
+        "title": "To add the widget:",
+        "step1": "Long-press on your Home Screen",
+        "step2": "Tap the edit button in the top left and select Widgets or Add Widgets",
+        "step3": "Search for Just for Today",
+        "step4": "Pick a widget size and tap Add Widget"
+      }
     }
   },
   "features": {
@@ -137,20 +155,17 @@
               "title": "Start with just one day",
               "description": "Every journey begins gently. Set your first intention when the moment feels right."
             },
-
             "active_streak": {
               "emoji": "✨",
               "title_one": "{{currentStreak}} day of showing up",
               "title_other": "{{currentStreak}} days of showing up",
               "description": "You’re building something meaningful, one peaceful moment at a time."
             },
-
             "streak_broken": {
               "emoji": "🌙",
               "title": "You paused — and that’s okay",
               "description": "Your {{lastStreak}}-day streak was a beautiful act of care. When you're ready, your journey continues."
             },
-
             "streak_restarted": {
               "emoji": "☀️",
               "title": "You're back — {{currentStreak}} day in",
@@ -412,7 +427,6 @@
         },
         "ReflectionFormSuccessScreen": {
           "moodQuestion": "Let's check in with your mood?",
-
           "firstReflection": {
             "title": "Your first reflection",
             "description": "You took a moment to look inward — that’s a powerful beginning."
@@ -485,7 +499,13 @@
         "SettingsScreen": {
           "title": "Settings",
           "profile": "Profile",
-          "notifications": "Notifications"
+          "notifications": "Notifications",
+          "version": "Version",
+          "requestReview": "Leave a review",
+          "language": "Language"
+        },
+        "LanguageScreen": {
+          "title": "Language"
         }
       }
     }

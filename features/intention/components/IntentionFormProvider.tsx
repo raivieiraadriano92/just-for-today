@@ -58,14 +58,18 @@ export const IntentionFormProvider: FunctionComponent<
   };
 
   const handleSave = async (payload: IntentionPayload) => {
-    if (todaysIntention) {
-      await updateTodaysIntention(payload);
-    } else {
-      await insertTodaysIntention(payload);
-    }
+    try {
+      if (todaysIntention) {
+        await updateTodaysIntention(payload);
+      } else {
+        await insertTodaysIntention(payload);
+      }
 
-    // After saving, redirect to success page
-    router.replace("/intention/success");
+      // After saving, redirect to success page
+      router.replace("/intention/success");
+    } catch (error) {
+      console.error("Error saving intention:", error);
+    }
   };
 
   const handleNext = async () => {

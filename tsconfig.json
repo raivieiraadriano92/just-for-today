@@ -3,7 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "just-for-today-android-widgets": [
+        "./modules/just-for-today-android-widgets"
+      ]
     }
   },
   "include": [

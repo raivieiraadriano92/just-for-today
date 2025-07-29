@@ -2,18 +2,25 @@
   "expo": {
     "name": "Just for Today",
     "slug": "just-for-today",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "justfortoday",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "appStoreUrl": "https://apps.apple.com/us/app/just-for-today-daily-journal/id6747355776",
       "supportsTablet": false,
       "bundleIdentifier": "app.justfortoday",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleAllowMixedLocalizations": true
+      },
+      "appleTeamId": "2W3CZ62JW3",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.app.justfortoday.widgets"
+        ]
       }
     },
     "locales": {
@@ -22,6 +29,7 @@
       "pt": "./i18n/locales/pt/metadata.json"
     },
     "android": {
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=app.justfortoday",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ECEFF2"
@@ -58,7 +66,8 @@
           "organization": "monsters-sa"
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      "@bacons/apple-targets"
     ],
     "experiments": {
       "typedRoutes": true

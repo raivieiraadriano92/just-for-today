@@ -4,6 +4,7 @@ import {
   requestNotificationPermission,
   scheduleDailyNotification,
 } from "@/utils/notifications";
+import { reloadWidgets, setWidgetUserDisplayName } from "@/utils/widgets";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -34,13 +35,17 @@ export type User = {
 };
 
 type UserStoreState = {
+  isHomeWidgetsPresentationCompleted: boolean;
   isOnboardingCompleted: boolean;
+  lastReviewRequestDate?: string; // ISO format
   settings: Settings;
   user: User | null;
 };
 
 type UserStoreActions = {
+  completeHomeWidgetsPresentation: () => void;
   completeOnboarding: () => void;
+  setLastReviewRequestDate: (date: string) => void;
   setUser: (user: User) => void;
   setEnabledNotification: (
     type: NotificationType,
@@ -84,6 +89,7 @@ const handleNotificationSchedule = async ({
 export const useUserStore = create<UserStore>()(
   persist(
     (set, get) => ({
+      isHomeWidgetsPresentationCompleted: false,
       isOnboardingCompleted: false,
       settings: {
         notifications: {
@@ -103,13 +109,32 @@ export const useUserStore = create<UserStore>()(
       },
       user: null,
 
+      completeHomeWidgetsPresentation: () => {
+        const current = get().user;
+        if (!current) return;
+        set({ isHomeWidgetsPresentationCompleted: true });
+      },
+
       completeOnboarding: () => {
         const current = get().user;
         if (!current) return;
         set({ isOnboardingCompleted: true });
       },
 
-      setUser: (user) => set({ user }),
+      setLastReviewRequestDate: (date) => {
+        set({ lastReviewRequestDate: date });
+      },
+
+      setUser: (user) => {
+        try {
+          setWidgetUserDisplayName(user.name);
+          reloadWidgets();
+        } catch (error) {
+          console.error("Error setting widget user display name:", error);
+        }
+
+        set({ user });
+      },
 
       setEnabledNotification: async (type, enabled) => {
         const userName = get().user?.name;
@@ -167,7 +192,10 @@ export const useUserStore = create<UserStore>()(
       name: "user-store",
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
+        isHomeWidgetsPresentationCompleted:
+          state.isHomeWidgetsPresentationCompleted,
         isOnboardingCompleted: state.isOnboardingCompleted,
+        lastReviewRequestDate: state.lastReviewRequestDate,
         settings: state.settings,
         user: state.user,
       }),

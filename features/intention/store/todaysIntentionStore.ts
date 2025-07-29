@@ -1,10 +1,10 @@
 import { drizzleDb } from "@/db/client";
 import { intentionsTable } from "@/db/schema";
 import { Emitter } from "@/utils/emitter";
+import { reloadWidgets, setWidgetIntention } from "@/utils/widgets";
 import { format } from "date-fns/format";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
-
 export type IntentionRow = typeof intentionsTable.$inferSelect;
 
 export type IntentionPayload = Pick<IntentionRow, "intention">;
@@ -70,6 +70,13 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
       set(() => ({
         todaysIntention: newRow,
       }));
+
+      try {
+        setWidgetIntention(newRow.intention, newRow.date);
+        reloadWidgets();
+      } catch (error) {
+        console.error("Failed to update intention widget storage:", error);
+      }
     },
 
     updateTodaysIntention: async (payload) => {
@@ -91,12 +98,21 @@ export const useTodaysIntentionStore = create<TodaysIntentionStore>()(
 
       Emitter.emit("intention:updated");
 
+      const updatedRow = {
+        ...todaysIntention,
+        ...updatedPayload,
+      };
+
       set(() => ({
-        todaysIntention: {
-          ...todaysIntention,
-          ...updatedPayload,
-        },
+        todaysIntention: updatedRow,
       }));
+
+      try {
+        setWidgetIntention(updatedRow.intention, updatedRow.date);
+        reloadWidgets();
+      } catch (error) {
+        console.error("Failed to update intention widget storage:", error);
+      }
     },
   }),
 );
